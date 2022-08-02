@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nodeserver-env
+data:
+  NAME: 'Henrique Holtz' # using env + valueFrom
+  AGE: '22' # using env + valueFrom
+  name: 'Henrique Holtz' # using envFrom + configMapRef
+  age: '22' # using envFrom + configMapRef

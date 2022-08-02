@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+
+kind: ReplicaSet
+metadata:
+  name: 'nodeserver'
+  labels:
+    app: 'nodeserver'
+
+spec:
+  selector:
+    matchLabels:
+      app: nodeserver
+  replicas: 4
+  template:
+    metadata:
+      name: 'nodeserver'
+      labels:
+        app: 'nodeserver'
+    spec:
+      containers:
+        - name: nodeserver
+          image: 'henriqueholtz/nodeserver:latest'

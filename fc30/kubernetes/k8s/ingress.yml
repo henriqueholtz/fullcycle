@@ -1,0 +1,22 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: ingress-host
+  annotations:
+    kubernetes.io/ingress.class: 'nginex'
+    cert-manager.io/cluster-issuer: 'letsencrypt-issuer' # Equals to ClusterIssuer name
+    ingress.kubernetes.io/force-ssl-redirect: 'true'
+  spec:
+    rules:
+      - host: 'ingress.mydomain.com.br'
+        http:
+          paths:
+            - pathType: Prefix
+              path: '/'
+              backend:
+                serviceName: nodeserver-service
+                servicePort: 3000
+  tls:
+    - hosts:
+        - 'ingress.mydomain.com.br'
+      secretName: letsencrypt-tls # Equals to ClusterIssuer -> privateKeySecretRef -> name
