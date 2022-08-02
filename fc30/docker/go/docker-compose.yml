@@ -1,0 +1,9 @@
+version: '3'
+
+services:
+  fullcycle3.0-docker:
+    image: henriqueholtz/go_fullcycle3.0-docker
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: fullcycle3.0-docker_go
