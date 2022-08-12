@@ -5,6 +5,7 @@
 - `terraform init`
 - `terraform plan`
 - `terraform apply`
+- `export TF_VAR_content="From Environment"`
 
 ### Notes
 
