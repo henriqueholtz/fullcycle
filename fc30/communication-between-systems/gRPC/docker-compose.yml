@@ -1,0 +1,10 @@
+version: '3'
+
+services:
+  app:
+    build: .
+    container_name: fullcycle-communication-between-systems-gRPC
+    ports:
+      - 50021:50021
+    volumes:
+      - .:/go/src
