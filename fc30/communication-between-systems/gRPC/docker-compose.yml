@@ -5,6 +5,6 @@ services:
     build: .
     container_name: fullcycle-communication-between-systems-gRPC
     ports:
-      - 50021:50021
+      - 50051:50051
     volumes:
       - .:/go/src
