@@ -29,3 +29,5 @@
 
 - `go run cmd/client/client.go`
 - `protoc --proto_path=proto proto/*.proto --go_out=pb --go-grpc_out=pb`
+- `export GOPATH=$HOME/go`
+- `export PATH=$PATH:$GOPATH/bin`

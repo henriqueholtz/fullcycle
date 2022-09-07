@@ -3,6 +3,7 @@ package services
 import (
 	"context"
 	"fmt"
+	"time"
 
 	"github.com/henriqueholtz/fullcycle/fc30/communication-between-systems/gRPC/pb"
 )
@@ -36,13 +37,13 @@ func (*UserService) AddUserVerbose(req *pb.User, stream pb.UserService_AddUserVe
 		Status: "Init",
 		User: &pb.User{},
 	})
-	time.Sleep(time.Sconds * 3);
+	time.Sleep(time.Second * 3);
 
 	stream.Send(&pb.UserResultStream{
 		Status: "Inserting",
 		User: &pb.User{},
 	})
-	time.Sleep(time.Sconds * 3);
+	time.Sleep(time.Second * 3);
 
 	stream.Send(&pb.UserResultStream{
 		Status: "User has been inserted",
@@ -52,7 +53,7 @@ func (*UserService) AddUserVerbose(req *pb.User, stream pb.UserService_AddUserVe
 			Email: req.GetEmail(),
 		},
 	})
-	time.Sleep(time.Sconds * 3);
+	time.Sleep(time.Second * 3);
 
 
 	stream.Send(&pb.UserResultStream{
@@ -63,7 +64,7 @@ func (*UserService) AddUserVerbose(req *pb.User, stream pb.UserService_AddUserVe
 			Email: req.GetEmail(),
 		},
 	})
-	time.Sleep(time.Sconds * 3);
+	time.Sleep(time.Second * 3);
 
 	return nil
 }
