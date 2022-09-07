@@ -28,6 +28,7 @@
   -> Put the fields (As id, name, email)
 
 - `go run cmd/client/client.go`
-- `protoc --proto_path=proto proto/*.proto --go_out=pb --go-grpc_out=pb`
+- `protoc --proto_path=proto proto/*.proto --go_out=. --go-grpc_out=.`
 - `export GOPATH=$HOME/go`
 - `export PATH=$PATH:$GOPATH/bin`
+- `sudo chown -R $USER:$USER .`
