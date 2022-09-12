@@ -32,3 +32,5 @@
 - `export GOPATH=$HOME/go`
 - `export PATH=$PATH:$GOPATH/bin`
 - `sudo chown -R $USER:$USER .`
+- `go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@v1.2` [link](https://grpc.io/docs/languages/go/quickstart/)
+- `go install google.golang.org/protobuf/cmd/protoc-gen-go@v1.28` [link](https://grpc.io/docs/languages/go/quickstart/)
