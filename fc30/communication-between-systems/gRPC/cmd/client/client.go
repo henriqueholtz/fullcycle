@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"io"
 	"log"
-	// "time"
+	"time"
 
 	"github.com/henriqueholtz/fullcycle/fc30/communication-between-systems/gRPC/pb"
 	"google.golang.org/grpc"
@@ -20,7 +20,8 @@ func main() {
 
 	client:= pb.NewUserServiceClient(connection)
 	// AddUser(client)
-	AddUserVerbose(client)
+	// AddUserVerbose(client)
+	AddUsers(client)
 
 }
 
@@ -63,4 +64,51 @@ func AddUserVerbose(client pb.UserServiceClient) {
 
 		fmt.Println("Status: ", stream.Status, " - ", stream.GetUser())
 	}
+}
+
+func AddUsers(client pb.UserServiceClient) {
+	reqs := []*pb.User{
+		&pb.User{
+			Id: "h1",
+			Name: "Henrique 1",
+			Email: "henrique@1.com",
+		},
+		&pb.User{
+			Id: "h2",
+			Name: "Henrique 2",
+			Email: "henrique@2.com",
+		},
+		&pb.User{
+			Id: "h3",
+			Name: "Henrique 3",
+			Email: "henrique@3.com",
+		},
+		&pb.User{
+			Id: "h4",
+			Name: "Henrique 4",
+			Email: "henrique@4.com",
+		},
+		&pb.User{
+			Id: "h5",
+			Name: "Henrique 5",
+			Email: "henrique@5.com",
+		},
+	}
+
+	stream, err := client.AddUsers(context.Background())
+	if err != nil {
+		log.Fatalf("Error creating request: %w", err)
+	}
+
+	for _, req := range reqs {
+		stream.Send(req)
+		time.Sleep(time.Second * 3)
+	}
+
+	res, err := stream.CloseAndRecv()
+	if err != nil {
+		log.Fatalf("Error receiving response: %w", err)
+	}
+
+	fmt.Println(res)
 }
