@@ -102,13 +102,15 @@ func (*UserService) AddUserStreamBoth(stream pb.UserService_AddUserStreamBothSer
 	for {
 		req, err := stream.Recv()
 		if err == io.EOF {
+			fmt.Println("Server is closing the stream.")
 			return nil
 		}
-
+		
 		if err != nil {
 			log.Fatalf("Error receiving stream from client: %v", err)
 		}
-
+		
+		fmt.Println("Server received user: ", req.GetName())
 		err = stream.Send(&pb.UserResultStream{
 			Status: "Added",
 			User: req,
