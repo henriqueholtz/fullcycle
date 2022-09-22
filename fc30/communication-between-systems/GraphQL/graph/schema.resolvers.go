@@ -6,21 +6,58 @@ package graph
 import (
 	"context"
 	"fmt"
+	"math/rand"
 
 	"github.com/henriqueholtz/fullcycle/fc30/communication-between-systems/GraphQL/graph/generated"
 	"github.com/henriqueholtz/fullcycle/fc30/communication-between-systems/GraphQL/graph/model"
 )
 
 func (r *mutationResolver) CreateCategory(ctx context.Context, input model.NewCategory) (*model.Category, error) {
-	panic(fmt.Errorf("not implemented"))
+	category := model.Category{
+		ID: fmt.Sprintf("T%d", rand.Int()),
+		Name: input.Name,
+		Description: &input.Description,
+	}
+	r.Categories = append(r.Categories, &category)
+	return &category, nil
 }
 
 func (r *mutationResolver) CreateCourse(ctx context.Context, input model.NewCourse) (*model.Course, error) {
-	panic(fmt.Errorf("not implemented"))
+	var category *model.Category
+	for _, v := range(r.Categories) {
+		if v.ID == input.CategoryID {
+			category = v
+			break
+		}
+	}
+
+	course := model.Course{
+		ID: fmt.Sprintf("T%d", rand.Int()),
+		Name: input.Name,
+		Description: &input.Description,
+		Category: category,
+	}
+
+	r.Courses = append(r.Courses, &course)
+	return &course, nil
 }
 
 func (r *mutationResolver) CreateChapter(ctx context.Context, input model.NewChapter) (*model.Chapter, error) {
-	panic(fmt.Errorf("not implemented"))
+	var course *model.Course
+	for _, v := range(r.Courses) {
+		if v.ID == input.CourseID {
+			course = v
+			break
+		}
+	}
+
+	chapter := model.Chapter{
+		ID: fmt.Sprintf("T%d", rand.Int()),
+		Name: input.Name,
+		Course: course,
+	}
+	r.Chapters = append(r.Chapters, &chapter)
+	return &chapter, nil
 }
 
 func (r *queryResolver) Categories(ctx context.Context) ([]*model.Category, error) {
