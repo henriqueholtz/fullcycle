@@ -10,5 +10,6 @@ https://github.com/codeedu/fc2-graphql
 ## Commands
 
 - `go mod init github.com/henriqueholtz/fullcycle/fc30/communication-between-systems/GraphQL`
-- [into container] `go get github.com/99designs/gqlgen`
-- `go run github.com/99designs/gqlgen init`
+- [into container] `go get github.com/99designs/gqlgen@v0.13.0`
+- `go run github.com/99designs/gqlgen init` (needs the file `graph/schema.graphqls`)
+- `go run ./server.go`
