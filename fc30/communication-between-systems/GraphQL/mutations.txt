@@ -1,0 +1,26 @@
+mutation createCategory{
+  createCategory(input: { name: "C#", description:"C# is awesome" }) {
+    id
+    name
+    description
+  }
+}
+
+mutation createCourse{
+  createCourse(input: { name: ".Net 6", description:".NET 6", categoryId: "T5577006791947779410"}) {
+    id
+    name
+    description
+    category {
+      name
+      description
+    }
+  }
+}
+
+mutation createChapter{
+  createChapter(input: { name: "Chapter 1", courseId:"T8674665223082153551" }) {
+    id
+    name
+  }
+}

@@ -1,0 +1,32 @@
+# Write your query or mutation here
+query getCategories {
+  categories {
+    id
+    name
+    description
+    Courses {
+      name
+    }
+  }
+}
+
+query getCourses {
+  courses {
+    id
+    name
+    description
+    category {
+      name
+    }
+  }
+}
+
+query getChapters {
+  chapters {
+    id
+    name
+    course {
+      name
+    }
+  }
+}
