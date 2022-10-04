@@ -5,13 +5,16 @@
 #### Run docker container and access it
 
 - `docker-compose up -d`
-- `docker exec -it consul01 sh`
+- `docker exec -it consul-server-{number} sh`
 
 #### Consul (commands into the container)
 
-- `consult agent -dev`
+- `consul agent -dev`
 - `consul members`
 - `curl localhost:8500/v1/catalog/nodes`
+- `mkdir /etc/consul.d` && `mkdir /var/lib/consul` create folders
+- `consul agent -server -bootstrap-expect=3 -node=consul-server-{number} -bind={ip from ifconfig} -data-dir=/var/lib/consul -config-dir=/etc/consul.d`
+- `consul join {ip from ifconfig}`
 
 #### DNS
 
