@@ -27,6 +27,18 @@
 - `consul join {ip from ifconfig of another server}`
 - `consul reload`
 - `dig @localhost -p 8600 nginx.service.consul` (from clients/consul-01/services.json)
+- `consul agent -bind=172.30.0.6 -data-dir=/var/lib/consul -config-dir=/etc/consul.d -retry-join=172.30.0.2 -retry-join=172.30.0.4`
+
+###### Add nginx into client
+
+- `apk add nginx`
+- `apk add vim`
+  - `mkdir /usr/share/nginx/html -p`
+  - `vim etc/nginx/conf.d/default.conf` or `vim /etc/nginx/http.d/default.conf`
+  - Remove `localtion { ... }`
+  - Add `root /usr/share/nginx/html` (Write and quit with `:wq`)
+  - `vim /usr/share/nginx/html/index.html` -> put some text (Write and quit with `:wq`)
+  - `nginx -S reload`
 
 #### DNS
 
