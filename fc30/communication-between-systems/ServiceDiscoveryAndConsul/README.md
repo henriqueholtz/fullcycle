@@ -49,3 +49,7 @@
 - `consul catalog nodes -service nginx`
 - `consul catalog nodes -detailed` (show all IPs)
 - `dig @localhost -p 8600 web.nginx.service.consul`
+
+## Sync with json files
+
+- `consul agent -config-dir=/etc/consul.d`

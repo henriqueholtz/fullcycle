@@ -6,6 +6,8 @@ services:
     container_name: consul-server-01
     hostname: consul-server-01
     command: ['tail', '-f', '/dev/null']
+    volumes:
+      - ./servers/server-01:/etc/consul.d
     networks:
       customnetwork:
         ipv4_address: 172.75.0.11
@@ -18,6 +20,8 @@ services:
     networks:
       customnetwork:
         ipv4_address: 172.75.0.12
+    volumes:
+      - ./servers/server-02:/etc/consul.d
 
   consul-server-03:
     image: consul:1.10
@@ -27,6 +31,8 @@ services:
     networks:
       customnetwork:
         ipv4_address: 172.75.0.13
+    volumes:
+      - ./servers/server-03:/etc/consul.d
 
   consul-client-01:
     image: consul:1.10
