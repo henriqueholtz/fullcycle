@@ -26,13 +26,13 @@
 - `consul agent -bind={ip from ifconfig} -data-dir=/var/lib/consul -config-dir=/etc/consul.d`
 - `consul join {ip from ifconfig of another server}`
 - `consul reload`
-- `dig @localhost -p 8600 nginex.service.consul` (from clients/consul-01/services.json)
+- `dig @localhost -p 8600 nginx.service.consul` (from clients/consul-01/services.json)
 
 #### DNS
 
 - `apk -U add bind-tools` (install dig)
 - `dig @localhost -p 8600 consul01.node.consul`
-- `dig @localhost -p 8600 nginex.service.consul`
+- `dig @localhost -p 8600 nginx.service.consul`
 - `curl localhost:8500/v1/catalog/services`
 - `consul catalog nodes -service nginx`
 - `consul catalog nodes -detailed` (show all IPs)
