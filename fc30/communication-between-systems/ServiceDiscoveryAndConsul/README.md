@@ -53,3 +53,12 @@
 ## Sync with json files
 
 - `consul agent -config-dir=/etc/consul.d`
+
+### Generate key
+
+- `consul keygen`
+
+#### See the data between eth
+
+- `apk add tcpdump`
+- `tcpdump -i eth0 -an port 8301 -A`

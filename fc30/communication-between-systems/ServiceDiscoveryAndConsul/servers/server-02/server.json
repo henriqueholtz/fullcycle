@@ -3,5 +3,7 @@
   "bind_addr": "172.75.0.12",
   "bootstrap_expect": 3,
   "data_dir": "/tmp",
-  "retry_join": ["172.75.0.11", "172.75.0.13"]
+  "retry_join": ["172.75.0.11", "172.75.0.13"],
+  "node_name": "consul-server-02",
+  "encrypt": "3vfOquFXGux+pOoMg+fR365XKRYX1arjEuoYkLY2sxw="
 }
