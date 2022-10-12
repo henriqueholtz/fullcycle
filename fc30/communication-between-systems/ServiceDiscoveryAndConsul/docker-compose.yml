@@ -8,6 +8,8 @@ services:
     command: ['tail', '-f', '/dev/null']
     volumes:
       - ./servers/server-01:/etc/consul.d
+    ports:
+      - '8501:8500'
     networks:
       customnetwork:
         ipv4_address: 172.75.0.11
@@ -22,6 +24,8 @@ services:
         ipv4_address: 172.75.0.12
     volumes:
       - ./servers/server-02:/etc/consul.d
+    ports:
+      - '8502:8500'
 
   consul-server-03:
     image: consul:1.10
@@ -33,6 +37,8 @@ services:
         ipv4_address: 172.75.0.13
     volumes:
       - ./servers/server-03:/etc/consul.d
+    ports:
+      - '8503:8500'
 
   consul-client-01:
     image: consul:1.10

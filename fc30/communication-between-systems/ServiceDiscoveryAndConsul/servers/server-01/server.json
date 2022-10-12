@@ -5,5 +5,9 @@
   "data_dir": "/tmp",
   "retry_join": ["172.75.0.12", "172.75.0.13"],
   "node_name": "consul-server-01",
-  "encrypt": "3vfOquFXGux+pOoMg+fR365XKRYX1arjEuoYkLY2sxw="
+  "encrypt": "3vfOquFXGux+pOoMg+fR365XKRYX1arjEuoYkLY2sxw=",
+  "client_addr": "0.0.0.0",
+  "ui_config": {
+    "enabled": true
+  }
 }
