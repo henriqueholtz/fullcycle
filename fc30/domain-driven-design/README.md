@@ -7,3 +7,6 @@
 - `npm i typescript --save-dev`, `npm i tslint --save-dev`
 - `npx tsc --init`
 - `npx tsc`: build
+- `npm i -D jest @types/jest ts-node --save-dev`
+- `npm i -D jest @swc/jest @swc/cli @swc/core`
+- `npx jest --init`
