@@ -40,4 +40,16 @@ describe('Customer unit tests', () => {
       customer.activate();
     }).toThrowError('Address is required to activate the customer!');
   });
+
+  it('Should add reward points', () => {
+    let customer = new Customer('123', 'Jhon', undefined);
+    expect(customer.rewardPoints).toBe(0);
+
+    const additionalRewardPoints: number = 10;
+    customer.addRewardPoints(additionalRewardPoints);
+    expect(customer.rewardPoints).toBe(additionalRewardPoints);
+
+    customer.addRewardPoints(additionalRewardPoints);
+    expect(customer.rewardPoints).toBe(additionalRewardPoints * 2);
+  });
 });
