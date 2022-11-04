@@ -3,7 +3,7 @@ import Address from './domain/entity/address';
 import OrderItem from './domain/entity/order_item';
 import Order from './domain/entity/order';
 
-let address = new Address('Street Abc', '10A', 'New York');
+let address = new Address('Street Abc', '10A', 'ZIP', 'New York');
 let customer = new Customer('123', 'Henrique Holtz', address);
 
 const item1 = new OrderItem('1', 'Item 1', 11, 'p1', 1);
