@@ -1,8 +1,6 @@
-name: Run Sonar Cloud
+name: '[ci] Run Sonar Cloud'
 
-on:
-  pull_request:
-    types: [opened, reopened]
+on: workflow_dispatch
 
 jobs:
   install-tests-sonarcloud:
