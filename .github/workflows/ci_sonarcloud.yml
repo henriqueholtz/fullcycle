@@ -2,6 +2,10 @@ name: '[ci] Run Sonar Cloud'
 
 on: workflow_dispatch
 
+defaults:
+  run:
+    working-directory: ./fc30/ci
+
 jobs:
   install-tests-sonarcloud:
     runs-on: ubuntu-latest

@@ -2,6 +2,10 @@ name: '[git-ops] CD'
 
 on: workflow_dispatch
 
+defaults:
+  run:
+    working-directory: ./fc30/git-ops
+
 jobs:
   build:
     name: Build
