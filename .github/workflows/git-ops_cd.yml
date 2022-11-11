@@ -7,7 +7,7 @@ defaults:
     working-directory: ./fc30/git-ops
 
 jobs:
-  build:
+  login-build-push-to-dockerhub:
     name: Build
     runs-on: ubuntu-latest
 
@@ -26,6 +26,6 @@ jobs:
       - name: Build and push image to Dockerhub
         uses: docker/build-push-action@v3.2.0
         with:
-          push: true
+          load: true
           context: ./fc30/git-ops
           tags: ${{ github.sha }}, latest
