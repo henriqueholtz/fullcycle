@@ -27,5 +27,5 @@ jobs:
         uses: docker/build-push-action@v3.2.0
         with:
           push: true
-          context: .
+          context: ./fc30/git-ops
           tags: ${{ github.sha }}, latest
