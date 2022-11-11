@@ -7,8 +7,8 @@ defaults:
     working-directory: ./fc30/git-ops
 
 jobs:
-  build:
-    name: Build
+  login-build-push-to-dockerhub:
+    name: Login + Build + Push to Dockerhub
     runs-on: ubuntu-latest
 
     steps: #https://docs.docker.com/build/ci/github-actions/examples/
