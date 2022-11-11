@@ -28,4 +28,6 @@ jobs:
         with:
           push: true
           context: ./fc30/git-ops
-          tags: ${{ github.sha }}, latest
+          tags: |
+            henriqueholtz/fullcycle-gitops:${{ github.sha }}
+            henriqueholtz/fullcycle-gitops:latest
