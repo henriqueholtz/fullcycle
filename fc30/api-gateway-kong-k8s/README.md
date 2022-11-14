@@ -4,4 +4,5 @@ https://github.com/devfullcycle/FC3-kong-automation
 
 ### Installation
 
-- Create kind cluster => `infra/kong-k8s/kind/kind.sh`
+- Create `kind` cluster => `infra/kong-k8s/kind/kind.sh`
+- Install `kong` with `helm` => `infra/kong-k8s/kong/kong.sh`
