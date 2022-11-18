@@ -8,6 +8,7 @@ https://github.com/devfullcycle/FC3-kong-automation
 - Apply `kong` with `helm` => `infra/kong-k8s/kong/kong.sh`
 - Apply `prometheus` with `helm` => `infra/kong-k8s/misc/prometheus/prometheus.sh`
 - Apply `keycloak` with `helm` => `infra/kong-k8s/misc/keycloak/keycloak.sh`
+- Apply/Create Apps with => `infra/kong-k8s/misc/apps/apps.sh`
 
 ### Commands
 
