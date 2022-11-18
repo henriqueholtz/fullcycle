@@ -5,7 +5,9 @@ https://github.com/devfullcycle/FC3-kong-automation
 ### Installation
 
 - Create `kind` cluster => `infra/kong-k8s/kind/kind.sh`
-- Install `kong` with `helm` => `infra/kong-k8s/kong/kong.sh`
+- Apply `kong` with `helm` => `infra/kong-k8s/kong/kong.sh`
+- Apply `prometheus` with `helm` => `infra/kong-k8s/misc/prometheus/prometheus.sh`
+- Apply `keycloak` with `helm` => `infra/kong-k8s/misc/keycloak/keycloak.sh`
 
 ### Commands
 
