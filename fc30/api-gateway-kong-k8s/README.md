@@ -6,3 +6,14 @@ https://github.com/devfullcycle/FC3-kong-automation
 
 - Create `kind` cluster => `infra/kong-k8s/kind/kind.sh`
 - Install `kong` with `helm` => `infra/kong-k8s/kong/kong.sh`
+
+### Commands
+
+- `kubectl get pods -n kong`
+
+### Helm
+
+- `helm repo add kong https://charts.konghq.com`
+- `helm repo add prometheus-community https://prometheus-community.github.io/helm-charts`
+- [...]
+- `helm repo update`
