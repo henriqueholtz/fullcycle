@@ -1,6 +1,7 @@
 # API Gateway With Kong and k8s (kubernetes)
 
 https://github.com/devfullcycle/FC3-kong-automation
+https://github.com/claudioed/bets-app
 
 ### Installation
 
@@ -10,6 +11,8 @@ https://github.com/devfullcycle/FC3-kong-automation
 - Apply `keycloak` with `helm` => `infra/kong-k8s/misc/keycloak/keycloak.sh`
 - Apply/Create Apps with => `infra/kong-k8s/misc/apps/apps.sh`
 - Apply `plugins` => `infra/kong-k8s/misc/apis/apis.sh`
+- `npm install -g @stoplight/spectral-cli`
+- Apply `ArgoCD` => `infra/kong-k8s/argo/argo.sh`
 
 ### Commands
 
