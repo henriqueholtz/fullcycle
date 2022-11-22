@@ -15,6 +15,15 @@ https://github.com/devfullcycle/FC3-kong-automation
 
 - `kubectl get pods -n kong` => Get Name
 - `kubectl logs {name} proxy -f -n kong`
+- `kubectl port-forward svc/keycloak 8080:80 -n iam` (Open in browser, select "Administration Console" and use login/password from `infra/kong-k8s/misc/keycloak/keycloak.sh`)
+
+### Keycloak
+
+- Create Ream with name `Bets`
+- Create some users (with password)
+- Create client with:
+  - `Client authentication: true`
+  - `Redirect Urls: *`
 
 ### Helm
 
