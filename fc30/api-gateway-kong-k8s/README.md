@@ -34,3 +34,16 @@ https://github.com/claudioed/bets-app
 - `helm repo add prometheus-community https://prometheus-community.github.io/helm-charts`
 - [...]
 - `helm repo update`
+
+### ArgoCD
+
+https://argo-cd.readthedocs.io/en/stable/getting_started/
+
+- [Login Using CLI](https://argo-cd.readthedocs.io/en/stable/getting_started/#4-login-using-the-cli) (Get Password)
+  - `kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d; echo`
+  - [Windows] `kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}"; echo` + Convert from Base64 manually
+- [Port Forward](https://argo-cd.readthedocs.io/en/stable/getting_started/#port-forwarding)
+  - `kubectl port-forward svc/argocd-server -n argocd 8080:443`
+- Login [https://localhost:8080/](https://localhost:8080/)
+  - User: `admin`
+  - Password: `{Get it above}`
