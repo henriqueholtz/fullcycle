@@ -13,6 +13,8 @@ https://github.com/claudioed/bets-app
 - Apply `plugins` => `infra/kong-k8s/misc/apis/apis.sh`
 - `npm install -g @stoplight/spectral-cli`
 - Apply `ArgoCD` => `infra/kong-k8s/argo/argo.sh`
+- Install `testkube` => `/load/infra/install.sh`
+- Apply `metrics` => `infra/kong-k8s/kind/metrics-server/metrics-server.sh`
 
 ### Commands
 
@@ -47,3 +49,7 @@ https://argo-cd.readthedocs.io/en/stable/getting_started/
 - Login [https://localhost:8080/](https://localhost:8080/)
   - User: `admin`
   - Password: `{Get it above}`
+
+### TestKube
+
+https://testkube.io/download
