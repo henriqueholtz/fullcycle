@@ -21,6 +21,8 @@ https://github.com/claudioed/bets-app
 - `kubectl get pods -n kong` => Get Name
 - `kubectl logs {name} proxy -f -n kong`
 - `kubectl port-forward svc/keycloak 8080:80 -n iam` (Open in browser, select "Administration Console" and use login/password from `infra/kong-k8s/misc/keycloak/keycloak.sh`)
+- `kubectl get pods -A`
+- `kubectl get hpa -n bets`
 
 ### Keycloak
 
