@@ -2,17 +2,18 @@ import { check } from 'k6';
 import http from 'k6/http';
 
 const KONG_CLIENT = 'kong';
-const KONG_SECRET = 'ohSN0VS9Qtdi5KCLmkj52jGFU91FQJn2';
-const USER = 'maria';
-const PASS = 'maria';
+const KONG_SECRET = 'tyKwYz8WxCcZC9EE35KmglwVTtPQLzPZ';
+const USER = 'user1';
+const PASS = '123456';
 
 export const options = {
   stages: [
-    { target: 0, duration: '10s' },
+    { target: 3, duration: '10s' },
     { target: 5, duration: '60s' },
-    { target: 5, duration: '60s' },
-    { target: 5, duration: '180s' },
   ],
+  thresholds: {
+    http_req_failed: [{ threshold: 'rate<0.2', abortOnFail: true }],
+  },
 };
 
 function authenticateUsingKeycloak(clientId, clientSecret, username, pass) {
@@ -30,6 +31,7 @@ function authenticateUsingKeycloak(clientId, clientSecret, username, pass) {
     formData,
     { headers }
   );
+  // console.log('authenticateUsingKeycloak', response.json());
   return response.json();
 }
 
@@ -56,6 +58,7 @@ export default function (data) {
     payload,
     params
   );
+  console.log('response...', response.status);
   check(response, {
     'is status 201': (r) => r.status === 201,
   });
