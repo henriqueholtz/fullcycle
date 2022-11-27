@@ -81,3 +81,12 @@ https://testkube.io/download
 - `kubectl get pods -n bets`
 - `kubectl get hpa -n bets`
   <!-- - `kubectl port-forward svc/prometheus-stack-kube-prom-prometheus 9090:80 -n monitoring` -->
+
+### EFK
+
+- #### Elastic
+  - Apply `/infra/kong-k8s/efk/elastic/elastic.sh`
+- #### FluentD
+  - Apply `/infra/kong-k8s/efk/fluentd/fluentd.sh`
+- #### Kibana
+  - Apply `/infra/kong-k8s/efk/kibana/kibana.sh`
