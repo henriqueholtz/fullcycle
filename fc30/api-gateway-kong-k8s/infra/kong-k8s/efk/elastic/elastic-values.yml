@@ -1,11 +1,23 @@
+# https://forum.code.education/forum/topico/error-installation-failed-statefulset-in-version-v1-cannot-be-handled-as-a-statefulset-unable-to-parse-quantitys-suffix-2186/
+# Permit co-located instances for solitary minikube virtual machines.
 antiAffinity: 'soft'
+
+# Shrink default JVM heap.
 esJavaOpts: '-Xmx128m -Xms128m'
+
+# Allocate smaller chunks of memory per pod.
 resources:
   requests:
     cpu: '100m'
-    memory: '512mi'
+    memory: '512M'
   limits:
     cpu: '1000m'
-    memory: '512mi'
-persistence:
-  enabled: false
+    memory: '512M'
+
+# Request smaller persistent volumes.
+volumeClaimTemplate:
+  accessModes: ['ReadWriteOnce']
+  storageClassName: 'local-path'
+  resources:
+    requests:
+      storage: 100M
