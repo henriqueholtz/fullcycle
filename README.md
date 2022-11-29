@@ -10,5 +10,5 @@
 - [GitOps](https://github.com/henriqueholtz/fullcycle/tree/master/fc30/git-ops)
 - [istio](https://github.com/henriqueholtz/fullcycle/tree/master/fc30/istio)
 - [Kubernetes](https://github.com/henriqueholtz/fullcycle/tree/master/fc30/kubernetes)
-- [OpenTelemetry](https://github.com/henriqueholtz/fullcycle/tree/master/fc30/open-telemtry)
+- [OpenTelemetry](https://github.com/henriqueholtz/fullcycle/tree/master/fc30/open-telemetry)
 - [Terraform](https://github.com/henriqueholtz/fullcycle/tree/master/fc30/terraform)
