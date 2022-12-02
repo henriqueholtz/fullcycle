@@ -27,7 +27,7 @@ https://github.com/claudioed/bets-app
 ### Keycloak
 
 - Get User and password in `/infra/kong-k8s/misc/keycloak/keycloak.sh`
-- Create Ream with name `Bets`
+- Create Realm with name `bets` (note: needs to be lowercase!)
 - Create some users (with password)
 - Create client with:
   - `ClientId=kong`

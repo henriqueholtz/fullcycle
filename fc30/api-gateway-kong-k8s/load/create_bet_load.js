@@ -2,14 +2,15 @@ import { check } from 'k6';
 import http from 'k6/http';
 
 const KONG_CLIENT = 'kong';
-const KONG_SECRET = 'tyKwYz8WxCcZC9EE35KmglwVTtPQLzPZ';
+const KONG_SECRET = 'XGU1lBtceGiCENOGurzYPicNkkZ1Bxdc'; //update from client "kong" created on keycloak
 const USER = 'user1';
 const PASS = '123456';
 
 export const options = {
   stages: [
-    { target: 3, duration: '10s' },
-    { target: 5, duration: '60s' },
+    { target: 5, duration: '10s' },
+    { target: 30, duration: '10s' },
+    { target: 30, duration: '180s' },
   ],
   thresholds: {
     http_req_failed: [{ threshold: 'rate<0.2', abortOnFail: true }],
@@ -31,7 +32,7 @@ function authenticateUsingKeycloak(clientId, clientSecret, username, pass) {
     formData,
     { headers }
   );
-  // console.log('authenticateUsingKeycloak', response.json());
+  console.log('authenticateUsingKeycloak', response.json());
   return response.json();
 }
 
