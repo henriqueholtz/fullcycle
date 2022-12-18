@@ -1,0 +1,26 @@
+version: '3.0'
+
+services:
+  zipkin:
+    image: openzipkin/zipkin
+    container_name: zipkin
+    ports:
+      - 9411:9411
+  goapp:
+    build:
+      context: .
+      dockerfile: ./goapp/Dockerfile
+    container_name: goapp
+    ports:
+      - 8888:8888
+    volumes:
+      - ./goapp:/go/src
+  nodeapp:
+    build:
+      context: .
+      dockerfile: ./nodeapp/Dockerfile
+    container_name: nodeapp
+    ports:
+      - 3000:3000
+    volumes:
+      - ./nodeapp:/app/
