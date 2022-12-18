@@ -20,7 +20,7 @@ func main() {
 	ot := opentel.NewOpenTel()
 	ot.ServiceName = "GoApp"
 	ot.ServiceVersion = "0.1"
-	ot.ExporterEndpoint = "http://localhost:9411/api/v2/spans"
+	ot.ExporterEndpoint = "http://zipkin:9411/api/v2/spans"
 	tracer = ot.GetTracer()
 
 	router := mux.NewRouter()
@@ -40,7 +40,7 @@ func homeHandler(writer http.ResponseWriter, request *http.Request) {
 	// rotina 2 - Fazer Request HTTP
 	ctx, httpCall := tracer.Start(ctx, "request-remote-json")
 	client := http.Client{Transport: otelhttp.NewTransport(http.DefaultTransport)}
-	req, err := http.NewRequestWithContext(ctx, "GET", "http://localhost:3000/", nil)
+	req, err := http.NewRequestWithContext(ctx, "GET", "http://nodeapp:3000/", nil)
 	if err != nil {
 		log.Fatal(err)
 	}
