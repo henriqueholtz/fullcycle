@@ -1,5 +1,7 @@
 # Terraform
 
+https://github.com/codeedu/fc2-terraform
+
 ### Commands:
 
 - `terraform init`

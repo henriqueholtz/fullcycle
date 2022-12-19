@@ -12,6 +12,18 @@ output "id-from-file" {
   value = resource.local_file.example.id # from resource "localfile" above
 }
 
-output "content" {
+output "data-source-result" {
+  value = data.local_file.content-example.content
+}
+
+output "data-source-result-base64" {
+  value = data.local_file.content-example.content_base64
+}
+
+output "my-content" {
   value = var.content
+}
+
+data "local_file" "content-example" {
+  filename = "example.txt"
 }
