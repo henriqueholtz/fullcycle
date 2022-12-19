@@ -5,6 +5,8 @@ https://github.com/claudioed/bets-app
 
 ### Installation
 
+Note: In some shells you can needs the prefix `sh` (example: `sh infra/kong-k8s/kind/kind.sh` )
+
 - Create `kind` cluster => `infra/kong-k8s/kind/kind.sh`
 - Apply `prometheus` with `helm` => `infra/kong-k8s/misc/prometheus/prometheus.sh`
 - Apply `kong` with `helm` => `infra/kong-k8s/kong/kong.sh`
