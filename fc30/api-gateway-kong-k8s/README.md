@@ -8,7 +8,9 @@ https://github.com/claudioed/bets-app
 Note: In some shells you can needs the prefix `sh` (example: `sh infra/kong-k8s/kind/kind.sh` )
 
 - Create `kind` cluster => `infra/kong-k8s/kind/kind.sh`
+- Add additional repos on `helm`
 - Apply `prometheus` with `helm` => `infra/kong-k8s/misc/prometheus/prometheus.sh`
+- Import dashboard of prometheus (7424 ) on grafana (needs port-forward)
 - Apply `kong` with `helm` => `infra/kong-k8s/kong/kong.sh`
 - Apply `keycloak` with `helm` => `infra/kong-k8s/misc/keycloak/keycloak.sh`
 - Apply/Create Apps with => `infra/kong-k8s/misc/apps/apps.sh`
@@ -17,6 +19,7 @@ Note: In some shells you can needs the prefix `sh` (example: `sh infra/kong-k8s/
 - Apply `ArgoCD` => `infra/kong-k8s/argo/argo.sh`
 - Install `testkube` => `/load/infra/install.sh`
 - Apply `metrics` => `infra/kong-k8s/kind/metrics-server/metrics-server.sh`
+- Configure keycloack (Realm, client, and user). Needs port-forward.
 
 ### Commands
 
@@ -44,6 +47,7 @@ Note: In some shells you can needs the prefix `sh` (example: `sh infra/kong-k8s/
 
 - `helm repo add kong https://charts.konghq.com`
 - `helm repo add prometheus-community https://prometheus-community.github.io/helm-charts`
+- `helm repo add bitnami https://charts.bitnami.com/bitnami`
 - [...]
 - `helm repo update`
 

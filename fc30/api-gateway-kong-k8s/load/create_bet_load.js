@@ -2,7 +2,7 @@ import { check } from 'k6';
 import http from 'k6/http';
 
 const KONG_CLIENT = 'kong';
-const KONG_SECRET = 'XGU1lBtceGiCENOGurzYPicNkkZ1Bxdc'; //update from client "kong" created on keycloak
+const KONG_SECRET = 'R8JXGcQvX30XM4diOqEmkRj3OeP4G1yL'; //update from client "kong" created on keycloak
 const USER = 'user1';
 const PASS = '123456';
 
