@@ -14,3 +14,14 @@ https://github.com/codeedu/fc2-terraform
 ### Notes
 
 - Per default, terraform use `terraform.tfvars`
+
+# AWS
+
+### Configure AWS CLI
+
+The settings are stored in `~/.aws/*`
+
+- `aws configure`
+  - Access Key ID
+  - Secret Access Key
+  - Region (ex: `us-east-1`)
