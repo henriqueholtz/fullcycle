@@ -11,6 +11,24 @@ output "az" {
   value = "${data.aws_availability_zones.available.names}"
 }
 
+resource "aws_internet_gateway" "new-igw" {
+  vpc_id = aws_vpc.new-vpc.id
+  tags = {
+    Name = "${var.prefix}-igw"
+  }
+}
+
+resource "aws_route_table" "new-rtb" {
+  vpc_id = aws_vpc.new-vpc.id
+  route {
+    cidr_block = "0.0.0.0/0" # means everyone
+    gateway_id = aws_internet_gateway.new-igw.id
+  }
+  tags = {
+    Name = "${var.prefix}-rtb"
+  }
+}
+
 resource "aws_subnet" "subnets" {
   count = 2
   availability_zone = data.aws_availability_zones.available.names[count.index]
