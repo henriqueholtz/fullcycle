@@ -1,7 +1,7 @@
 resource "aws_vpc" "new-vpc" {
     cidr_block = "10.0.0.0/16"
     tags = {
-      "Name" = "fullcycle-vpc"
+      "Name" = "${var.prefix}-vpc"
     }
 }
 
@@ -16,7 +16,7 @@ resource "aws_subnet" "new-subnet-1" {
   cidr_block = "10.0.0.0/24"  
   availability_zone = "us-east-1a"
   tags = {
-    "Name" = "fullcycle-subnet-1"
+    "Name" = "${var.prefix}-subnet-1"
   }
 }
 
@@ -25,6 +25,6 @@ resource "aws_subnet" "new-subnet-2" {
   cidr_block = "10.0.1.0/24"  
   availability_zone = "us-east-1b"
   tags = {
-    "Name" = "fullcycle-subnet-2"
+    "Name" = "${var.prefix}-subnet-2"
   }
 }
