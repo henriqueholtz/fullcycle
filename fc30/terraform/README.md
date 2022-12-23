@@ -6,7 +6,7 @@ https://github.com/codeedu/fc2-terraform
 
 - `terraform init`
 - `terraform plan`
-- `terraform apply`
+- `terraform apply` or `terraform apply --auto-approve`
 - `export TF_VAR_content="From Environment"`
 - `terraform apply -var "content=From Environment line"`
 - `terraform apply -var-file _terraform.tfvars`
