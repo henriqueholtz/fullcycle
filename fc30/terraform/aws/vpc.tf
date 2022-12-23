@@ -29,6 +29,12 @@ resource "aws_route_table" "new-rtb" {
   }
 }
 
+resource "aws_route_table_association" "new-trb-association" {
+  count = 2
+  route_table_id = aws_route_table.new-rtb.id
+  subnet_id = aws_subnet.subnets.*.id[count.index]
+}
+
 resource "aws_subnet" "subnets" {
   count = 2
   availability_zone = data.aws_availability_zones.available.names[count.index]
