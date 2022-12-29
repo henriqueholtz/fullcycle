@@ -22,6 +22,11 @@ https://github.com/codeedu/fc2-terraform
 The settings are stored in `~/.aws/*`
 
 - `aws configure`
+
   - Access Key ID
   - Secret Access Key
   - Region (ex: `us-east-1`)
+
+- `terraform apply --auto-approve`
+- `cp kubeconfig ~/.kube/config` (after apply, the `outputs.tf` will create the `kubeconfig` file)
+- `kubectl get nodes -A`
