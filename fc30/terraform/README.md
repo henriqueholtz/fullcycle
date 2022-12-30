@@ -30,3 +30,7 @@ The settings are stored in `~/.aws/*`
 - `terraform apply --auto-approve`
 - `cp kubeconfig ~/.kube/config` (after apply, the `outputs.tf` will create the `kubeconfig` file)
 - `kubectl get nodes -A`
+- `kubectl create deploy nginx --image=nginx`
+- `kubectl port-forward pod/{podName} 8181:80` (get `{podName}` from `kubectl get pods`)
+- `kubectl delete deploy nginx `
+- `terraform destroy`
