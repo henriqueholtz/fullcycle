@@ -11,7 +11,7 @@ module "eks" {
     cluster_name = var.cluster_name
     retention_in_days = var.retention_in_days
     subnet_ids = module.new-vpc.subnet_ids
-    desired_size = var.desired_size
+    desired_size = var.desired_size # from ./vpc/outputs.tf
     max_size = var.max_size
     min_size = var.min_size
 }
