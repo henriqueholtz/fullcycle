@@ -23,6 +23,8 @@ Note: In some shells you can needs the prefix `sh` (example: `sh infra/kong-k8s/
 
 ### Commands
 
+To linux version we can use the `watch` command as prefix. Example: `watch kubectl get pods -A`
+
 - `kubectl get pods -n kong` => Get Name
 - `kubectl logs {name} proxy -f -n kong`
 - `kubectl port-forward svc/keycloak 8080:80 -n iam` (Open in browser, select "Administration Console" and use login/password from `infra/kong-k8s/misc/keycloak/keycloak.sh`)

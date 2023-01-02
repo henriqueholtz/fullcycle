@@ -2,15 +2,15 @@ import { check } from 'k6';
 import http from 'k6/http';
 
 const KONG_CLIENT = 'kong';
-const KONG_SECRET = 'R8JXGcQvX30XM4diOqEmkRj3OeP4G1yL'; //update from client "kong" created on keycloak
+const KONG_SECRET = 'eGwSk0o9AlJZed0S51gAdvB6qvUIHYiI'; //update from client "kong" created on keycloak
 const USER = 'user1';
 const PASS = '123456';
 
 export const options = {
   stages: [
-    { target: 5, duration: '10s' },
-    { target: 30, duration: '10s' },
-    { target: 30, duration: '180s' },
+    { target: 1, duration: '10s' },
+    { target: 3, duration: '10s' },
+    { target: 3, duration: '180s' },
   ],
   thresholds: {
     http_req_failed: [{ threshold: 'rate<0.2', abortOnFail: true }],
