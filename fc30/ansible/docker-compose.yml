@@ -8,3 +8,9 @@ services:
     hostname: control
     volumes:
       - .:/root/asible
+
+  node1:
+    build: .
+    container_name: node1
+    command: ['tail', '-f', '/dev/null']
+    hostname: node1
