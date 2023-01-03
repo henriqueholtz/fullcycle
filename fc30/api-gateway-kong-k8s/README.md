@@ -5,12 +5,16 @@ https://github.com/claudioed/bets-app
 
 ### Installation
 
+See `./initial-create.sh`
+See `./finish-create-and-run-testkube.sh`
+
 Note: In some shells you can needs the prefix `sh` (example: `sh infra/kong-k8s/kind/kind.sh` )
 
 - Create `kind` cluster => `infra/kong-k8s/kind/kind.sh`
 - Add additional repos on `helm`
 - Apply `prometheus` with `helm` => `infra/kong-k8s/misc/prometheus/prometheus.sh`
 - Import dashboard of prometheus (7424 ) on grafana (needs port-forward)
+  - In case the error, maybe can be the metrics name of the dashboard
 - Apply `kong` with `helm` => `infra/kong-k8s/kong/kong.sh`
 - Apply `keycloak` with `helm` => `infra/kong-k8s/misc/keycloak/keycloak.sh`
 - Apply/Create Apps with => `infra/kong-k8s/misc/apps/apps.sh`
@@ -85,9 +89,11 @@ https://testkube.io/download
 #### See logs of tests
 
 - `kubectl get pods -n testkube`
-- ` kubectl logs {id} -n testkube`
+- `kubectl logs {id} -n testkube`
 - `kubectl get pods -n bets`
 - `kubectl get hpa -n bets`
+- `kubectl get svc -A`
+- `kubectl port-forward svc/kong-kong-proxy 8001:80 -n kong` => to make request directly to kong app
   <!-- - `kubectl port-forward svc/prometheus-stack-kube-prom-prometheus 9090:80 -n monitoring` -->
 
 ### EFK
