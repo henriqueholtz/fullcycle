@@ -16,7 +16,7 @@ https://github.com/devfullcycle/fc-ansible
 
 ### Configure keys
 
-- `docker exec -it node1 bash`
+- `docker exec -it node1 bash` and/or `docker exec -it node2 bash`
 
   - `service ssh start`
 
@@ -25,4 +25,5 @@ https://github.com/devfullcycle/fc-ansible
   - `ssh-copy-id root@node1` => send the public key to `root@node1` (require the root password)
   - `ssh root@node1` => login without password
   - `exit` (return back to the control)
+  - `cd /root/asible`
   - `ansible -i hosts all -m ping`
