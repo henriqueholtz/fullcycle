@@ -34,6 +34,7 @@ To linux version we can use the `watch` command as prefix. Example: `watch kubec
 - `kubectl port-forward svc/keycloak 8080:80 -n iam` (Open in browser, select "Administration Console" and use login/password from `infra/kong-k8s/misc/keycloak/keycloak.sh`)
 - `kubectl get pods -A`
 - `kubectl get hpa -n bets`
+- `kubectl logs -n kong svc/kong-kong-proxy --all-containers=true --since 5m`
 
 ### Keycloak
 

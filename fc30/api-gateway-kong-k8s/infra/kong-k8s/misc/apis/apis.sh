@@ -3,6 +3,8 @@
 # maybe needs to comment "konghq.com/plugins" on "./apis/bets-api.yml"
 kubectl create ns bets
 kubectl apply -f ./kratelimit.yml -n bets
+kubectl apply -f ./kprometheus-without-config.yml
+echo sleep 5
 kubectl apply -f ./kprometheus.yml
 kubectl apply -f ./bets-api.yml -n bets
 kubectl apply -f ./king.yml -n bets
