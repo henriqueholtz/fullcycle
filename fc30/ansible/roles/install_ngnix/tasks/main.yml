@@ -1,2 +1,12 @@
 ---
 # tasks file for install_ngnix
+- name: Install nginx
+  apt:
+    update_cache: yes
+    name: nginx
+    state: present
+
+- name: Init nginx
+  service:
+    name: nginx
+    state: started

@@ -49,3 +49,4 @@ https://github.com/devfullcycle/fc-ansible
 ### Ansible-Galaxy to organize playbooks
 
 - `cd roles` -> `ansible-galaxy init install_ngnix`
+- `ansible-playbook -i ../hosts-aws main.yml`
