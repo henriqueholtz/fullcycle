@@ -1,0 +1,7 @@
+44.201.151.179
+3.83.150.249
+52.55.153.80
+
+[all:vars]
+ansible_ssh_private_key_file=/home/henriqueholtz/Projects/fullcycle/fc30/ansible/HENRIQUE-FC-AWS.pem 
+ansible_user=ubuntu
