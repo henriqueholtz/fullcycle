@@ -41,3 +41,7 @@ https://github.com/devfullcycle/fc-ansible
 - [From my local shell] `chmod 400 /home/henriqueholtz/Projects/fullcycle/fc30/ansible/HENRIQUE-FC-AWS.pem ` To allow ansible access the file as ReadOnly
 - PUT the path in inventory file (this case `hosts-aws`) in the `ansible_ssh_private_key_file` variable
 - `ansible -i hosts-aws all -m ping`
+
+### Ansible with Playbook
+
+- `ansible-playbook -i hosts-aws playbook.yml`

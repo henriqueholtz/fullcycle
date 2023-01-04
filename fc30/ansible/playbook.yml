@@ -1,0 +1,16 @@
+---
+- hosts: all
+  remote_user: ubuntu
+  become: true # execute as root user after login
+
+  tasks:
+    - name: Install nginx
+      apt:
+        update_cache: yes
+        name: nginx
+        state: present
+
+    - name: Init nginx
+      service:
+        name: nginx
+        state: started
