@@ -50,3 +50,8 @@ https://github.com/devfullcycle/fc-ansible
 
 - `cd roles` -> `ansible-galaxy init install_ngnix`
 - `ansible-playbook -i ../hosts-aws main.yml`
+
+### SSH Commands
+
+- `ssh -i /home/henriqueholtz/Projects/fullcycle/fc30/ansible/HENRIQUE-FC-AWS.pem ubuntu@44.201.151.179`
+- `ps -aux | grep nginx` or `ps -aux | grep docker`

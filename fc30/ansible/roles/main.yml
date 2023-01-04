@@ -1,4 +1,5 @@
 - hosts: all
   become: true # execute as root user after login
   roles:
-    - install_ngnix
+    # - install_ngnix
+    - install_docker
