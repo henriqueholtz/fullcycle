@@ -45,3 +45,7 @@ https://github.com/devfullcycle/fc-ansible
 ### Ansible with Playbook
 
 - `ansible-playbook -i hosts-aws playbook.yml`
+
+### Ansible-Galaxy to organize playbooks
+
+- `cd roles` -> `ansible-galaxy init install_ngnix`
