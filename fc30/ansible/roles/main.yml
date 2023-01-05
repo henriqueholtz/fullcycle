@@ -1,5 +1,11 @@
-- hosts: all
+# - hosts: all
+#   become: true # execute as root user after login
+#   roles:
+# - install_ngnix
+# - install_docker
+
+- hosts: manager
   become: true # execute as root user after login
   roles:
-    # - install_ngnix
-    - install_docker
+    # - install_docker
+    - docker_swarm_manager

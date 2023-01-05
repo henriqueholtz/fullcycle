@@ -55,3 +55,8 @@ https://github.com/devfullcycle/fc-ansible
 
 - `ssh -i /home/henriqueholtz/Projects/fullcycle/fc30/ansible/HENRIQUE-FC-AWS.pem ubuntu@44.201.151.179`
 - `ps -aux | grep nginx` or `ps -aux | grep docker`
+
+### Docker Swarm commands
+
+- `docker node ls`
+- `docker swarm join-token`
