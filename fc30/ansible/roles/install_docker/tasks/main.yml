@@ -28,3 +28,8 @@
       - docker-ce-cli
       - containerd.io
     state: present
+
+- name: Install docker-compose
+  apt:
+    name: docker-compose
+    state: present
