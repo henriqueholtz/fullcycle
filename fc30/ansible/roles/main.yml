@@ -9,3 +9,9 @@
   roles:
     # - install_docker
     - docker_swarm_manager
+
+- hosts: worker
+  become: true # execute as root user after login
+  roles:
+    # - install_docker
+    - docker_swarm_worker

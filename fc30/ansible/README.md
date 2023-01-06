@@ -58,5 +58,7 @@ https://github.com/devfullcycle/fc-ansible
 
 ### Docker Swarm commands
 
+Can needs `sudo su` before
+
 - `docker node ls`
 - `docker swarm join-token`
