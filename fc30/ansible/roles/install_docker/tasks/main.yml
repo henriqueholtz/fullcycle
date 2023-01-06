@@ -8,6 +8,7 @@
       - curl
       - gnupg
       - lsb-release
+      - python3-pip
     state: present
     update_cache: yes
 
@@ -32,4 +33,10 @@
 - name: Install docker-compose
   apt:
     name: docker-compose
+    state: present
+
+- name: Install jsondiff
+  pip:
+    name:
+      - jsondiff
     state: present

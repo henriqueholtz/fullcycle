@@ -1,2 +1,13 @@
 ---
 # tasks file for deploy_stack
+- name: Copy docker-compose.yml to remote host
+  copy:
+    src: 'docker-compose.yml'
+    dest: '/opt/docker-compose.yml'
+
+- name: Deploy stack
+  docker_stack:
+    state: present
+    name: app
+    compose:
+      - '/opt/docker-compose.yml'

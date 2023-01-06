@@ -62,3 +62,6 @@ Can needs `sudo su` before
 
 - `docker node ls`
 - `docker swarm join-token`
+- `docker service ls`
+- `docker service ps app_app` (note: `app_app` is the service name)
+- `docker service scale app_app=6`
