@@ -1,22 +1,21 @@
-# - hosts: all
+- hosts: all
+  become: true # execute as root user after login
+  roles:
+    - install_ngnix
+# Cluster docker
+# - hosts: manager
 #   become: true # execute as root user after login
 #   roles:
-# - install_ngnix
-# - install_docker
+#     - install_docker
+#     - docker_swarm_manager
 
-- hosts: manager
-  become: true # execute as root user after login
-  roles:
-    - install_docker
-    - docker_swarm_manager
+# - hosts: worker
+#   become: true # execute as root user after login
+#   roles:
+#     - install_docker
+#     - docker_swarm_worker
 
-- hosts: worker
-  become: true # execute as root user after login
-  roles:
-    - install_docker
-    - docker_swarm_worker
-
-- hosts: manager
-  become: true # execute as root user after login
-  roles:
-    - deploy_stack
+# - hosts: manager
+#   become: true # execute as root user after login
+#   roles:
+#     - deploy_stack

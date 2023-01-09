@@ -1,9 +1,9 @@
 [manager]
-54.81.240.2
+34.227.15.235
 
 [worker]
-54.165.114.52
-52.91.229.18
+44.206.224.222
+52.87.157.216
 
 [all:vars]
 ansible_ssh_private_key_file=/home/henriqueholtz/Projects/fullcycle/fc30/ansible/HENRIQUE-FC-AWS.pem 

@@ -1,12 +1,35 @@
 ---
 # tasks file for install_ngnix
-- name: Install nginx
+- name: Install nginx, node and NPM
   apt:
+    pkg:
+      - nginx
+      - nodejs
+      - npm
     update_cache: yes
-    name: nginx
     state: present
 
 - name: Init nginx
   service:
     name: nginx
     state: started
+
+- name: Create dir /app
+  file:
+    path: /app
+    state: directory
+
+- name: Copy package.json
+  copy:
+    src: package.json
+    dest: /app/package.json
+
+- name: npm Install
+  npm:
+    path: /app
+    state: present
+
+- name: Copy index.js
+  template:
+    src: index.js.j2
+    dest: /app/index.js
