@@ -1,3 +1,4 @@
 ---
 # vars file for install_ngnix
 hello_fullcycle: 'Hello FullCycle! (from vars)'
+url_app: 'http://localhost:3002'
