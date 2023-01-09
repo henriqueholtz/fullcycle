@@ -33,3 +33,18 @@
   template:
     src: index.js.j2
     dest: /app/index.js
+
+- name: Copy app.service
+  copy:
+    src: app.service
+    dest: /etc/systemd/system/app.service
+
+- name: Enable app.service
+  systemd:
+    name: app
+    enabled: yes
+
+- name: Run app.service
+  systemd:
+    name: app
+    state: started
