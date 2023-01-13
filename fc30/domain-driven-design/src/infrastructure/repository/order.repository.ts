@@ -31,7 +31,7 @@ export default class OrderRepository implements IOrderRepository {
         id: entity.id,
         customer_id: entity.customerId,
         total: entity.total(),
-        // items: entity.items,
+        items: entity.items,
       },
       {
         where: {
