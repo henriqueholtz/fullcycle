@@ -1,4 +1,4 @@
+import IRepository from '../../@shared/repository/repository.interface';
 import Order from '../entity/order';
-import IRepository from './repository.interface';
 
 export default interface IOrderRepository extends IRepository<Order> {}
