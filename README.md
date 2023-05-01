@@ -13,3 +13,4 @@
 - [Kubernetes](https://github.com/henriqueholtz/fullcycle/tree/master/fc30/kubernetes)
 - [OpenTelemetry](https://github.com/henriqueholtz/fullcycle/tree/master/fc30/open-telemetry)
 - [Terraform](https://github.com/henriqueholtz/fullcycle/tree/master/fc30/terraform)
+- [Hexagonal Architecture](https://github.com/henriqueholtz/fullcycle/tree/master/fc30/hexagonal-architecture)
