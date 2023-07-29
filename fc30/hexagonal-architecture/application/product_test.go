@@ -21,3 +21,20 @@ func TestProduct_Enable(t *testing.T) {
 	err = product.Enable()
 	require.Equal(t, "The price must be greater than zero to enable the product.", err.Error())
 }
+
+func TestProduct_Disable(t *testing.T) {
+	product := application.Product{}
+	product.Name = "Laptop"
+	product.Status = application.ENABLED
+	product.Price = 0
+
+	// Can be disabled
+	err := product.Disable()
+	require.Nil(t, err)
+
+	// Can't be disabled
+	// product.Price = 3500
+	// err = product.Enable()
+	// require.Equal(t, "The price must be zero in order to have the product disabled.", err.Error())
+
+}
