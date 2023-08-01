@@ -1,4 +1,4 @@
-# Hexagonal Architecture
+# Hexagonal Architecture (Ports and adapters)
 
 https://github.com/codeedu/fc2-arquitetura-hexagonal
 
@@ -30,3 +30,4 @@ https://github.com/codeedu/fc2-arquitetura-hexagonal
 - `cobra-cli add cli` ("cli" is the name of the command)
 - `go run main.go cli`
 - `go run main.go cli -a="create" -name="Product CLI" -p=25.0`
+- `go run main.go cli -a="get" -i="a532d919-420b-444b-aa79-7fae4f1ec577"`
