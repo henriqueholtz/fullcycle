@@ -13,6 +13,8 @@ https://github.com/codeedu/fc2-arquitetura-hexagonal
 - `mockgen -destination=application/mocks/application.go -source=application/product.go application`
 - `go get github.com/golang/mock/gomock`
 - `go get github.com/mattn/go-sqlite3@v1.14.7`
+- `go get -u github.com/spf13/cobra@v1.1.3`
+- `go mod tidy` (remove unused packages and add the missing packages)
 
 ### SQLite
 
@@ -20,3 +22,11 @@ https://github.com/codeedu/fc2-arquitetura-hexagonal
 - `sqlite3 sqlite.db`
 - `create table products(id string, name string, price float, status string);`
 - `.tables`
+- `SELECT * FROM products;`
+
+### Cobra CLI
+
+- `cobra-cli init` (old `cobra init --pkg-name=github.com/henriqueholtz/fullcycle/fc30/hexagonal-architecture`)
+- `cobra-cli add cli` ("cli" is the name of the command)
+- `go run main.go cli`
+- `go run main.go cli -a="create" -name="Product CLI" -p=25.0`
