@@ -31,5 +31,33 @@
         "headers": [],
         "params": [],
         "tests": []
+    },
+    {
+        "_id": "724dd32c-f7cf-4bd5-905b-695443da3e8d",
+        "colId": "history",
+        "containerId": "",
+        "name": "Enable Product",
+        "url": "http://localhost:9000/product/c6c97f38-90b0-44e3-bbff-470118b4933f/enable",
+        "method": "PUT",
+        "sortNum": 0,
+        "created": "2023-08-03T10:22:07.652Z",
+        "modified": "2023-08-03T10:22:07.652Z",
+        "headers": [],
+        "params": [],
+        "tests": []
+    },
+    {
+        "_id": "a2e4a52e-43ea-400f-95ef-60f7f852041f",
+        "colId": "history",
+        "containerId": "",
+        "name": "Disable Product",
+        "url": "http://localhost:9000/product/c6c97f38-90b0-44e3-bbff-470118b4933f/disable",
+        "method": "PUT",
+        "sortNum": 0,
+        "created": "2023-08-03T10:22:07.652Z",
+        "modified": "2023-08-03T10:22:39.922Z",
+        "headers": [],
+        "params": [],
+        "tests": []
     }
 ]
