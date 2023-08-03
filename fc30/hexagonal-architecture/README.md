@@ -37,3 +37,7 @@ https://github.com/codeedu/fc2-arquitetura-hexagonal
 - `go run main.go http`
 - `curl http://localhost:9000/product/invalid-productId`
 - `curl http://localhost:9000/product/a532d919-420b-444b-aa79-7fae4f1ec577`
+
+### HTTP Requests
+
+You can use the `Thunder Client` extension on VS Code to run the requests insite the folder `thunder-tests`

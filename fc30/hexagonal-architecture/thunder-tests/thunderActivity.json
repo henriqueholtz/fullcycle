@@ -1,0 +1,35 @@
+[
+    {
+        "_id": "e7b5ff2f-a625-4c05-97e3-b29e6826ada6",
+        "colId": "history",
+        "containerId": "",
+        "name": "Add Product",
+        "url": "http://localhost:9000/product",
+        "method": "POST",
+        "sortNum": 0,
+        "created": "2023-08-03T10:07:35.292Z",
+        "modified": "2023-08-03T10:07:35.292Z",
+        "headers": [],
+        "params": [],
+        "body": {
+            "type": "json",
+            "raw": "{\n  \"name\": \"Tablet (HTTP)\",\n  \"price\": 796.60\n}",
+            "form": []
+        },
+        "tests": []
+    },
+    {
+        "_id": "1af02cf6-ef58-428f-8249-f0845e78b26d",
+        "colId": "history",
+        "containerId": "",
+        "name": "Get Product",
+        "url": "http://localhost:9000/product/c6c97f38-90b0-44e3-bbff-470118b4933f",
+        "method": "GET",
+        "sortNum": 0,
+        "created": "2023-08-03T10:11:29.217Z",
+        "modified": "2023-08-03T10:11:29.217Z",
+        "headers": [],
+        "params": [],
+        "tests": []
+    }
+]
