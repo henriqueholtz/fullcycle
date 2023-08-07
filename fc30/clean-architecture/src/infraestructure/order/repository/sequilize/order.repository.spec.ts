@@ -1,0 +1,174 @@
+import { Sequelize } from 'sequelize-typescript';
+import CustomerModel from '../../../customer/repository/sequelize/customer.model';
+import ProductModel from '../../../product/repository/sequelize/product.model';
+import OrderItemModel from './order_item.model';
+import OrderModel from './order.model';
+import OrderRepository from './order.repository';
+import Address from '../../../../domain/customer/value-object/address';
+import Customer from '../../../../domain/customer/entity/customer';
+import Product from '../../../../domain/product/entity/product';
+import OrderItem from '../../../../domain/checkout/entity/order_item';
+import Order from '../../../../domain/checkout/entity/order';
+import ProductRepository from '../../../product/repository/sequelize/product.repository';
+import CustomerRepository from '../../../customer/repository/sequelize/customer.repository';
+
+const address = new Address('Street 1', '1A', '85950000', 'Palotina');
+const address2 = new Address('Street 2', '2A', '85950222', 'Palotina2');
+const customer = new Customer('C1', 'Henrique', address);
+const customer2 = new Customer('C2', 'enrique', address2);
+const product = new Product('P1', 'Product 1', 15);
+const product2 = new Product('P2', 'Product 2', 12);
+const orderItem = new OrderItem(
+  '1',
+  product.name,
+  product.price,
+  product.id,
+  2
+);
+const orderItem2 = new OrderItem(
+  '2',
+  product2.name,
+  product2.price,
+  product2.id,
+  2
+);
+const order = new Order('O1', customer.id, [orderItem]);
+const order2 = new Order('O2', customer2.id, [orderItem2]);
+
+describe('Order repository test', () => {
+  let sequelize: Sequelize;
+
+  beforeEach(async () => {
+    sequelize = new Sequelize({
+      dialect: 'sqlite',
+      storage: ':memory:',
+      logging: false,
+      sync: { force: true },
+    });
+
+    await sequelize.addModels([
+      CustomerModel,
+      ProductModel,
+      OrderItemModel,
+      OrderModel,
+    ]);
+    await sequelize.sync();
+  });
+
+  afterEach(async () => {
+    await sequelize.close();
+  });
+
+  it('Should create a new order', async () => {
+    const customerRepository = new CustomerRepository();
+    await customerRepository.create(customer);
+
+    const productRepository = new ProductRepository();
+    await productRepository.create(product);
+
+    const orderRepository = new OrderRepository();
+    await orderRepository.create(order);
+
+    const orderModel = await OrderModel.findOne({
+      where: { id: order.id },
+      include: ['items'],
+    });
+
+    expect(orderModel.toJSON()).toStrictEqual({
+      id: 'O1',
+      customer_id: 'C1',
+      total: order.total(),
+      items: [
+        {
+          id: orderItem.id,
+          name: orderItem.name,
+          price: orderItem.price,
+          quantity: orderItem.quantity,
+          order_id: 'O1',
+          product_id: 'P1',
+        },
+      ],
+    });
+  });
+
+  it('should find a order', async () => {
+    const customerRepository = new CustomerRepository();
+    await customerRepository.create(customer);
+
+    const productRepository = new ProductRepository();
+    await productRepository.create(product);
+
+    const orderRepository = new OrderRepository();
+    await orderRepository.create(order);
+
+    const orderResult = await orderRepository.find(order.id);
+
+    // @equipe FullCycle algum proobleam em usar o próprios obj "order" ?
+    expect(orderResult).toStrictEqual(order);
+  });
+
+  it('should update changing "customer_id" of an order', async () => {
+    const customerRepository = new CustomerRepository();
+    await customerRepository.create(customer);
+
+    const productRepository = new ProductRepository();
+    await productRepository.create(product);
+
+    const orderRepository = new OrderRepository();
+    const customOrder = new Order('OC1', customer.id, [orderItem]);
+    await orderRepository.create(customOrder);
+
+    await customerRepository.create(customer2);
+    customOrder.changeCustomerId(customer2.id);
+
+    await orderRepository.update(customOrder);
+    const orderModel = await OrderModel.findOne({
+      where: { id: customOrder.id },
+      include: [{ model: OrderItemModel }],
+    });
+
+    expect(orderModel.toJSON()).toStrictEqual({
+      id: customOrder.id,
+      customer_id: customer2.id,
+      total: customOrder.total(),
+      items: [
+        {
+          id: orderItem.id,
+          name: orderItem.name,
+          price: orderItem.price,
+          quantity: orderItem.quantity,
+          order_id: customOrder.id,
+          product_id: product.id,
+        },
+      ],
+    });
+  });
+
+  it('should throw an error when order is not found', async () => {
+    const orderRepository = new OrderRepository();
+
+    expect(async () => {
+      await orderRepository.find('456ABC');
+    }).rejects.toThrow('Order not found');
+  });
+
+  it('should find all orders', async () => {
+    const customerRepository = new CustomerRepository();
+    await customerRepository.create(customer);
+    await customerRepository.create(customer2);
+
+    const productRepository = new ProductRepository();
+    await productRepository.create(product);
+    await productRepository.create(product2);
+
+    const orderRepository = new OrderRepository();
+    await orderRepository.create(order);
+    await orderRepository.create(order2);
+
+    const orders = await orderRepository.findAll();
+
+    expect(orders).toHaveLength(2);
+    expect(orders).toContainEqual(order);
+    expect(orders).toContainEqual(order2);
+  });
+});

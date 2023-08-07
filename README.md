@@ -6,6 +6,7 @@
 - [Api Gateway with Kong + K8S](https://github.com/henriqueholtz/fullcycle/tree/master/fc30/api-gateway-kong-k8s)
 - [CI](https://github.com/henriqueholtz/fullcycle/tree/master/fc30/ci)
 - [Communication Between Systems](https://github.com/henriqueholtz/fullcycle/tree/master/fc30/communication-between-systems)
+- [Clean Architecture](https://github.com/henriqueholtz/fullcycle/tree/master/fc30/clean-architecture)
 - [Docker](https://github.com/henriqueholtz/fullcycle/tree/master/fc30/docker)
 - [DDD - Domain Driven Design](https://github.com/henriqueholtz/fullcycle/tree/master/fc30/domain-driven-design)
 - [GitOps](https://github.com/henriqueholtz/fullcycle/tree/master/fc30/git-ops)
