@@ -1,8 +1,5 @@
-import { Sequelize } from 'sequelize-typescript';
 import Customer from '../../../domain/customer/entity/customer';
 import Address from '../../../domain/customer/value-object/address';
-import CustomerModel from '../../../infraestructure/customer/repository/sequelize/customer.model';
-import CustomerRepository from '../../../infraestructure/customer/repository/sequelize/customer.repository';
 import FindCustomerUseCase from './find.customer.usecase';
 
 const address = new Address('Street', '200', 'Zip', 'City');
@@ -44,8 +41,9 @@ describe('Unit Test find customer use case', () => {
 
   it('should not find a customer', async () => {
     const customerRepository = MockRepository();
+    const errorMessage = 'Customer not found';
     customerRepository.find.mockImplementation(() => {
-      throw new Error('Customer not found');
+      throw new Error(errorMessage);
     });
     const usecase = new FindCustomerUseCase(customerRepository);
 
@@ -55,6 +53,6 @@ describe('Unit Test find customer use case', () => {
 
     expect(() => {
       return usecase.execute(input);
-    }).rejects.toThrow('Customer not found');
+    }).rejects.toThrow(errorMessage);
   });
 });
