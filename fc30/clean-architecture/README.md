@@ -12,3 +12,6 @@ The project is based on [domain-driven-design](../domain-driven-design/)
 - `npm i -D jest @types/jest ts-node --save-dev`
 - `npm i -D jest @swc/jest @swc/cli @swc/core`
 - `npx jest --init`
+- `npm i express @types/express dotenv`
+- `npm i nodemon jstoxml supertest`
+- `npm i -D supertest @types/supertest @types/jstoxml"`
