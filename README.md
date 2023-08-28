@@ -12,6 +12,7 @@
 - [GitOps](https://github.com/henriqueholtz/fullcycle/tree/master/fc30/git-ops)
 - [istio](https://github.com/henriqueholtz/fullcycle/tree/master/fc30/istio)
 - [Kubernetes](https://github.com/henriqueholtz/fullcycle/tree/master/fc30/kubernetes)
+- [Monolithic Systems](https://github.com/henriqueholtz/fullcycle/tree/master/fc30/monolithic-systems)
 - [OpenTelemetry](https://github.com/henriqueholtz/fullcycle/tree/master/fc30/open-telemetry)
 - [Terraform](https://github.com/henriqueholtz/fullcycle/tree/master/fc30/terraform)
 - [Hexagonal Architecture](https://github.com/henriqueholtz/fullcycle/tree/master/fc30/hexagonal-architecture)
