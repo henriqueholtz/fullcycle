@@ -20,7 +20,7 @@ export default class ClientRepository implements IClientGateway {
     });
 
     if (!client) {
-      throw new Error(`Client with id ${id} not found`);
+      throw new Error(`Client with id ${id} not found.`);
     }
 
     const clientAsJson = client.toJSON();

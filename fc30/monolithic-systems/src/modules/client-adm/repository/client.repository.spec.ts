@@ -66,4 +66,21 @@ describe('ClientRepository test', () => {
     expect(result.email).toBe(client.email);
     expect(result.address).toBe(client.address);
   });
+
+  it('Should not find a client', async () => {
+    const client = new Client({
+      id: new Id('1'),
+      name: 'Client 1',
+      email: 'x@x.com',
+      address: 'Address 1',
+    });
+
+    const repository = new ClientRepository();
+    await repository.add(client);
+
+    const id = '2';
+    await expect(repository.find('2')).rejects.toThrow(
+      `Client with id ${id} not found.`
+    );
+  });
 });
