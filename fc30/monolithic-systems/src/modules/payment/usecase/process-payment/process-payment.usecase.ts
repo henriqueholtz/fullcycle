@@ -13,6 +13,7 @@ export default class ProcessPaymentUseCase implements IUseCase {
     input: IProcessPaymentInputDto
   ): Promise<IProcessPaymentOutputDto> {
     const transaction = new Transaction({
+      id: input.id,
       amount: input.amount,
       orderId: input.orderId,
     });
