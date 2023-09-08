@@ -36,7 +36,8 @@ const invoice = new Invoice({
 
 const MockRepository = () => {
   return {
-    save: jest.fn().mockReturnValue(Promise.resolve(invoice)),
+    generate: jest.fn().mockReturnValue(Promise.resolve(invoice)),
+    find: jest.fn(),
   };
 };
 
@@ -73,7 +74,8 @@ describe('Process generate-invoice usecase unit test', () => {
 
     expect(result.items.length).toBe(2);
     expect(result.total).toBe(50);
-    expect(invoiceRepository.save).toHaveBeenCalled();
+    expect(invoiceRepository.generate).toHaveBeenCalled();
+    expect(invoiceRepository.find).not.toHaveBeenCalled();
   });
 
   it("Shouldn't save the invoice without items", async () => {
@@ -94,6 +96,7 @@ describe('Process generate-invoice usecase unit test', () => {
     await expect(usecase.execute(input)).rejects.toThrow(
       'At least one item is required!'
     );
-    expect(invoiceRepository.save).toHaveBeenCalledTimes(0);
+    expect(invoiceRepository.generate).toHaveBeenCalledTimes(0);
+    expect(invoiceRepository.find).not.toHaveBeenCalled();
   });
 });

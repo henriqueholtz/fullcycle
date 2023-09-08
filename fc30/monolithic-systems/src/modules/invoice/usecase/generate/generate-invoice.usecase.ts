@@ -32,7 +32,9 @@ export default class GenerateInvoiceUseCase implements IUseCase {
       }),
     });
 
-    const persistInvoice: Invoice = await this.invoiceRepository.save(invoice);
+    const persistInvoice: Invoice = await this.invoiceRepository.generate(
+      invoice
+    );
 
     return {
       id: persistInvoice.id.id,
