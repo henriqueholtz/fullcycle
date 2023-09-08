@@ -20,17 +20,12 @@ export default class InvoiceItems extends BaseEntity implements AggregateRoot {
   }
 
   validate(): void {
-    // if (this._amount <= 0) {
-    //   throw new Error('Amount must be greater than 0');
-    // }
-  }
-
-  process(): void {
-    //   if (this._amount >= 100) {
-    //     this.approve();
-    //   } else {
-    //     this.decline();
-    //   }
+    if (this._price <= 0) {
+      throw new Error('Price must be greater than 0!');
+    }
+    if (this._name.length <= 0) {
+      throw new Error('Name is required!');
+    }
   }
 
   get name(): string {
