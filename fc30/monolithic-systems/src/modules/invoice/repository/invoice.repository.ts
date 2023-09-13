@@ -3,6 +3,7 @@ import Invoice from '../domain/invoice';
 import Address from '../domain/invoice.address';
 import IInvoiceGateway from '../gateway/invoice.gateway';
 import { InvoiceAddressModel } from './invoice.address.model';
+import { InvoiceItemModel } from './invoice.item.model';
 import { InvoiceModel } from './invoice.model';
 
 export default class InvoiceRepository implements IInvoiceGateway {
@@ -13,6 +14,13 @@ export default class InvoiceRepository implements IInvoiceGateway {
         name: invoice.name,
         document: invoice.document,
         addressId: invoice.address.id.id,
+        items: invoice.items.map((i) => {
+          return {
+            id: i.id,
+            price: i.price,
+            name: i.name,
+          };
+        }),
         address: {
           id: invoice.address.id.id,
           city: invoice.address.city,
@@ -26,7 +34,7 @@ export default class InvoiceRepository implements IInvoiceGateway {
         updatedAt: new Date(),
       },
       {
-        include: [InvoiceAddressModel],
+        include: [InvoiceAddressModel, InvoiceItemModel],
       }
     );
 

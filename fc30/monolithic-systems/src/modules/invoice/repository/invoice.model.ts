@@ -38,9 +38,8 @@ export class InvoiceModel extends Model {
   addressId: string;
 
   @HasOne(() => InvoiceAddressModel)
-  // @Column({ allowNull: false })
   address: InvoiceAddressModel;
 
-  // @HasMany(() => InvoiceItemModel)
+  @HasMany(() => InvoiceItemModel)
   items: InvoiceItemModel[];
 }
