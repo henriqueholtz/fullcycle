@@ -67,7 +67,7 @@ export default class InvoiceRepository implements IInvoiceGateway {
   async find(id: string): Promise<Invoice> {
     const invoice = await InvoiceModel.findOne({
       where: { id },
-      include: [InvoiceAddressModel],
+      include: [InvoiceAddressModel, InvoiceItemModel],
     });
 
     if (!invoice) {
@@ -80,10 +80,24 @@ export default class InvoiceRepository implements IInvoiceGateway {
       id: new Id(invoiceAsJson.id),
       name: invoiceAsJson.name,
       document: invoiceAsJson.document,
-      items: [], //invoiceAsJson.items
+      items: invoiceAsJson.items.map((i: any) => {
+        return {
+          id: new Id(i.id),
+          price: i.price,
+          name: i.name,
+        };
+      }),
       createdAt: invoiceAsJson.createdAt,
       updatedAt: invoiceAsJson.updatedAt,
-      address: invoiceAsJson.address,
+      address: new Address({
+        id: new Id(invoiceAsJson.addressId),
+        city: invoiceAsJson.address.city,
+        complement: invoiceAsJson.address.complement,
+        number: invoiceAsJson.address.number,
+        state: invoiceAsJson.address.state,
+        street: invoiceAsJson.address.street,
+        zipCode: invoiceAsJson.address.zipCode,
+      }),
     });
   }
 }
