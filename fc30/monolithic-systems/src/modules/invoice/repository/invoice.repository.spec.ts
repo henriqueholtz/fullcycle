@@ -5,6 +5,8 @@ import { InvoiceAddressModel } from './invoice.address.model';
 import Invoice from '../domain/invoice';
 import Address from '../domain/invoice.address';
 import InvoiceRepository from './invoice.repository';
+import { InvoiceItemModel } from './invoice.item.model';
+import InvoiceItems from '../domain/invoice.items';
 
 describe('InvoiceRepository test', () => {
   let sequelize: Sequelize;
@@ -19,7 +21,7 @@ describe('InvoiceRepository test', () => {
 
     await sequelize.addModels([
       InvoiceModel,
-      // InvoiceItemModel,
+      InvoiceItemModel,
       InvoiceAddressModel,
     ]);
     await sequelize.sync();
@@ -33,7 +35,18 @@ describe('InvoiceRepository test', () => {
     const invoice = new Invoice({
       id: new Id('1'),
       name: 'Invoice 1',
-      items: [],
+      items: [
+        new InvoiceItems({
+          id: new Id('1'),
+          name: 'Item1',
+          price: 15,
+        }),
+        new InvoiceItems({
+          id: new Id('2'),
+          name: 'Item2',
+          price: 40,
+        }),
+      ],
       document: '12345',
       address: new Address({
         id: new Id('Add1'),
@@ -51,7 +64,7 @@ describe('InvoiceRepository test', () => {
 
     const invoicetDb = await InvoiceModel.findOne({
       where: { id: invoice.id.id },
-      include: [InvoiceAddressModel],
+      include: [InvoiceAddressModel, InvoiceItemModel],
     });
 
     const invoicetDbAsJson = invoicetDb.toJSON();
@@ -59,7 +72,7 @@ describe('InvoiceRepository test', () => {
     expect(invoicetDbAsJson).toBeDefined();
     expect(invoicetDbAsJson.id).toBe(invoice.id.id);
     expect(invoicetDbAsJson.name).toBe(invoice.name);
-    // expect(invoicetDbAsJson.items.length).toBe(2);
+    expect(invoicetDbAsJson.items.length).toBe(2);
     expect(invoicetDbAsJson.address.id).toBe(invoice.address.id.id);
   });
 });

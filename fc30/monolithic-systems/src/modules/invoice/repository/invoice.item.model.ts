@@ -1,8 +1,8 @@
-import { Model } from 'sequelize';
 import {
   BelongsTo,
   Column,
   ForeignKey,
+  Model,
   PrimaryKey,
   Table,
 } from 'sequelize-typescript';

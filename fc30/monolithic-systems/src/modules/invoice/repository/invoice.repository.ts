@@ -16,7 +16,7 @@ export default class InvoiceRepository implements IInvoiceGateway {
         addressId: invoice.address.id.id,
         items: invoice.items.map((i) => {
           return {
-            id: i.id,
+            id: i.id.id,
             price: i.price,
             name: i.name,
           };
@@ -51,7 +51,13 @@ export default class InvoiceRepository implements IInvoiceGateway {
         zipCode: resultAsJson.address.zipCode,
       }),
       document: resultAsJson.document,
-      items: [],
+      items: resultAsJson.items.map((i: any) => {
+        return {
+          id: new Id(i.id),
+          price: i.price,
+          name: i.name,
+        };
+      }),
       name: resultAsJson.name,
       createdAt: resultAsJson.createdAt,
       updatedAt: resultAsJson.updatedAt,
