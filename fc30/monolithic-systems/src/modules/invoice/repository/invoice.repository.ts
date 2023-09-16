@@ -10,10 +10,10 @@ export default class InvoiceRepository implements IInvoiceGateway {
   async generate(invoice: Invoice): Promise<Invoice> {
     const result: InvoiceModel = await InvoiceModel.create(
       {
-        id: invoice.id.id,
+        id: invoice.id?.id ?? new Id().id,
         name: invoice.name,
         document: invoice.document,
-        addressId: invoice.address.id.id,
+        addressId: invoice.address.id?.id ?? new Id().id,
         items: invoice.items.map((i) => {
           return {
             id: i.id.id,
@@ -22,7 +22,7 @@ export default class InvoiceRepository implements IInvoiceGateway {
           };
         }),
         address: {
-          id: invoice.address.id.id,
+          id: invoice.address.id?.id ?? new Id().id,
           city: invoice.address.city,
           street: invoice.address.street,
           complement: invoice.address.complement,
