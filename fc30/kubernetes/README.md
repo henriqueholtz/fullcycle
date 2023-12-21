@@ -60,3 +60,24 @@ Este repositório é referente ao conteúdo no módulo **Kubernetes** do curso *
 
 - In another prompt: `watch -n1 kubectl get hpa`
 - In another prompt: `watch -n1 kubectl get pods`
+
+## Kubernetes util commands
+
+- `kubectl config get-clusters`
+- `kubectl get replicasets`
+- `kubectl config use-context <cluster-name>` or install the Official Kubernetes extension for VSCode
+- `kubectl port-forward pod/<pod-name> 8000:80`
+- `kubectl port-forward svc/<service-name> 8000:80`
+- `kubectl rollout history deployment <deployment-name>`: Get the history
+- `kubectl rollout undo deployment <deployment-name>`: Rollback to last version
+- `kubectl rollout undo deployment --to-revision=X`: Rollback to revision X
+- `kubectl describe deployment <deployment-name>`
+- `kubectl proxy --port=8080`
+- `kubectl exec -it <pod-name> -- bash`
+- `kubectl logs <pod-name>`
+- `kubectl get apiservices`
+- `kubectl top pod <pod-name>`
+- `kubectl run -it <name> --rm --image=<docker_image> -- <command>`
+- `kubectl run -it <name> --rm --image=fortio/fortio -- load -qps 800 -t 120s -c 70 "http://goserver-service/healthz"` (fortio to run stress test)
+- `kubectl get storageclass`
+- `kubectl get pvc`
