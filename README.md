@@ -9,6 +9,7 @@
 - [Communication Between Systems](https://github.com/henriqueholtz/fullcycle/tree/master/fc30/communication-between-systems)
 - [Clean Architecture](https://github.com/henriqueholtz/fullcycle/tree/master/fc30/clean-architecture)
 - [Docker](https://github.com/henriqueholtz/fullcycle/tree/master/fc30/docker)
+- [EDA - Event Driven Architecture](./fc30/domain-driven-design)
 - [DDD - Domain Driven Design](https://github.com/henriqueholtz/fullcycle/tree/master/fc30/domain-driven-design)
 - [GitOps](https://github.com/henriqueholtz/fullcycle/tree/master/fc30/git-ops)
 - [istio](https://github.com/henriqueholtz/fullcycle/tree/master/fc30/istio)
