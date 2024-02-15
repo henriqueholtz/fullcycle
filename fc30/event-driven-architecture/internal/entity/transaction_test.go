@@ -1,8 +1,8 @@
-package entity 
-
+package entity
 
 import (
 	"testing"
+
 	"github.com/stretchr/testify/assert"
 )
 
@@ -21,8 +21,8 @@ func TestCreateTransactionSuccessfully(t *testing.T) {
 
 	assert.Nil(t, err)
 	assert.NotNil(t, transaction)
-	assert.Equal(t, account.Balance, 850)
-	assert.Equal(t, account2.Balance, 650)
+	assert.Equal(t, account.Balance, 850.0)
+	assert.Equal(t, account2.Balance, 650.0)
 }
 
 
@@ -41,6 +41,6 @@ func TestCreateTransactionWithoutSufficientFunds(t *testing.T) {
 	assert.NotNil(t, err)
 	assert.Error(t, err, "Insufficient funds!")
 	assert.Nil(t, transaction)
-	assert.Equal(t, account.Balance, 1000)
-	assert.Equal(t, account2.Balance, 500)
+	assert.Equal(t, account.Balance, 1000.0)
+	assert.Equal(t, account2.Balance, 500.0)
 }

@@ -11,5 +11,6 @@ https://github.com/devfullcycle/fc-eda/blob/main/pkg/events/event_dispatcher_tes
 
 ## Commands
 
+- `go test ./...`
 - `go mod init github.com/henriqueholtz/fullcycle/fc30/event-driven-architecture/utils`
 - `go mod tidy`
