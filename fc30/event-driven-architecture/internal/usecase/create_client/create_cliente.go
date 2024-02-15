@@ -1,9 +1,10 @@
 package create_client
 
 import (
-	"github.com/henriqueholtz/fullcycle/fc30/architecture-microservices-based/ms/walletcore/internal/entity"
-	"github.com/henriqueholtz/fullcycle/fc30/architecture-microservices-based/ms/walletcore/internal/gateway"
 	"time"
+
+	"github.com/henriqueholtz/fullcycle/fc30/event-driven-architecture/internal/entity"
+	"github.com/henriqueholtz/fullcycle/fc30/event-driven-architecture/internal/gateway"
 )
 
 

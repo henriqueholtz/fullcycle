@@ -1,6 +1,6 @@
 package gateway
 
-import "github.com/henriqueholtz/fullcycle/fc30/architecture-microservices-based/ms/walletcore/internal/entity"
+import "github.com/henriqueholtz/fullcycle/fc30/event-driven-architecture/internal/entity"
 
 type AccountGateway interface {
 	Save(account *entity.Account) error
