@@ -52,7 +52,7 @@ func TestCreateTransactionUseCase_Execute(t *testing.T) {
 		AccountIDTo: account2.ID,
 		Amount: 100,
 	}
-	uc := NewCreateTransactionUserCase(mockTransaction, mockAccount)
+	uc := NewCreateTransactionUseCase(mockTransaction, mockAccount)
 	output, err := uc.Execute(input)
 	assert.Nil(t, err)
 	assert.NotNil(t, output)

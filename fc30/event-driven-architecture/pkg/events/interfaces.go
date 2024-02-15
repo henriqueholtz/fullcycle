@@ -9,6 +9,7 @@ type IEvent interface {
 	GetName() string
 	GetDateTime() time.Time
 	GetPayload() interface{}
+	SetPayload(payload interface{})
 }
 
 type IEventHandler interface {
@@ -20,5 +21,5 @@ type IEventDispatcher interface {
 	Dispatch(event IEvent) error
 	Remove(eventName string, handler IEventHandler) error
 	Has(eventName string, handler IEventHandler) bool
-	Clear() error
+	Clear()
 }

@@ -20,7 +20,7 @@ type CreateTransactionUseCase struct {
 	AccountGateway gateway.AccountGateway
 }
 
-func NewCreateTransactionUserCase(transactionGateway gateway.TransactionGateway, accountGateway gateway.AccountGateway) *CreateTransactionUseCase {
+func NewCreateTransactionUseCase(transactionGateway gateway.TransactionGateway, accountGateway gateway.AccountGateway) *CreateTransactionUseCase {
 	return &CreateTransactionUseCase{
 		TransactionGateway: transactionGateway,
 		AccountGateway: accountGateway,
