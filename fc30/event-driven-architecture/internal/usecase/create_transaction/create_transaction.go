@@ -1,4 +1,4 @@
-package createtransaction
+package create_transaction
 
 import (
 	"github.com/henriqueholtz/fullcycle/fc30/event-driven-architecture/internal/entity"
