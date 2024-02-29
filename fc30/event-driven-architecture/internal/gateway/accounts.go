@@ -5,4 +5,5 @@ import "github.com/henriqueholtz/fullcycle/fc30/event-driven-architecture/intern
 type AccountGateway interface {
 	Save(account *entity.Account) error
 	FindByID(id string) (*entity.Account, error)
+	UpdateBalance(account *entity.Account) error
 }
