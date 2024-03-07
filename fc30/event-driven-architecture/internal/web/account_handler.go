@@ -17,7 +17,7 @@ func NewWebAccountHandler(createAccountUseCase create_account.CreateAccountUseCa
 	}
 }
 
-func (h *WebAccountHandler) CreateClient(w http.ResponseWriter, r *http.Request) {
+func (h *WebAccountHandler) CreateAccount(w http.ResponseWriter, r *http.Request) {
 	var dto create_account.CreateAccountInputDto
 	err := json.NewDecoder(r.Body).Decode(&dto)
 	if err != nil {
@@ -28,6 +28,7 @@ func (h *WebAccountHandler) CreateClient(w http.ResponseWriter, r *http.Request)
 	output, err := h.CreateAccountUseCase.Execute(dto)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
+		w.Write([]byte(err.Error()))
 		return
 	}
 
@@ -35,6 +36,7 @@ func (h *WebAccountHandler) CreateClient(w http.ResponseWriter, r *http.Request)
 	err = json.NewEncoder(w).Encode(output)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
+		w.Write([]byte(err.Error()))
 		return
 	}
 

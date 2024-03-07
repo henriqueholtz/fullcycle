@@ -14,3 +14,7 @@ https://github.com/devfullcycle/fc-eda/blob/main/pkg/events/event_dispatcher_tes
 - `go test ./...`
 - `go mod init github.com/henriqueholtz/fullcycle/fc30/event-driven-architecture/utils`
 - `go mod tidy`
+- `go run cmd/walletcore/main.go`
+- `docker-compose exec mysql bash`
+- `mysql -uroot -p wallet` (password from docker-compose.yml: `root` )
+- Scripts SQL to create the tables are on `./internal/database/transaction_db_test.go`
