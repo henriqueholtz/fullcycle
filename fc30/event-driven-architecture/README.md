@@ -18,3 +18,4 @@ https://github.com/devfullcycle/fc-eda/blob/main/pkg/events/event_dispatcher_tes
 - `docker-compose exec mysql bash`
 - `mysql -uroot -p wallet` (password from docker-compose.yml: `root` )
 - Scripts SQL to create the tables are on `./internal/database/transaction_db_test.go`
+- `docker-compose exec goapp bash`
