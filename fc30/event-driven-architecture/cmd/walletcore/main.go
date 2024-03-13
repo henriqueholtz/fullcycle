@@ -5,15 +5,18 @@ import (
 	"database/sql"
 	"fmt"
 
+	ckafka "github.com/confluentinc/confluent-kafka-go/kafka"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/henriqueholtz/fullcycle/fc30/event-driven-architecture/internal/database"
 	"github.com/henriqueholtz/fullcycle/fc30/event-driven-architecture/internal/event"
+	"github.com/henriqueholtz/fullcycle/fc30/event-driven-architecture/internal/event/handler"
 	"github.com/henriqueholtz/fullcycle/fc30/event-driven-architecture/internal/usecase/create_account"
 	"github.com/henriqueholtz/fullcycle/fc30/event-driven-architecture/internal/usecase/create_client"
 	"github.com/henriqueholtz/fullcycle/fc30/event-driven-architecture/internal/usecase/create_transaction"
 	"github.com/henriqueholtz/fullcycle/fc30/event-driven-architecture/internal/web"
 	"github.com/henriqueholtz/fullcycle/fc30/event-driven-architecture/internal/web/webserver"
 	"github.com/henriqueholtz/fullcycle/fc30/event-driven-architecture/pkg/events"
+	"github.com/henriqueholtz/fullcycle/fc30/event-driven-architecture/pkg/kafka"
 	"github.com/henriqueholtz/fullcycle/fc30/event-driven-architecture/pkg/uow"
 )
 
@@ -24,14 +27,14 @@ func main() {
 	}
 	defer db.Close()
 
-	// configMap := ckafka.ConfigMap{
-	// 	"bootstrap.servers": "kafka:29092",
-	// 	"group.id":          "wallet",
-	// }
-	// kafkaProducer := kafka.NewKafkaProducer(&configMap)
+	configMap := ckafka.ConfigMap{
+		"bootstrap.servers": "localhost:9092", //kafka:29092
+		"group.id":          "wallet",
+	}
+	kafkaProducer := kafka.NewKafkaProducer(&configMap)
 
 	eventDispatcher := events.NewEventDispatcher()
-	// eventDispatcher.Register("TransactionCreated", handler.NewTransactionCreatedKafkaHandler(kafkaProducer))
+	eventDispatcher.Register("TransactionCreated", handler.NewTransactionCreatedKafkaHandler(kafkaProducer))
 	// eventDispatcher.Register("BalanceUpdated", handler.NewUpdateBalanceKafkaHandler(kafkaProducer))
 	transactionCreatedEvent := event.NewTransactionCreated()
 	// balanceUpdatedEvent := events.NewBalanceUpdated()

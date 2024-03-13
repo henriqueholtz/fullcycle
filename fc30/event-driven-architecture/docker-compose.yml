@@ -60,7 +60,7 @@ services:
     depends_on:
       - kafka
     ports:
-      - '9021:9021'
+      - '9021:9021' # http://localhost:9021/clusters
     environment:
       CONTROL_CENTER_BOOTSTRAP_SERVERS: 'kafka:29092'
       CONTROL_CENTER_REPLICATION_FACTOR: 1

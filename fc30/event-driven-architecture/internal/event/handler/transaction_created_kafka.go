@@ -22,5 +22,5 @@ func (h *TransactionCreatedKafkaHandler) Handle(message events.IEvent, wg *sync.
 	defer wg.Done()
 
 	h.Kafka.Publish(message, nil, "transactions")
-	fmt.Println("TransactionCreatedKafkaHandler: ", message)
+	fmt.Println("TransactionCreatedKafkaHandler: ", message.GetPayload())
 }
