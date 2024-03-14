@@ -21,23 +21,23 @@ import (
 )
 
 func main() {
-	db, err := sql.Open("mysql", fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8&parseTime=True&loc=Local", "root", "root", "localhost", "3306", "wallet"))
+	db, err := sql.Open("mysql", fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8&parseTime=True&loc=Local", "root", "root", "mysql", "3306", "wallet"))
 	if err != nil {
 		panic(err)
 	}
 	defer db.Close()
 
 	configMap := ckafka.ConfigMap{
-		"bootstrap.servers": "localhost:9092", //kafka:29092
+		"bootstrap.servers": "kafka:29092", // "localhost:9092"
 		"group.id":          "wallet",
 	}
 	kafkaProducer := kafka.NewKafkaProducer(&configMap)
 
 	eventDispatcher := events.NewEventDispatcher()
 	eventDispatcher.Register("TransactionCreated", handler.NewTransactionCreatedKafkaHandler(kafkaProducer))
-	// eventDispatcher.Register("BalanceUpdated", handler.NewUpdateBalanceKafkaHandler(kafkaProducer))
+	eventDispatcher.Register("BalanceUpdated", handler.NewUpdateBalanceKafkaHandler(kafkaProducer))
 	transactionCreatedEvent := event.NewTransactionCreated()
-	// balanceUpdatedEvent := events.NewBalanceUpdated()
+	balanceUpdatedEvent := event.NewBalanceUpdated()
 
 	clientDb := database.NewClientDB(db)
 	accountDb := database.NewAccountDB(db)
@@ -52,7 +52,7 @@ func main() {
 	uow.Register("TransactionDB", func(tx *sql.Tx) interface{} {
 		return database.NewTransactionDB(db)
 	})
-	createTransactionUseCase := create_transaction.NewCreateTransactionUseCase(uow, eventDispatcher, transactionCreatedEvent)
+	createTransactionUseCase := create_transaction.NewCreateTransactionUseCase(uow, eventDispatcher, transactionCreatedEvent, balanceUpdatedEvent)
 	createClientUseCase := create_client.NewCreateClientUseCase(clientDb)
 	createAccountUseCase := create_account.NewCreateAccountUseCase(accountDb, clientDb)
 
