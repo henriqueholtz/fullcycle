@@ -10,6 +10,7 @@ import (
 	"github.com/confluentinc/confluent-kafka-go/v2/kafka"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/henriqueholtz/fullcycle/fc30/event-driven-architecture/internal/database"
+	"github.com/henriqueholtz/fullcycle/fc30/event-driven-architecture/internal/entity"
 	"github.com/henriqueholtz/fullcycle/fc30/event-driven-architecture/internal/usecase/create_client"
 	"github.com/henriqueholtz/fullcycle/fc30/event-driven-architecture/internal/web"
 	"github.com/henriqueholtz/fullcycle/fc30/event-driven-architecture/internal/web/webserver"
@@ -29,14 +30,15 @@ type BalanceUpdatedOutputDTO struct {
 
 func main() {
 	fmt.Println("Starting...")
-	db, err := sql.Open("mysql", fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8&parseTime=True&loc=Local", "root", "root", "mysql-reflected", "3307", "wallet-reflected"))
+	db, err := sql.Open("mysql", fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8&parseTime=True&loc=Local", "root", "root", "mysql-reflected", "3306", "wallet-reflected"))
 	if err != nil {
 		panic(err)
 	}
 	defer db.Close()
 
 	clientDb := database.NewClientDB(db)
-	// accountDb := database.NewAccountDB(db)
+	accountDb := database.NewAccountDB(db)
+	transactionDb := database.NewTransactionDB(db)
 
 	ctx := context.Background()
 	uow := uow.NewUow(ctx, db)
@@ -59,7 +61,7 @@ func main() {
 	// transactionHandler := web.NewWebTransactionHandler(*createTransactionUseCase)
 
 	c, err := kafka.NewConsumer(&kafka.ConfigMap{
-		"bootstrap.servers": "localhost:9092", //"kafka:29092", // 
+		"bootstrap.servers": "kafka:29092", // "localhost:9092", //
 		"group.id":          "wallet-reflected",
 	})
 
@@ -76,8 +78,9 @@ func main() {
 	for run {
 		fmt.Println("Reading a message...")
 		msg, err := c.ReadMessage(time.Second)
-		fmt.Println("Message has been readed...")
+
 		if err == nil {
+			fmt.Println("Message has been readed...")
 			fmt.Printf("Message on %s: %s\n", msg.TopicPartition, string(msg.Value))
 			kafkaMessage := &KafkaMessage{}
 			errJson := json.Unmarshal(msg.Value, kafkaMessage)
@@ -86,13 +89,39 @@ func main() {
 			}
 
 			fmt.Printf("AccountIDFrom: %s; AccountIDTo: %s\n", kafkaMessage.Payload.AccountIDFrom, kafkaMessage.Payload.AccountIDTo)
+			
+			accountFrom, dbErr := accountDb.FindByID(kafkaMessage.Payload.AccountIDFrom)
+			if dbErr != nil {
+				panic(dbErr)
+			}
+			if accountFrom == nil {
+				panic("AccountFrom does not exist!")
+			}
 
-		} else if err.(kafka.Error).IsTimeout() {
-			fmt.Println("Timeout...")
-		} else {
+			accountTo, dbErr := accountDb.FindByID(kafkaMessage.Payload.AccountIDTo)
+			if dbErr != nil {
+				panic(dbErr)
+			}
+			if accountTo == nil {
+				panic("AccountTo does not exist!")
+			}
+
+			fmt.Printf("Accounts from and to ok...")
+			amount := kafkaMessage.Payload.BalanceAccountIdTo - accountTo.Balance
+			fmt.Printf("Transaction Amount: %f\n", amount)
+			transaction, transactionErr := entity.NewTransaction(accountFrom, accountTo, amount)
+			if transactionErr != nil {
+				panic(transactionErr)
+			}
+
+			transactionDb.Create(transaction)
+			fmt.Println("Successfuly completed...")
+			fmt.Println("-------------")
+
+		} else if !err.(kafka.Error).IsTimeout() {
 			fmt.Printf("Consumer error: %v (%v)\n", err, msg)
+			fmt.Println("-------------")
 		}
-		fmt.Printf("-------------")
 	}
 	fmt.Println("Before close")
 	
