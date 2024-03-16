@@ -5,15 +5,16 @@ import (
 	"database/sql"
 	"encoding/json"
 	"fmt"
+	"log"
+	"net/http"
+	"sync"
 	"time"
 
 	"github.com/confluentinc/confluent-kafka-go/v2/kafka"
 	_ "github.com/go-sql-driver/mysql"
+	"github.com/gorilla/mux"
 	"github.com/henriqueholtz/fullcycle/fc30/event-driven-architecture/internal/database"
 	"github.com/henriqueholtz/fullcycle/fc30/event-driven-architecture/internal/entity"
-	"github.com/henriqueholtz/fullcycle/fc30/event-driven-architecture/internal/usecase/create_client"
-	"github.com/henriqueholtz/fullcycle/fc30/event-driven-architecture/internal/web"
-	"github.com/henriqueholtz/fullcycle/fc30/event-driven-architecture/internal/web/webserver"
 	"github.com/henriqueholtz/fullcycle/fc30/event-driven-architecture/pkg/uow"
 )
 type KafkaMessage struct {
@@ -36,10 +37,6 @@ func main() {
 	}
 	defer db.Close()
 
-	clientDb := database.NewClientDB(db)
-	accountDb := database.NewAccountDB(db)
-	transactionDb := database.NewTransactionDB(db)
-
 	ctx := context.Background()
 	uow := uow.NewUow(ctx, db)
 
@@ -50,16 +47,35 @@ func main() {
 	uow.Register("TransactionDB", func(tx *sql.Tx) interface{} {
 		return database.NewTransactionDB(db)
 	})
-	// createTransactionUseCase := create_transaction.NewCreateTransactionUseCase(uow, eventDispatcher, transactionCreatedEvent, balanceUpdatedEvent)
-	createClientUseCase := create_client.NewCreateClientUseCase(clientDb)
-	// createAccountUseCase := create_account.NewCreateAccountUseCase(accountDb, clientDb)
 
-	webserver := webserver.NewWebServer(":3003")
+	var wg sync.WaitGroup
+	wg.Add(2)
+	go webServer(db, &wg)
+	go kafkaConsumer(db, &wg)
+	wg.Wait()
+}
 
-	clientHandler := web.NewWebClientHandler(*createClientUseCase)
-	// accountHandler := web.NewWebAccountHandler(*createAccountUseCase)
-	// transactionHandler := web.NewWebTransactionHandler(*createTransactionUseCase)
 
+
+func returnBalance(w http.ResponseWriter, r *http.Request){
+	vars := mux.Vars(r)
+    account_id := vars["account_id"]
+    fmt.Printf("Endpoint Hit: %s\n", account_id)
+    json.NewEncoder(w).Encode("balances")
+}
+
+
+func webServer(db *sql.DB, wg *sync.WaitGroup) {
+	defer wg.Done()
+    myRouter := mux.NewRouter().StrictSlash(true)
+	myRouter.HandleFunc("/balances/{account_id}", returnBalance)
+
+    log.Fatal(http.ListenAndServe(":3003", myRouter))
+	fmt.Println("Server is running at 3003 port")
+}
+
+func kafkaConsumer(db *sql.DB, wg *sync.WaitGroup) {
+	defer wg.Done()
 	c, err := kafka.NewConsumer(&kafka.ConfigMap{
 		"bootstrap.servers": "kafka:29092",
 		"group.id":          "wallet-reflected",
@@ -71,8 +87,8 @@ func main() {
 
 	fmt.Println("Subscribing kafka topics...")
 	c.SubscribeTopics([]string{"transactions"}, nil)
-
-	// A signal handler or similar could be used to set this to false to break the loop.
+	accountDb := database.NewAccountDB(db)
+	transactionDb := database.NewTransactionDB(db)
 	run := true
 
 	for run {
@@ -126,12 +142,6 @@ func main() {
 		}
 	}
 	fmt.Println("Before close")
-	
 	c.Close()
 	fmt.Println("After close")
-
-	webserver.AddHandler("/balances/{account_id}", clientHandler.CreateClient)
-
-	fmt.Println("Server is running at 3003 port")
-	webserver.Start()
 }
