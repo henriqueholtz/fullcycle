@@ -3,9 +3,21 @@ Content-Type: application/json
 
 {
     "client_id": "a33ab931-7268-469f-b3bc-7946e126a8b7",
-    "amount": 30,
+    "amount": 40,
     "account_id_from": "c9222008-579e-4b3f-8a2e-4e09910bd2dd",
     "account_id_to": "c5cb7470-999d-4a85-9a23-63ac83e1c89c"
+}
+
+### 
+
+POST http://localhost:8080/transactions HTTP/1.1
+Content-Type: application/json
+
+{
+    "client_id": "5e88ddae-98e0-4a0d-bda1-ebe85532a823",
+    "amount": 700,
+    "account_id_from": "c5cb7470-999d-4a85-9a23-63ac83e1c89c",
+    "account_id_to": "c9222008-579e-4b3f-8a2e-4e09910bd2dd"
 }
 
 ###

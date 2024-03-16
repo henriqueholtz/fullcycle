@@ -55,24 +55,38 @@ func main() {
 	wg.Wait()
 }
 
+type BalanceDependencies struct {
+	Db *sql.DB
+}
 
-
-func returnBalance(w http.ResponseWriter, r *http.Request){
+func (balanceDependencies *BalanceDependencies) returnBalance(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
     account_id := vars["account_id"]
     fmt.Printf("Endpoint Hit: %s\n", account_id)
-    json.NewEncoder(w).Encode("balances")
+	accountDb := database.NewAccountDB(balanceDependencies.Db)
+	account, err := accountDb.FindByID(account_id)
+	if err != nil {
+		fmt.Println(err)
+		json.NewEncoder(w).Encode(nil)
+		http.NotFound(w, r)
+	}
+	
+	json.NewEncoder(w).Encode(account)
 }
-
 
 func webServer(db *sql.DB, wg *sync.WaitGroup) {
 	defer wg.Done()
     myRouter := mux.NewRouter().StrictSlash(true)
-	myRouter.HandleFunc("/balances/{account_id}", returnBalance)
+	balanceDependencies := &BalanceDependencies{
+		Db: db,
+	}
+	myRouter.HandleFunc("/balances/{account_id}", balanceDependencies.returnBalance)
 
     log.Fatal(http.ListenAndServe(":3003", myRouter))
 	fmt.Println("Server is running at 3003 port")
 }
+
+// TODO: Listen balances to update accounts rows
 
 func kafkaConsumer(db *sql.DB, wg *sync.WaitGroup) {
 	defer wg.Done()
