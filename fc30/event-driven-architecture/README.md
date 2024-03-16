@@ -9,6 +9,22 @@ Note: Some files came from [architecture-microservices-based](../architecture-mi
 
 https://github.com/devfullcycle/fc-eda/blob/main/pkg/events/event_dispatcher_test.go
 
+## How to run
+
+Just run the docker-compose with the below command:
+
+```
+docker-compose up -d
+```
+
+# Characteristics
+
+- :heavy_check_mark: **GO**
+- :heavy_check_mark: **MySql**
+- :heavy_check_mark: **Docker**
+- :heavy_check_mark: **Docker-compose**
+- :heavy_check_mark: **Kafka**
+
 ## Commands
 
 - `go test ./...`
