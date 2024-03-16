@@ -3,14 +3,26 @@ version: '3'
 services:
   goapp:
     build: .
+    container_name: wallet-go-app
     volumes:
       - .:/app
     ports:
       - 8080:8080
 
-  mysql:
+  wallet-reflected:
+    build:
+      dockerfile: Dockerfile-Wallet-Reflected
+      context: .
+    container_name: wallet-reflected-go-app
+    volumes:
+      - .:/app
+    ports:
+      - 3003:3003
+
+  mysql: &mysql
     image: mysql:5.7
     platform: linux/amd64
+    container_name: mysql
     environment:
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_DATABASE=wallet
@@ -19,6 +31,22 @@ services:
       - 3306:3306
     volumes:
       - .docker/mysql:/var/lib/mysql
+      - ./sql/init.sql:/docker-entrypoint-initdb.d/init-script.sql
+
+  mysql-reflected:
+    # Copy from 'mysql'
+    <<: *mysql
+    container_name: mysql-reflected
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=wallet-reflected
+      - MYSQL_PASSWORD=password
+    ports:
+      - 3307:3306
+    volumes:
+      - .docker/mysql-reflected:/var/lib/mysql
+      - ./sql/init.sql:/docker-entrypoint-initdb.d/init-script.sql
+
   zookeeper:
     image: 'confluentinc/cp-zookeeper:6.1.0'
     container_name: zookeeper
