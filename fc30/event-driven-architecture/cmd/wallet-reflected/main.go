@@ -18,14 +18,14 @@ import (
 )
 type KafkaMessage struct {
 	Name string
-	Payload BalanceUpdatedOutputDTO
+	Payload KafkaEventPayloadDTO
 }
 
-type BalanceUpdatedOutputDTO struct {
+type KafkaEventPayloadDTO struct {
+	ClientId string `json:"id"`
 	AccountIDFrom string `json:"account_id_from"`
 	AccountIDTo string `json:"account_id_to"`
-	BalanceAccountIdFrom float64 `json:"balance_account_id_from"`
-	BalanceAccountIdTo float64 `json:"balance_account_id_to"`
+	Amount float64 `json:"amount"`
 }
 
 func main() {
@@ -61,7 +61,7 @@ func main() {
 	// transactionHandler := web.NewWebTransactionHandler(*createTransactionUseCase)
 
 	c, err := kafka.NewConsumer(&kafka.ConfigMap{
-		"bootstrap.servers": "kafka:29092", // "localhost:9092", //
+		"bootstrap.servers": "kafka:29092",
 		"group.id":          "wallet-reflected",
 	})
 
@@ -70,7 +70,7 @@ func main() {
 	}
 
 	fmt.Println("Subscribing kafka topics...")
-	c.SubscribeTopics([]string{"balances"}, nil)
+	c.SubscribeTopics([]string{"transactions"}, nil)
 
 	// A signal handler or similar could be used to set this to false to break the loop.
 	run := true
@@ -88,7 +88,7 @@ func main() {
 				panic(errJson)
 			}
 
-			fmt.Printf("AccountIDFrom: %s; AccountIDTo: %s\n", kafkaMessage.Payload.AccountIDFrom, kafkaMessage.Payload.AccountIDTo)
+			fmt.Printf("Amount: %f; ClientId: %s; AccountIDFrom: %s; AccountIDTo: %s\n", kafkaMessage.Payload.Amount, kafkaMessage.Payload.ClientId, kafkaMessage.Payload.AccountIDFrom, kafkaMessage.Payload.AccountIDTo)
 			
 			accountFrom, dbErr := accountDb.FindByID(kafkaMessage.Payload.AccountIDFrom)
 			if dbErr != nil {
@@ -107,14 +107,16 @@ func main() {
 			}
 
 			fmt.Printf("Accounts from and to ok...")
-			amount := kafkaMessage.Payload.BalanceAccountIdTo - accountTo.Balance
-			fmt.Printf("Transaction Amount: %f\n", amount)
-			transaction, transactionErr := entity.NewTransaction(accountFrom, accountTo, amount)
+			fmt.Printf("Transaction Amount: %f\n", kafkaMessage.Payload.Amount)
+			transaction, transactionErr := entity.NewTransaction(accountFrom, accountTo, kafkaMessage.Payload.Amount)
 			if transactionErr != nil {
 				panic(transactionErr)
 			}
 
-			transactionDb.Create(transaction)
+			transactionErr = transactionDb.Create(transaction)
+			if transactionErr != nil {
+				panic(transactionErr)
+			}
 			fmt.Println("Successfuly completed...")
 			fmt.Println("-------------")
 
