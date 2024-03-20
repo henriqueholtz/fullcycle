@@ -16,5 +16,6 @@
 - [Kubernetes](./fc30/kubernetes)
 - [Monolithic Systems](./fc30/monolithic-systems)
 - [OpenTelemetry](./fc30/open-telemetry)
+- [RabitMq](./fc30/rabbit-mq/)
 - [Terraform](./fc30/terraform)
 - [Hexagonal Architecture](./fc30/hexagonal-architecture)
