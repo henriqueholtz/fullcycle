@@ -9,9 +9,21 @@ import (
 
 func main() {
 	fmt.Println("Starting Kafka Producer...")
+
+	deliveryChannel := make(chan kafka.Event)
 	producer := NewKafkaProducer()
-	PublishMessage("message 1", "test", producer, nil)
+	PublishMessage("message 1", "test", producer, nil, deliveryChannel)
+	
+	e := <- deliveryChannel
+	msg := e.(*kafka.Message)
+	if msg.TopicPartition.Error != nil {
+		fmt.Println("Error while sending a kafka message!")
+	} else {
+		fmt.Println("A kafka message was successfuly sent!", msg.TopicPartition)
+	}
+
 	producer.Flush(1 * 1000)
+	
 	fmt.Println("Ending Kafka Producer...")
 }
 
@@ -27,14 +39,14 @@ func NewKafkaProducer() *kafka.Producer {
 	return p
 }
 
-func PublishMessage(msg string, topic string, producer *kafka.Producer, key []byte) error {
+func PublishMessage(msg string, topic string, producer *kafka.Producer, key []byte, deliveryChannel chan kafka.Event) error {
 	kafkaMsg := &kafka.Message{
 		Value: []byte(msg),
 		TopicPartition: kafka.TopicPartition{Topic: &topic, Partition: kafka.PartitionAny},
 		Key: key,
 	}
 
-	err := producer.Produce(kafkaMsg, nil)
+	err := producer.Produce(kafkaMsg, deliveryChannel)
 	if err != nil {
 		return err
 	}
