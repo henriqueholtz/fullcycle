@@ -13,16 +13,18 @@ func main() {
 	deliveryChannel := make(chan kafka.Event)
 	producer := NewKafkaProducer()
 	PublishMessage("message 1", "test", producer, nil, deliveryChannel)
-	
+
+	/* sync
 	e := <- deliveryChannel
 	msg := e.(*kafka.Message)
 	if msg.TopicPartition.Error != nil {
 		fmt.Println("Error while sending a kafka message!")
 	} else {
 		fmt.Println("A kafka message was successfuly sent!", msg.TopicPartition)
-	}
-
-	producer.Flush(1 * 1000)
+	}*/
+	
+	go DeliveryReport(deliveryChannel) // async
+	producer.Flush(1000)
 	
 	fmt.Println("Ending Kafka Producer...")
 }
@@ -52,4 +54,17 @@ func PublishMessage(msg string, topic string, producer *kafka.Producer, key []by
 	}
 
 	return nil
+}
+
+func DeliveryReport(deliveryChannel chan kafka.Event) {
+	for e := range deliveryChannel {
+		switch ev := e.(type) {
+		case *kafka.Message:
+			if ev.TopicPartition.Error != nil {
+				fmt.Println("Error while sending a kafka message!")
+			} else {
+				fmt.Println("A kafka message was successfuly sent!", ev.TopicPartition)
+			}
+		}
+	}
 }
