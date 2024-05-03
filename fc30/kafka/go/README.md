@@ -2,6 +2,8 @@
 
 https://github.com/codeedu/fc2-gokafka
 
+https://github.com/codeedu/fc2-kafka-connect
+
 ### Commands
 
 - `docker logs gokafka`
@@ -13,3 +15,4 @@ https://github.com/codeedu/fc2-gokafka
 - `gokafka` => `go run cmd/consumer/main.go`
 - `go-kafka-1` => `kafka-topics --bootstrap-server=localhost:9092 --create --topic=test --partitions=3`
 - `go-kafka-1` => `kafka-console-consumer --bootstrap-server=localhost:9092 --topic=test`
+- `go-kafka-1` => `kafka-consumer-groups --bootstrap-server=localhost:9092 --group=goapp-group --describe`

@@ -12,7 +12,7 @@ func main() {
 
 	deliveryChannel := make(chan kafka.Event)
 	producer := NewKafkaProducer()
-	PublishMessage("message 1", "test", producer, nil, deliveryChannel)
+	PublishMessage("message 1", "test", producer, nil/*[]byte("my-key")*/, deliveryChannel)
 
 	/* sync
 	e := <- deliveryChannel
@@ -31,7 +31,11 @@ func main() {
 
 func NewKafkaProducer() *kafka.Producer {
 	configMap := &kafka.ConfigMap{
+		// https://docs.confluent.io/platform/current/installation/configuration/producer-configs.html
 		"bootstrap.servers": "go-kafka-1:9092",
+		"delivery.timeout.ms": "1000",
+		"acks": "all",
+		"enable.idempotence": "false",
 	}
 	p, err := kafka.NewProducer(configMap)
 
