@@ -2,8 +2,6 @@
 
 https://github.com/codeedu/fc2-gokafka
 
-https://github.com/codeedu/fc2-kafka-connect
-
 ### Commands
 
 - `docker logs gokafka`
