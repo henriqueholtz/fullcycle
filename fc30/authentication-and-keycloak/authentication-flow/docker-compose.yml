@@ -10,3 +10,9 @@ services:
       - .:/home/node/app
     extra_hosts:
       - "host.docker.internal:172.17.0.1"
+#     networks:
+#       - keycloak-external-network
+
+# networks:
+#   keycloak-external-network: # docker network create keycloak-external-network
+#     external: true

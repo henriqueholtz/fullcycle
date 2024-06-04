@@ -17,6 +17,8 @@ services:
     depends_on:
       db:
         condition: service_healthy
+    # networks:
+    #   - keycloak-external-network
   
   db:
     image: mysql:8.0.30-debian
@@ -32,3 +34,9 @@ services:
       interval: 5s
       timeout: 10s
       retries: 3
+    # networks:
+    #   - keycloak-external-network
+
+# networks:
+#   keycloak-external-network: # docker network create keycloak-external-network
+#     external: true
