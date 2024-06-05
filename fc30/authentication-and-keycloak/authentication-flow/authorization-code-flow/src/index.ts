@@ -1,5 +1,6 @@
 import express from 'express'
 import session from "express-session";
+import jwt from "jsonwebtoken";
 import crypto from 'crypto'
 
 const realm = 'master'
@@ -56,10 +57,33 @@ app.get('/callback-login', async (req, res) => {
         body: bodyParams.toString()
     })
     
-    const json = await response.json()
-    console.log(json)
+    const jsonResult = await response.json()
+    console.log(jsonResult)
+    const payloadAccessToken = jwt.decode(jsonResult.access_token) as any;
+    const payloadRefreshToken = jwt.decode(jsonResult.refresh_token) as any;
+    const payloadIdToken = jwt.decode(jsonResult.id_token) as any;
+  
+    if (
+      //@ts-expect-error - type mismatch
+      payloadAccessToken!.nonce !== req.session.nonce ||
+      //@ts-expect-error - type mismatch
+      payloadRefreshToken.nonce !== req.session.nonce ||
+      //@ts-expect-error - type mismatch
+      payloadIdToken.nonce !== req.session.nonce
+    ) {
+      return res.status(401).json({ message: "Unauthenticated" });
+    }
+  
+    console.log(payloadAccessToken);
+    //@ts-expect-error - type mismatch
+    req.session.user = payloadAccessToken;
+    //@ts-expect-error - type mismatch
+    req.session.access_token = jsonResult.access_token;
+    //@ts-expect-error - type mismatch
+    req.session.id_token = jsonResult.id_token;
+    req.session.save();
 
-    res.send(json)
+    res.send(jsonResult)
 })
 
 
