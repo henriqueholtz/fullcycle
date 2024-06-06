@@ -11,4 +11,4 @@
 
 ### Commands
 
-- `docker compose exec app bash`
+- `cd authorization-code-flow` && `docker compose exec app bash`
