@@ -34,7 +34,7 @@ app.get('/callback-login', async (req, res) => {
 
     //@ts-expect-error - type mismatch
     if(req.query.state !== req.session.state) {
-      //poderia redirecionar para o login em vez de mostrar o erro
+      // Could redirect to login
       return res.status(401).json({ message: "Unauthenticated" });
     }
   
@@ -90,9 +90,12 @@ app.get('/callback-login', async (req, res) => {
 app.get('/login', (req, res) => {
 
     const nonce = crypto.randomBytes(16).toString('base64')
+    const state = crypto.randomBytes(16).toString("base64");
 
     //@ts-expect-error - type mismatch
     req.session.nonce = nonce;
+    //@ts-expect-error - type mismatch
+    req.session.state = state;
     req.session.save();
 
     const loginParams = new URLSearchParams({
@@ -100,7 +103,8 @@ app.get('/login', (req, res) => {
         redirect_uri,
         response_type: 'code',
         scope: 'openid',
-        nonce
+        nonce,
+        state
     })
     const url = `http://localhost:8081/realms/${realm}/protocol/openid-connect/auth?${loginParams.toString()}`
     console.log(url)
