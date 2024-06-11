@@ -8,4 +8,5 @@ https://github.com/devfullcycle/fc-keycloak
     - `npm run authorization-code` 
     - `npm run implicit`
     - `npm run hybrid`
+    - `npm run resource-owner`
 2. http://localhost:3000/
