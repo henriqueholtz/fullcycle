@@ -9,6 +9,7 @@
 - [CI](./fc30/ci)
 - [Communication Between Systems](./fc30/communication-between-systems)
 - [Clean Architecture](./fc30/clean-architecture)
+- [CodeFlix](./fc30/CodeFlix/)
 - [Docker](./fc30/docker)
 - [EDA - Event Driven Architecture](./fc30/domain-driven-design)
 - [DDD - Domain Driven Design](./fc30/domain-driven-design)
