@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using CodeFlix.Catalog.Domain.Exceptions;
 
 namespace CodeFlix.Catalog.Domain.Entity;
 
@@ -21,5 +17,13 @@ public class Category
         Id = Guid.NewGuid();
         IsActive = isActive;
         CreatedAt = DateTime.Now;
+
+        Validate();
+    }
+
+    public void Validate()
+    {
+        if (string.IsNullOrWhiteSpace(Name))
+            throw new EntityValidationException($"{nameof(Name)} should not be empty or null");
     }
 }
