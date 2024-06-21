@@ -25,7 +25,7 @@ public class CategoryTest
         Assert.NotNull(category);
         Assert.Equal(validData.Name, category.Name);
         Assert.Equal(validData.Description, category.Description);
-        Assert.NotEqual(default(Guid), category.Id);
+        Assert.NotEqual(Guid.Empty, category.Id);
         Assert.NotEqual(default(DateTime), category.CreatedAt);
         Assert.True(category.CreatedAt > dateTimeBefore);
         Assert.True(category.CreatedAt < dateTimeAfter);
@@ -54,7 +54,7 @@ public class CategoryTest
         Assert.NotNull(category);
         Assert.Equal(validData.Name, category.Name);
         Assert.Equal(validData.Description, category.Description);
-        Assert.NotEqual(default(Guid), category.Id);
+        Assert.NotEqual(Guid.Empty, category.Id);
         Assert.NotEqual(default(DateTime), category.CreatedAt);
         Assert.True(category.CreatedAt > dateTimeBefore);
         Assert.True(category.CreatedAt < dateTimeAfter);
@@ -68,7 +68,7 @@ public class CategoryTest
     [InlineData(null)]
     public void InstantiateErrorWhenNameIsEmpty(string? name) 
     {
-        Action action = () => new DomainEntity.Category(name, "Valid description");
+        Action action = () => new DomainEntity.Category(name!, "Valid description");
 
         var exception = Assert.Throws<EntityValidationException>(action);
         Assert.Equal("Name should not be empty or null", exception.Message);
@@ -78,7 +78,7 @@ public class CategoryTest
     [Trait("Domain", "Category - Aggregates")]
     public void InstantiateErrorWhenDescriptionIsNull()
     {
-        Action action = () => new DomainEntity.Category("Sports", null);
+        Action action = () => new DomainEntity.Category("Sports", null!);
 
         var exception = Assert.Throws<EntityValidationException>(action);
         Assert.Equal("Description should not be null", exception.Message);
@@ -105,5 +105,16 @@ public class CategoryTest
 
         var exception = Assert.Throws<EntityValidationException>(action);
         Assert.Equal("Name should be less or equal 255 characters long", exception.Message);
+    }
+
+    [Fact(DisplayName = nameof(InstantiateErrorWhenDescriptionIsGreaterThan10_000Chars))]
+    [Trait("Domain", "Category - Aggregates")]
+    public void InstantiateErrorWhenDescriptionIsGreaterThan10_000Chars()
+    {
+        string invalidDescription = String.Join(null, Enumerable.Range(1, 10_001).Select(_ => "a").ToArray());
+        Action action = () => new DomainEntity.Category("Sports", invalidDescription);
+
+        var exception = Assert.Throws<EntityValidationException>(action);
+        Assert.Equal("Description should be less or equal 10.000 characters long", exception.Message);
     }
 }
