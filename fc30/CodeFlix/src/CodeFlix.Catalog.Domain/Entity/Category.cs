@@ -1,20 +1,20 @@
 ﻿using CodeFlix.Catalog.Domain.Exceptions;
+using CodeFlix.Catalog.Domain.SeedWork;
 
 namespace CodeFlix.Catalog.Domain.Entity;
 
-public class Category
+public class Category : AggregateRoot
 {
-    public Guid Id { get; set; }
     public string Name { get; private set; }
     public string Description { get; private set; }
     public bool IsActive { get; set; }
     public DateTime CreatedAt { get; set; }
 
     public Category(string name, string description, bool isActive = true)
+        : base()
     {
         Name = name;
         Description = description;
-        Id = Guid.NewGuid();
         IsActive = isActive;
         CreatedAt = DateTime.Now;
 
