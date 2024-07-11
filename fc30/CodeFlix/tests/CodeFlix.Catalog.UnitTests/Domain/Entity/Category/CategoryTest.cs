@@ -17,7 +17,7 @@ public class CategoryTest(CategoryTestFixture _categoryFixture)
 
         // Act
         DomainEntity.Category category = new DomainEntity.Category(validCategory.Name, validCategory.Description);
-        DateTime dateTimeAfter = DateTime.Now;
+        DateTime dateTimeAfter = DateTime.Now.AddSeconds(1);
 
         // Assert
         category.Should().NotBeNull();
@@ -169,14 +169,14 @@ public class CategoryTest(CategoryTestFixture _categoryFixture)
     {
         // Arrange
         DomainEntity.Category validCategory = _categoryFixture.GetValidCategory();
-        var newValues = new { Name = "Bar Category", Description = "Updated desc" };
+        DomainEntity.Category categoryWithNewValues = _categoryFixture.GetValidCategory();
 
         // Act
-        validCategory.Update(newValues.Name, newValues.Description);
+        validCategory.Update(categoryWithNewValues.Name, categoryWithNewValues.Description);
 
         // Assert
-        validCategory.Name.Should().Be(newValues.Name);
-        validCategory.Description.Should().Be(newValues.Description);
+        validCategory.Name.Should().Be(categoryWithNewValues.Name);
+        validCategory.Description.Should().Be(categoryWithNewValues.Description);
     }
 
     [Fact(DisplayName = nameof(UpdateOnlyName))]
@@ -186,13 +186,13 @@ public class CategoryTest(CategoryTestFixture _categoryFixture)
         // Arrange
         DomainEntity.Category validCategory = _categoryFixture.GetValidCategory();
         string currentDescription = validCategory.Description;
-        var newValues = new { Name = "Bar Category" };
+        string newCategoryName = _categoryFixture.GetValidCategoryName();
 
         // Act
-        validCategory.Update(newValues.Name);
+        validCategory.Update(newCategoryName);
 
         // Assert
-        validCategory.Name.Should().Be(newValues.Name);
+        validCategory.Name.Should().Be(newCategoryName);
         validCategory.Description.Should().Be(currentDescription);
     }
 
@@ -235,7 +235,7 @@ public class CategoryTest(CategoryTestFixture _categoryFixture)
     {
         // Arranje
         DomainEntity.Category validCategory = _categoryFixture.GetValidCategory();
-        string invalidName = String.Join(null, Enumerable.Range(1, 256).Select(_ => "a").ToArray());
+        string invalidName = _categoryFixture.Faker.Lorem.Letter(256);
         
         // Act
         Action action = () => validCategory.Update(invalidName);
@@ -250,8 +250,10 @@ public class CategoryTest(CategoryTestFixture _categoryFixture)
     {
         // Arranje
         DomainEntity.Category validCategory = _categoryFixture.GetValidCategory();
-        string invalidDescription = String.Join(null, Enumerable.Range(1, 10_001).Select(_ => "a").ToArray());
-        
+        string invalidDescription = _categoryFixture.GetValidCategoryDescription();
+        while (invalidDescription.Length < 10_000)
+            invalidDescription += $" {_categoryFixture.GetValidCategoryDescription()}";
+
         // Act
         Action action = () => validCategory.Update(validCategory.Description, invalidDescription);
 
