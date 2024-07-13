@@ -9,9 +9,16 @@ public class DomainValidation
         if (target is null)
             throw new EntityValidationException($"{fieldName} should not be null");
     }
+
     public static void NotNullOrEmpty(string? target, string fieldName)
     {
         if (string.IsNullOrWhiteSpace(target))
             throw new EntityValidationException($"{fieldName} should not be null or empty");
+    }
+
+    public static void MinLength(string target, int minLength, string fieldName)
+    {
+        if (target is null || target.Length < minLength)
+            throw new EntityValidationException($"{fieldName} should not be less than {minLength} characters long");
     }
 }

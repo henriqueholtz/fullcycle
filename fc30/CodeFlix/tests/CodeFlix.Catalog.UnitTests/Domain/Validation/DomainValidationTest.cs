@@ -68,4 +68,57 @@ public class DomainValidationTest
         // Assert
         action.Should().NotThrow();
     }
+
+    [Theory(DisplayName = nameof(MinLengthThrowWhenLess))]
+    [Trait("Domain", "DomainValidation - Validation")]
+    [MemberData(nameof(GetValuesSmallerThanMinimum), parameters: 10)]
+    public void MinLengthThrowWhenLess(string? target, int minLength)
+    {
+        // Arranje
+        string? value = target;
+
+        // Act
+        Action action = () => DomainValidation.MinLength(value, minLength, "FieldName");
+
+        // Assert
+        action.Should().Throw<EntityValidationException>()
+            .WithMessage($"FieldName should not be less than {minLength} characters long");
+    }
+
+    public static IEnumerable<object[]> GetValuesSmallerThanMinimum(int numberOfTests = 5)
+    {
+        var faker = new Faker();
+        for (int i = 0; i < numberOfTests; i++)
+        {
+            var example = faker.Commerce.ProductName();
+            var minLength = example.Length + (new Random()).Next(1, 20);
+            yield return new object[] { example, minLength };
+        }
+    }
+
+    [Theory(DisplayName = nameof(MinLengthOk))]
+    [Trait("Domain", "DomainValidation - Validation")]
+    [MemberData(nameof(GetValuesGreaterThanMinimum), parameters: 6)]
+    public void MinLengthOk(string? target, int minLength)
+    {
+        // Act
+        Action action = () => DomainValidation.MinLength(target, minLength, "Value");
+
+        // Assert
+        action.Should().NotThrow();
+    }
+
+    public static IEnumerable<object[]> GetValuesGreaterThanMinimum(int numberOfTests = 5)
+    {
+        var faker = new Faker();
+        for (int i = 0; i < numberOfTests; i++)
+        {
+            var example = faker.Commerce.ProductName();
+            var minLength = example.Length - (new Random()).Next(1, 5);
+            if (minLength < 0)
+                minLength = 0;
+
+            yield return new object[] { example, minLength };
+        }
+    }
 }
