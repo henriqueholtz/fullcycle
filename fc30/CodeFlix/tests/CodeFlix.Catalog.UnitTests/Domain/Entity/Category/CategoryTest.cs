@@ -138,7 +138,7 @@ public class CategoryTest(CategoryTestFixture _categoryFixture)
         Action action = () => new DomainEntity.Category(validCategory.Name, invalidDescription);
 
         // Assert
-        action.Should().Throw<EntityValidationException>().WithMessage("Description should be less or equal 10.000 characters long");
+        action.Should().Throw<EntityValidationException>().WithMessage("Description should be less or equal 10000 characters long");
     }
 
     [Fact(DisplayName = nameof(Activate))]
@@ -266,6 +266,6 @@ public class CategoryTest(CategoryTestFixture _categoryFixture)
         Action action = () => validCategory.Update(validCategory.Description, invalidDescription);
 
         // Assert
-        action.Should().Throw<EntityValidationException>().WithMessage("Description should be less or equal 10.000 characters long");
+        action.Should().Throw<EntityValidationException>().WithMessage("Description should be less or equal 10000 characters long");
     }
 }
