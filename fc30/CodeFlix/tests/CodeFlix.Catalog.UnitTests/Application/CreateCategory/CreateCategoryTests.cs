@@ -1,21 +1,27 @@
-﻿using CodeFlix.Catalog.Application;
+﻿using CodeFlix.Catalog.Application.UseCases.Category.CreateCategory;
 using CodeFlix.Catalog.Domain.Entity;
-using CodeFlix.Catalog.Domain.Repository;
 using UseCases = CodeFlix.Catalog.Application.UseCases.Category.CreateCategory;
 
 namespace CodeFlix.Catalog.UnitTests.Application.CreateCategory;
 
+[Collection(nameof(CreateCategoryTestsFixture))]
 public class CreateCategoryTests
 {
+    private readonly CreateCategoryTestsFixture _fixture;
+    public CreateCategoryTests(CreateCategoryTestsFixture createCategoryTestsFixture)
+    {
+        _fixture = createCategoryTestsFixture;
+    }
+
     [Fact(DisplayName = nameof(CreateCategorySuccess))]
     [Trait("Application", "CreateCategory - Use Cases")]
     public async Task CreateCategorySuccess()
     {
         // Arrange
-        var repositoryMock = new Mock<ICategoryRepository>();
-        var unitOfWorkMock = new Mock<IUnitOfWork>();
+        var repositoryMock = _fixture.GetRepositoryMock();
+        var unitOfWorkMock = _fixture.GetUowMock();
         var useCase = new UseCases.CreateCategory(repositoryMock.Object, unitOfWorkMock.Object);
-        var input = new UseCases.CreateCategoryInput("Category Name", "Description", true);
+        CreateCategoryInput input = _fixture.GetValidInput();
 
         // Act
         var output = await useCase.HandleAsync(input, CancellationToken.None);
@@ -25,7 +31,7 @@ public class CreateCategoryTests
         output.Id.Should().NotBeEmpty();
         output.Name.Should().Be(input.Name);
         output.Description.Should().Be(input.Description);
-        output.IsActive.Should().BeTrue();
+        output.IsActive.Should().Be(input.IsActive);
         output.CreatedAt.Should().NotBeSameDateAs(default(DateTime));
 
         repositoryMock.Verify(rep => rep.InsertAsync(It.IsAny<Category>(), It.IsAny<CancellationToken>()), Times.Once);
