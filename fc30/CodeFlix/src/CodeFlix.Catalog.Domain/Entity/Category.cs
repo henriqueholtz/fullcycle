@@ -1,5 +1,4 @@
-﻿using CodeFlix.Catalog.Domain.Exceptions;
-using CodeFlix.Catalog.Domain.SeedWork;
+﻿using CodeFlix.Catalog.Domain.SeedWork;
 using CodeFlix.Catalog.Domain.Validation;
 
 namespace CodeFlix.Catalog.Domain.Entity;
