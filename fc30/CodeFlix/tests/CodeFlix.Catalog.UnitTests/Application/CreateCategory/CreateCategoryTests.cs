@@ -16,7 +16,7 @@ public class CreateCategoryTests
 
     [Theory(DisplayName = nameof(Success))]
     [Trait("Application", "CreateCategory - Use Cases")]
-    [MemberData(nameof(GetValidInputs))]
+    [MemberData(nameof(CreateCategoryTestsGenerator.GetValidInputs), MemberType = typeof(CreateCategoryTestsGenerator))]
     public async Task Success(CreateCategoryInput input)
     {
         // Arrange
@@ -43,20 +43,10 @@ public class CreateCategoryTests
         unitOfWorkMock.VerifyNoOtherCalls();
     }
 
-    public static IEnumerable<object[]> GetValidInputs()
-    {
-        CreateCategoryTestsFixture fixture = new();
-        return new List<object[]>() {
-            new [] { fixture.GetValidInput() },
-            new [] { new CreateCategoryInput(fixture.GetValidCategoryName()) },
-            new [] { new CreateCategoryInput(fixture.GetValidCategoryName(), fixture.GetValidCategoryDescription()) }
-        };
-    }
-
-    [Theory(DisplayName = nameof(ThrowWhenCanNotInstantiateAggregate))]
+    [Theory(DisplayName = nameof(ThrowWhenCanNotInstantiateCategory))]
     [Trait("Application", "CreateCategory - Use Cases")]
-    [MemberData(nameof(GetInvalidInputs))]
-    public async Task ThrowWhenCanNotInstantiateAggregate(CreateCategoryInput input, string exceptionMessage)
+    [MemberData(nameof(CreateCategoryTestsGenerator.GetInvalidInputs), parameters: 24, MemberType = typeof(CreateCategoryTestsGenerator))]
+    public async Task ThrowWhenCanNotInstantiateCategory(CreateCategoryInput input, string exceptionMessage)
     {
         // Arrange
         var repositoryMock = _fixture.GetRepositoryMock();
@@ -68,35 +58,5 @@ public class CreateCategoryTests
 
         // Assert
         await task.Should().ThrowAsync<EntityValidationException>().WithMessage(exceptionMessage);
-    }
-
-    public static IEnumerable<object[]> GetInvalidInputs() 
-    {
-        var fixture = new CreateCategoryTestsFixture();
-        List<object[]> invalidInputs = new();
-
-        // Name too short
-        var invalidInput = fixture.GetValidInput();
-        invalidInput.Name = invalidInput.Name.Substring(0, 2);
-        invalidInputs.Add(new object[] { invalidInput, "Name should be at least 3 characters long" });
-        
-        // Name too long
-        invalidInput = fixture.GetValidInput();
-        while (invalidInput.Name.Length <= 255)
-            invalidInput.Name += $" {fixture.GetValidCategoryName()}";
-        invalidInputs.Add(new object[] { invalidInput, "Name should be less or equal 255 characters long" });
-        
-        // Null descrition
-        invalidInput = fixture.GetValidInput();
-        invalidInput.Description = null;
-        invalidInputs.Add(new object[] { invalidInput, "Description should not be null" });
-        
-        // Description too long
-        invalidInput = fixture.GetValidInput();
-        while (invalidInput.Description.Length <= 10_000)
-            invalidInput.Description += $" {fixture.GetValidCategoryDescription()}";
-        invalidInputs.Add(new object[] { invalidInput, "Description should be less or equal 10000 characters long" });
-
-        return invalidInputs;
     }
 }
