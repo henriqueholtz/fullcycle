@@ -26,7 +26,7 @@ public class CreateCategoryTests
         // CreateCategoryInput input = _fixture.GetValidInput();
 
         // Act
-        var output = await useCase.HandleAsync(input, CancellationToken.None);
+        var output = await useCase.Handle(input, CancellationToken.None);
 
         // Assert
         output.Should().NotBeNull();
@@ -54,7 +54,7 @@ public class CreateCategoryTests
         var useCase = new UseCases.CreateCategory(repositoryMock.Object, unitOfWorkMock.Object);
 
         // Act
-        Func<Task> task = async () => await useCase.HandleAsync(input, CancellationToken.None);
+        Func<Task> task = async () => await useCase.Handle(input, CancellationToken.None);
 
         // Assert
         await task.Should().ThrowAsync<EntityValidationException>().WithMessage(exceptionMessage);
