@@ -1,11 +1,15 @@
-﻿using CodeFlix.Catalog.UnitTests.Common;
+﻿using CodeFlix.Catalog.Domain.Repository;
+using CodeFlix.Catalog.UnitTests.Common;
 using DomainEntity = CodeFlix.Catalog.Domain.Entity;
 
-namespace CodeFlix.Catalog.UnitTests.Domain.Entity.Category;
+namespace CodeFlix.Catalog.UnitTests.Application.GetCategory;
 
-public class CategoryTestFixture : BaseFixture
+[CollectionDefinition(nameof(GetCategoryTestsFixture))]
+public class GetCategoryTestsFixtureCollection : ICollectionFixture<GetCategoryTestsFixture> { }
+
+public class GetCategoryTestsFixture : BaseFixture
 {
-    public CategoryTestFixture() : base() { }
+    public Mock<ICategoryRepository> GetRepositoryMock() => new();
 
     public string GetValidCategoryName()
     {
@@ -28,9 +32,5 @@ public class CategoryTestFixture : BaseFixture
 
         return categoryDescription;
     }
-
     public DomainEntity.Category GetValidCategory() => new(GetValidCategoryName(), GetValidCategoryDescription());
 }
-
-[CollectionDefinition(nameof(CategoryTestFixture))]
-public class CategoryTestFixtureCollection : ICollectionFixture<CategoryTestFixture> { }
