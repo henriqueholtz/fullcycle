@@ -16,7 +16,7 @@ public class DeleteCategoryTests
     [Fact(DisplayName = nameof(Success))]
     [Trait("Application", "DeleteCategory - Use Cases")]
     public async Task Success() {
-        // Arranje
+        // Arrange
         var repositoryMock = _fixture.GetRepositoryMock();
         var uowMock = _fixture.GetUowMock();
         var validCategory = _fixture.GetValidCategory();
@@ -40,7 +40,7 @@ public class DeleteCategoryTests
     [Fact(DisplayName = nameof(ThrowWhenCategoryNotFound))]
     [Trait("Application", "DeleteCategory - Use Cases")]
     public async Task ThrowWhenCategoryNotFound() {
-        // Arranje
+        // Arrange
         var repositoryMock = _fixture.GetRepositoryMock();
         var uowMock = _fixture.GetUowMock();
         var categoryId = Guid.NewGuid();

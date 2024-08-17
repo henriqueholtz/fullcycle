@@ -12,7 +12,7 @@ public class DomainValidationTest
     [Trait("Domain", "DomainValidation - Validation")]
     public void NotNullOk()
     {
-        // Arranje
+        // Arrange
         var value = _faker.Commerce.ProductName();
 
         // Act
@@ -26,7 +26,7 @@ public class DomainValidationTest
     [Trait("Domain", "DomainValidation - Validation")]
     public void NotNullThrowWhenNull()
     {
-        // Arranje
+        // Arrange
         string? value = null;
         string fieldName = this._faker.Commerce.ProductName().Replace(" ", "");
 
@@ -45,7 +45,7 @@ public class DomainValidationTest
     [InlineData(null)]
     public void NotEmptyOrNullThrowWhenEmpty(string? target)
     {
-        // Arranje
+        // Arrange
         string? value = target;
         string fieldName = this._faker.Commerce.ProductName().Replace(" ", "");
 
@@ -61,7 +61,7 @@ public class DomainValidationTest
     [Trait("Domain", "DomainValidation - Validation")]
     public void NotNullOrEmptyOk()
     {
-        // Arranje
+        // Arrange
         var value = _faker.Commerce.ProductName();
         string fieldName = this._faker.Commerce.ProductName().Replace(" ", "");
 
@@ -77,7 +77,7 @@ public class DomainValidationTest
     [MemberData(nameof(GetValuesSmallerThanMinimum), parameters: 10)]
     public void MinLengthThrowWhenLess(string? target, int minLength)
     {
-        // Arranje
+        // Arrange
         string? value = target;
         string fieldName = this._faker.Commerce.ProductName().Replace(" ", "");
 
@@ -105,7 +105,7 @@ public class DomainValidationTest
     [MemberData(nameof(GetValuesGreaterThanMinimum), parameters: 6)]
     public void MinLengthOk(string? target, int minLength)
     {
-        // Arranje 
+        // Arrange 
         string fieldName = this._faker.Commerce.ProductName().Replace(" ", "");
 
         // Act
@@ -134,7 +134,7 @@ public class DomainValidationTest
     [MemberData(nameof(GetValuesGreaterThanMaximum), parameters: 10)]
     public void MaxLengthThrowWhenGreater(string? target, int maxLength)
     {
-        // Arranje
+        // Arrange
         string? value = target;
         string fieldName = this._faker.Commerce.ProductName().Replace(" ", "");
 
@@ -165,7 +165,7 @@ public class DomainValidationTest
     [MemberData(nameof(GetValuesLessThanMaximum), parameters: 10)]
     public void MaxLengthOk(string? target, int maxLength)
     {
-        // Arranje
+        // Arrange
         string? value = target;
         string fieldName = this._faker.Commerce.ProductName().Replace(" ", "");
 

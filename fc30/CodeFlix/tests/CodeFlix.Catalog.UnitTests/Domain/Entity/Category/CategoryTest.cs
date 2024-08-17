@@ -62,7 +62,7 @@ public class CategoryTest(CategoryTestFixture _categoryFixture)
     [InlineData(null)]
     public void InstantiateErrorWhenNameIsEmpty(string? name) 
     {
-        // Arranje
+        // Arrange
         DomainEntity.Category validCategory = _categoryFixture.GetValidCategory();
 
         // Act
@@ -76,7 +76,7 @@ public class CategoryTest(CategoryTestFixture _categoryFixture)
     [Trait("Domain", "Category - Aggregates")]
     public void InstantiateErrorWhenDescriptionIsNull()
     {
-        // Arranje
+        // Arrange
         DomainEntity.Category validCategory = _categoryFixture.GetValidCategory();
 
         // Act
@@ -91,7 +91,7 @@ public class CategoryTest(CategoryTestFixture _categoryFixture)
     [MemberData(nameof(GetCategoryNamesWithLessThan3Chars), parameters: 6)]
     public void InstantiateErrorWhenNameIsLessThan3Chars(string name)
     {
-        // Arranje
+        // Arrange
         DomainEntity.Category validCategory = _categoryFixture.GetValidCategory();
 
         // Act
@@ -115,7 +115,7 @@ public class CategoryTest(CategoryTestFixture _categoryFixture)
     [Trait("Domain", "Category - Aggregates")]
     public void InstantiateErrorWhenNameIsGreaterThan255Chars()
     {
-        // Arranje
+        // Arrange
         DomainEntity.Category validCategory = _categoryFixture.GetValidCategory();
 
         // Act
@@ -130,7 +130,7 @@ public class CategoryTest(CategoryTestFixture _categoryFixture)
     [Trait("Domain", "Category - Aggregates")]
     public void InstantiateErrorWhenDescriptionIsGreaterThan10_000Chars()
     {
-        // Arranje
+        // Arrange
         DomainEntity.Category validCategory = _categoryFixture.GetValidCategory();
 
         // Act
@@ -212,7 +212,7 @@ public class CategoryTest(CategoryTestFixture _categoryFixture)
     [InlineData(null)]
     public void UpdateErrorWhenNameIsEmpty(string? name)
     {
-        // Arranje
+        // Arrange
         DomainEntity.Category validCategory = _categoryFixture.GetValidCategory();
 
         // Act
@@ -227,7 +227,7 @@ public class CategoryTest(CategoryTestFixture _categoryFixture)
     [MemberData(nameof(GetCategoryNamesWithLessThan3Chars), parameters: 4)]
     public void UpdateErrorWhenNameIsLessThan3Chars(string name)
     {
-        // Arranje
+        // Arrange
         DomainEntity.Category validCategory = _categoryFixture.GetValidCategory();
 
         // Act
@@ -241,7 +241,7 @@ public class CategoryTest(CategoryTestFixture _categoryFixture)
     [Trait("Domain", "Category - Aggregates")]
     public void UpdateErrorWhenNameIsGreaterThan255Chars()
     {
-        // Arranje
+        // Arrange
         DomainEntity.Category validCategory = _categoryFixture.GetValidCategory();
         string invalidName = _categoryFixture.Faker.Lorem.Letter(256);
         
@@ -256,7 +256,7 @@ public class CategoryTest(CategoryTestFixture _categoryFixture)
     [Trait("Domain", "Category - Aggregates")]
     public void UpdateErrorWhenDescriptionIsGreaterThan10_000Chars()
     {
-        // Arranje
+        // Arrange
         DomainEntity.Category validCategory = _categoryFixture.GetValidCategory();
         string invalidDescription = _categoryFixture.GetValidCategoryDescription();
         while (invalidDescription.Length < 10_000)

@@ -15,7 +15,7 @@ public class GetCategoryInputValidationTests
     [Fact(DisplayName = nameof(Success))]
     [Trait("Application", "GetCategoryInputValidation - Use Cases")]
     public void Success() {
-        // Arranje
+        // Arrange
         var validInput = new GetCategoryInput(Guid.NewGuid());
         var validator = new GetCategoryInputValidator();
 
@@ -31,7 +31,7 @@ public class GetCategoryInputValidationTests
     [Fact(DisplayName = nameof(InvalidWhenEmptyGuidId))]
     [Trait("Application", "GetCategoryInputValidation - Use Cases")]
     public void InvalidWhenEmptyGuidId() {
-        // Arranje
+        // Arrange
         var invalidInput = new GetCategoryInput(Guid.Empty);
         var validator = new GetCategoryInputValidator();
 

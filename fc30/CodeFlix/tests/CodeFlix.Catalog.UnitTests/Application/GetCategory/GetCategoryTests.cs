@@ -18,7 +18,7 @@ public class GetCategoryTests
     [Fact(DisplayName = nameof(GetSuccessfully))]
     [Trait("Application", "GetCategory - Use Cases")]
     public async Task GetSuccessfully() {
-        // Arranje
+        // Arrange
         var repositoryMock = _fixture.GetRepositoryMock();
         var exampleCategory = _fixture.GetValidCategory();
         repositoryMock.Setup(r => r.GetAsync(It.IsAny<Guid>(), It.IsAny<CancellationToken>())).ReturnsAsync(exampleCategory);
@@ -43,7 +43,7 @@ public class GetCategoryTests
     [Fact(DisplayName = nameof(NotFoundExceptionWhenCategoryDoesNotExists))]
     [Trait("Application", "GetCategory - Use Cases")]
     public async Task NotFoundExceptionWhenCategoryDoesNotExists() {
-        // Arranje
+        // Arrange
         var repositoryMock = _fixture.GetRepositoryMock();
         var exampleGuid = Guid.NewGuid();
         repositoryMock.Setup(r => r.GetAsync(It.IsAny<Guid>(), It.IsAny<CancellationToken>())).ThrowsAsync(new NotFoundException($"Category '{exampleGuid}' not found"));
