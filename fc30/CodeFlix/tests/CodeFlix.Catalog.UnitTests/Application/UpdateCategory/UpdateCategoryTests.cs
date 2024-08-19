@@ -15,10 +15,10 @@ public class UpdateCategoryTests : UpdateCategoryTestsFixture
         _fixture = fixture;
     }
 
-    [Theory(DisplayName = nameof(Success))]
+    [Theory(DisplayName = nameof(FullUpdateShouldBeSuccessful))]
     [Trait("Application", "UpdateCategory - Use Cases")]
     [MemberData(nameof(UpdateCategoryTestsGenerator.GetCategoriesToUpdate), parameters: 10, MemberType = typeof(UpdateCategoryTestsGenerator))]
-    public async Task Success(Category category, UpdateCategoryInput input) {
+    public async Task FullUpdateShouldBeSuccessful(Category category, UpdateCategoryInput input) {
         // Arrange
         var repositoryMock = _fixture.GetRepositoryMock();
         var uowMock = _fixture.GetUowMock();
@@ -33,7 +33,65 @@ public class UpdateCategoryTests : UpdateCategoryTestsFixture
         output.Should().NotBeNull();
         output.Name.Should().Be(input.Name);
         output.Description.Should().Be(input.Description);
-        output.IsActive.Should().Be(input.IsActive);
+        output.IsActive.Should().Be((bool)input.IsActive!);
+
+        repositoryMock.Verify(r => r.GetAsync(category.Id, It.IsAny<CancellationToken>()), Times.Once());
+        repositoryMock.Verify(r => r.UpdateAsync(category, It.IsAny<CancellationToken>()), Times.Once());
+        repositoryMock.VerifyNoOtherCalls();
+
+        uowMock.Verify(r => r.CommitAsync(It.IsAny<CancellationToken>()), Times.Once());
+        uowMock.VerifyNoOtherCalls();
+    }
+
+    [Theory(DisplayName = nameof(UpdateWithoutIsActiveShouldBeSuccessful))]
+    [Trait("Application", "UpdateCategory - Use Cases")]
+    [MemberData(nameof(UpdateCategoryTestsGenerator.GetCategoriesToUpdate), parameters: 10, MemberType = typeof(UpdateCategoryTestsGenerator))]
+    public async Task UpdateWithoutIsActiveShouldBeSuccessful(Category category, UpdateCategoryInput baseInput) {
+        // Arrange
+        var input = new UpdateCategoryInput(baseInput.Id, baseInput.Name, baseInput.Description);
+        var repositoryMock = _fixture.GetRepositoryMock();
+        var uowMock = _fixture.GetUowMock();
+        repositoryMock.Setup(r => r.GetAsync(category.Id, It.IsAny<CancellationToken>())).ReturnsAsync(category);
+
+        UseCaseUpdateCategory.UpdateCategory useCase = new(repositoryMock.Object, uowMock.Object);
+
+        // Act
+        var output = await useCase.Handle(input, CancellationToken.None);
+
+        // Assert
+        output.Should().NotBeNull();
+        output.Name.Should().Be(input.Name);
+        output.Description.Should().Be(input.Description);
+        output.IsActive.Should().Be((bool)baseInput.IsActive!);
+
+        repositoryMock.Verify(r => r.GetAsync(category.Id, It.IsAny<CancellationToken>()), Times.Once());
+        repositoryMock.Verify(r => r.UpdateAsync(category, It.IsAny<CancellationToken>()), Times.Once());
+        repositoryMock.VerifyNoOtherCalls();
+
+        uowMock.Verify(r => r.CommitAsync(It.IsAny<CancellationToken>()), Times.Once());
+        uowMock.VerifyNoOtherCalls();
+    }
+
+    [Theory(DisplayName = nameof(UpdateOnlyNameShouldBeSuccessful))]
+    [Trait("Application", "UpdateCategory - Use Cases")]
+    [MemberData(nameof(UpdateCategoryTestsGenerator.GetCategoriesToUpdate), parameters: 10, MemberType = typeof(UpdateCategoryTestsGenerator))]
+    public async Task UpdateOnlyNameShouldBeSuccessful(Category category, UpdateCategoryInput baseInput) {
+        // Arrange
+        var input = new UpdateCategoryInput(baseInput.Id, baseInput.Name);
+        var repositoryMock = _fixture.GetRepositoryMock();
+        var uowMock = _fixture.GetUowMock();
+        repositoryMock.Setup(r => r.GetAsync(category.Id, It.IsAny<CancellationToken>())).ReturnsAsync(category);
+
+        UseCaseUpdateCategory.UpdateCategory useCase = new(repositoryMock.Object, uowMock.Object);
+
+        // Act
+        var output = await useCase.Handle(input, CancellationToken.None);
+
+        // Assert
+        output.Should().NotBeNull();
+        output.Name.Should().Be(input.Name);
+        output.Description.Should().Be(baseInput.Description);
+        output.IsActive.Should().Be((bool)baseInput.IsActive!);
 
         repositoryMock.Verify(r => r.GetAsync(category.Id, It.IsAny<CancellationToken>()), Times.Once());
         repositoryMock.Verify(r => r.UpdateAsync(category, It.IsAny<CancellationToken>()), Times.Once());
