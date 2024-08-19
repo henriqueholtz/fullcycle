@@ -8,7 +8,7 @@ public class UpdateCategoryTestsGenerator
         var fixture = new UpdateCategoryTestsFixture();
         for (int i = 0; i < quantity; i++ ) {
             var category = fixture.GetValidCategory();
-            var input = new UpdateCategoryInput(category.Id, fixture.GetValidCategoryName(), fixture.GetValidCategoryDescription(), fixture.GetRandomBoolean());
+            var input = fixture.GetValidInput(category.Id);
             yield return new object[] { category, input };
         }
     }

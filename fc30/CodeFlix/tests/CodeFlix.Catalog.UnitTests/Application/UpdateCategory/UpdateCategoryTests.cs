@@ -1,3 +1,4 @@
+using CodeFlix.Catalog.Application.Exceptions;
 using CodeFlix.Catalog.Application.UseCases.Category.UpdateCategory;
 using CodeFlix.Catalog.Domain.Entity;
 using UseCaseUpdateCategory = CodeFlix.Catalog.Application.UseCases.Category.UpdateCategory;
@@ -42,4 +43,24 @@ public class UpdateCategoryTests : UpdateCategoryTestsFixture
         uowMock.VerifyNoOtherCalls();
     }
 
+    [Fact(DisplayName = nameof(ThrowNotFoundExceptionWhenCategoryIsNotFound))]
+    [Trait("Application", "UpdateCategory - Use Cases")]
+    public async Task ThrowNotFoundExceptionWhenCategoryIsNotFound () {
+        // Arrange
+        var repositoryMock = _fixture.GetRepositoryMock();
+        var uowMock = _fixture.GetUowMock();
+        var input = _fixture.GetValidInput(Guid.NewGuid());
+        repositoryMock.Setup(r => r.GetAsync(input.Id, It.IsAny<CancellationToken>())).ThrowsAsync(new NotFoundException($"Category {input.Id} not found."));
+        UseCaseUpdateCategory.UpdateCategory useCase = new(repositoryMock.Object, uowMock.Object);
+
+        // Act
+        var task = async () => await useCase.Handle(input, CancellationToken.None);
+
+        // Assert
+        await task.Should().ThrowAsync<NotFoundException>();
+
+        repositoryMock.Verify(r => r.GetAsync(input.Id, It.IsAny<CancellationToken>()), Times.Once());
+        repositoryMock.VerifyNoOtherCalls();
+        uowMock.VerifyNoOtherCalls();
+    }
 }
