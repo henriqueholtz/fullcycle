@@ -63,7 +63,7 @@ public class UpdateCategoryTests : UpdateCategoryTestsFixture
         output.Should().NotBeNull();
         output.Name.Should().Be(input.Name);
         output.Description.Should().Be(input.Description);
-        output.IsActive.Should().Be((bool)baseInput.IsActive!);
+        output.IsActive.Should().Be(category.IsActive);
 
         repositoryMock.Verify(r => r.GetAsync(category.Id, It.IsAny<CancellationToken>()), Times.Once());
         repositoryMock.Verify(r => r.UpdateAsync(category, It.IsAny<CancellationToken>()), Times.Once());
@@ -91,8 +91,8 @@ public class UpdateCategoryTests : UpdateCategoryTestsFixture
         // Assert
         output.Should().NotBeNull();
         output.Name.Should().Be(input.Name);
-        output.Description.Should().Be(baseInput.Description);
-        output.IsActive.Should().Be((bool)baseInput.IsActive!);
+        output.Description.Should().Be(category.Description);
+        output.IsActive.Should().Be(category.IsActive);
 
         repositoryMock.Verify(r => r.GetAsync(category.Id, It.IsAny<CancellationToken>()), Times.Once());
         repositoryMock.Verify(r => r.UpdateAsync(category, It.IsAny<CancellationToken>()), Times.Once());
