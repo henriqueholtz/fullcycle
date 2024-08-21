@@ -10,7 +10,8 @@ namespace CodeFlix.Catalog.UnitTests.Application.UpdateCategory;
 public class UpdateCategoryTestsFixtureCollection : ICollectionFixture<UpdateCategoryTestsFixture> {}
 
 public class UpdateCategoryTestsFixture : BaseFixture
-{    public Mock<ICategoryRepository> GetRepositoryMock() => new();
+{    
+    public Mock<ICategoryRepository> GetRepositoryMock() => new();
     public Mock<IUnitOfWork> GetUowMock() => new();
 
     public string GetValidCategoryName()
