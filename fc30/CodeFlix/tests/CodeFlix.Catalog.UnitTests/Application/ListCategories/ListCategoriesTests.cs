@@ -1,4 +1,3 @@
-using CodeFlix.Catalog.Application.UseCases.Category.ListCategories;
 using CodeFlix.Catalog.Domain.Entity;
 using CodeFlix.Catalog.Domain.SeedWork.SearchableRepository;
 using UseCaseListCategories = CodeFlix.Catalog.Application.UseCases.Category.ListCategories;
@@ -19,13 +18,7 @@ public class ListCategoriesTests
     [Trait("Application", "ListCategories - Use Cases")]
     public async Task ListSuccess() {
         var repositoryMock = _fixture.GetRepositoryMock();
-        var input = new ListCategoriesInput(
-            page: 2,
-            perPage: 15,
-            search: "shirt",
-            sort: "name",
-            dir: SearchOrder.Asc
-        );
+        var input = _fixture.GetValidInput();
         var categories = _fixture.GetCategories();
         var repositorySearchOutput = new SearchOutput<Category>(
             currentPage: input.Page,
