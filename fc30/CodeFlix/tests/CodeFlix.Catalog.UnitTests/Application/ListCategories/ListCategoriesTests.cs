@@ -122,4 +122,50 @@ public class ListCategoriesTests
         );
         repositoryMock.VerifyNoOtherCalls();
     }
+
+    [Fact(DisplayName = nameof(EmptyListSuccess))]
+    [Trait("Application", "ListCategories - Use Cases")]
+    public async Task EmptyListSuccess() {
+        var repositoryMock = _fixture.GetRepositoryMock();
+        var input = _fixture.GetValidInput();
+        var repositorySearchOutput = new SearchOutput<Category>(
+            currentPage: input.Page,
+            perPage: input.PerPage,
+            items: new List<Category>(),
+            total: 0
+        );
+        repositoryMock.Setup(x => x.SearchAsync(
+            It.Is<SearchInput>(i => 
+                i.Page == input.Page
+                && i.PerPage == input.PerPage
+                && i.Search == input.Search
+                && i.OrderBy == input.Sort
+                && i.Order == input.Dir
+            ),
+            It.IsAny<CancellationToken>()
+        )).ReturnsAsync(repositorySearchOutput);
+        var useCase = new UseCaseListCategories.ListCategories(repositoryMock.Object);
+
+        // Act
+        var output = await useCase.Handle(input, CancellationToken.None);
+
+        // Assert
+        output.Should().NotBeNull();
+        output.Page.Should().Be(repositorySearchOutput.CurrentPage);
+        output.PerPage.Should().Be(repositorySearchOutput.PerPage);
+        output.Total.Should().Be(0);
+        output.Items.Should().HaveCount(0);
+        
+        repositoryMock.Verify(x => x.SearchAsync(
+            It.Is<SearchInput>(p => 
+                p.Page == input.Page
+                && p.PerPage == input.PerPage
+                && p.Search == input.Search
+                && p.OrderBy == input.Sort
+                && p.Order == input.Dir),
+            It.IsAny<CancellationToken>()
+            ), Times.Once
+        );
+        repositoryMock.VerifyNoOtherCalls();
+    }
 }
