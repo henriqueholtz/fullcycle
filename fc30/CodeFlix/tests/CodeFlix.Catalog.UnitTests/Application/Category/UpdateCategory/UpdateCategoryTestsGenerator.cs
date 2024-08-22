@@ -1,28 +1,31 @@
 using CodeFlix.Catalog.Application.UseCases.Category.UpdateCategory;
 
-namespace CodeFlix.Catalog.UnitTests.Application.UpdateCategory;
+namespace CodeFlix.Catalog.UnitTests.Application.Category.UpdateCategory;
 
 public class UpdateCategoryTestsGenerator
 {
-    public static IEnumerable<object[]> GetCategoriesToUpdate(int quantity) {
+    public static IEnumerable<object[]> GetCategoriesToUpdate(int quantity)
+    {
         var fixture = new UpdateCategoryTestsFixture();
-        for (int i = 0; i < quantity; i++ ) {
+        for (int i = 0; i < quantity; i++)
+        {
             var category = fixture.GetValidCategory();
             var input = fixture.GetValidInput(category.Id);
             yield return new object[] { category, input };
         }
     }
 
-    public static IEnumerable<object[]> GetInvalidInputs(int times) 
+    public static IEnumerable<object[]> GetInvalidInputs(int times)
     {
         var fixture = new UpdateCategoryTestsFixture();
         List<object[]> invalidInputs = new();
         int totalInvalidInputs = 3;
 
-        for (int index = 0; index < times; index ++)
+        for (int index = 0; index < times; index++)
         {
             UpdateCategoryInput? invalidInput;
-            switch(index % totalInvalidInputs){
+            switch (index % totalInvalidInputs)
+            {
                 case 0: // Name too short
                     invalidInput = fixture.GetInvalidInputShortName();
                     invalidInputs.Add(new object[] { invalidInput, "Name should be at least 3 characters long" });
@@ -37,7 +40,7 @@ public class UpdateCategoryTestsGenerator
                     break;
             }
         }
-        
+
         return invalidInputs;
     }
 }

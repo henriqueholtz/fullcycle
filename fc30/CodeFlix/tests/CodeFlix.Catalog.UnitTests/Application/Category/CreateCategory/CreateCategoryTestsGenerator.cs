@@ -1,6 +1,6 @@
 ﻿using CodeFlix.Catalog.Application.UseCases.Category.CreateCategory;
 
-namespace CodeFlix.Catalog.UnitTests.Application.CreateCategory;
+namespace CodeFlix.Catalog.UnitTests.Application.Category.CreateCategory;
 
 public static class CreateCategoryTestsGenerator
 {
@@ -14,16 +14,17 @@ public static class CreateCategoryTestsGenerator
         };
     }
 
-    public static IEnumerable<object[]> GetInvalidInputs(int times = 12) 
+    public static IEnumerable<object[]> GetInvalidInputs(int times = 12)
     {
         var fixture = new CreateCategoryTestsFixture();
         List<object[]> invalidInputs = new();
         int totalInvalidInputs = 4;
 
-        for (int index = 0; index < times; index ++)
+        for (int index = 0; index < times; index++)
         {
             CreateCategoryInput? invalidInput;
-            switch(index % totalInvalidInputs){
+            switch (index % totalInvalidInputs)
+            {
                 case 0: // Name too short
                     invalidInput = fixture.GetInvalidInputShortName();
                     invalidInputs.Add(new object[] { invalidInput, "Name should be at least 3 characters long" });
@@ -42,7 +43,7 @@ public static class CreateCategoryTestsGenerator
                     break;
             }
         }
-        
+
         return invalidInputs;
     }
 

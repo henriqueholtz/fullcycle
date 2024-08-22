@@ -1,6 +1,6 @@
 using CodeFlix.Catalog.Application.UseCases.Category.GetCategory;
 
-namespace CodeFlix.Catalog.UnitTests.Application.GetCategory;
+namespace CodeFlix.Catalog.UnitTests.Application.Category.GetCategory;
 
 [Collection(nameof(GetCategoryTestsFixture))]
 public class GetCategoryInputValidationTests
@@ -14,7 +14,8 @@ public class GetCategoryInputValidationTests
 
     [Fact(DisplayName = nameof(Success))]
     [Trait("Application", "GetCategoryInputValidation - Use Cases")]
-    public void Success() {
+    public void Success()
+    {
         // Arrange
         var validInput = new GetCategoryInput(Guid.NewGuid());
         var validator = new GetCategoryInputValidator();
@@ -30,7 +31,8 @@ public class GetCategoryInputValidationTests
 
     [Fact(DisplayName = nameof(InvalidWhenEmptyGuidId))]
     [Trait("Application", "GetCategoryInputValidation - Use Cases")]
-    public void InvalidWhenEmptyGuidId() {
+    public void InvalidWhenEmptyGuidId()
+    {
         // Arrange
         var invalidInput = new GetCategoryInput(Guid.Empty);
         var validator = new GetCategoryInputValidator();

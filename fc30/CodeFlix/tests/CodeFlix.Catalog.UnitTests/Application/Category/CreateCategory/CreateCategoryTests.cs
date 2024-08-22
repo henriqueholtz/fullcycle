@@ -1,9 +1,9 @@
 ﻿using CodeFlix.Catalog.Application.UseCases.Category.CreateCategory;
-using CodeFlix.Catalog.Domain.Entity;
 using CodeFlix.Catalog.Domain.Exceptions;
 using UseCases = CodeFlix.Catalog.Application.UseCases.Category.CreateCategory;
+using DomainEntity = CodeFlix.Catalog.Domain.Entity;
 
-namespace CodeFlix.Catalog.UnitTests.Application.CreateCategory;
+namespace CodeFlix.Catalog.UnitTests.Application.Category.CreateCategory;
 
 [Collection(nameof(CreateCategoryTestsFixture))]
 public class CreateCategoryTests
@@ -23,7 +23,6 @@ public class CreateCategoryTests
         var repositoryMock = _fixture.GetRepositoryMock();
         var unitOfWorkMock = _fixture.GetUowMock();
         var useCase = new UseCases.CreateCategory(repositoryMock.Object, unitOfWorkMock.Object);
-        // CreateCategoryInput input = _fixture.GetValidInput();
 
         // Act
         var output = await useCase.Handle(input, CancellationToken.None);
@@ -34,9 +33,9 @@ public class CreateCategoryTests
         output.Name.Should().Be(input.Name);
         output.Description.Should().Be(input.Description);
         output.IsActive.Should().Be(input.IsActive);
-        output.CreatedAt.Should().NotBeSameDateAs(default(DateTime));
+        output.CreatedAt.Should().NotBeSameDateAs(default);
 
-        repositoryMock.Verify(rep => rep.InsertAsync(It.IsAny<Category>(), It.IsAny<CancellationToken>()), Times.Once);
+        repositoryMock.Verify(rep => rep.InsertAsync(It.IsAny<DomainEntity.Category>(), It.IsAny<CancellationToken>()), Times.Once);
         repositoryMock.VerifyNoOtherCalls();
 
         unitOfWorkMock.Verify(uow => uow.CommitAsync(It.IsAny<CancellationToken>()), Times.Once);

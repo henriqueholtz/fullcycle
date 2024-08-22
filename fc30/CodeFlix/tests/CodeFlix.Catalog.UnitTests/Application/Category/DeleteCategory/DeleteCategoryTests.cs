@@ -1,7 +1,7 @@
 using CodeFlix.Catalog.Application.Exceptions;
 using UseCaseDeleteCategory = CodeFlix.Catalog.Application.UseCases.Category.DeleteCategory;
 
-namespace CodeFlix.Catalog.UnitTests.Application.DeleteCategory;
+namespace CodeFlix.Catalog.UnitTests.Application.Category.DeleteCategory;
 
 [Collection(nameof(DeleteCategoryFixture))]
 public class DeleteCategoryTests
@@ -15,7 +15,8 @@ public class DeleteCategoryTests
 
     [Fact(DisplayName = nameof(Success))]
     [Trait("Application", "DeleteCategory - Use Cases")]
-    public async Task Success() {
+    public async Task Success()
+    {
         // Arrange
         var repositoryMock = _fixture.GetRepositoryMock();
         var uowMock = _fixture.GetUowMock();
@@ -39,7 +40,8 @@ public class DeleteCategoryTests
 
     [Fact(DisplayName = nameof(ThrowWhenCategoryNotFound))]
     [Trait("Application", "DeleteCategory - Use Cases")]
-    public async Task ThrowWhenCategoryNotFound() {
+    public async Task ThrowWhenCategoryNotFound()
+    {
         // Arrange
         var repositoryMock = _fixture.GetRepositoryMock();
         var uowMock = _fixture.GetUowMock();

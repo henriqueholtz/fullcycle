@@ -1,24 +1,27 @@
 using CodeFlix.Catalog.Application.UseCases.Category.ListCategories;
-using CodeFlix.Catalog.Domain.Entity;
 using CodeFlix.Catalog.Domain.SeedWork.SearchableRepository;
-using CodeFlix.Catalog.UnitTests.Application.Common;
+using CodeFlix.Catalog.UnitTests.Application.Category.Common;
+using DomainEntity = CodeFlix.Catalog.Domain.Entity;
 
-namespace CodeFlix.Catalog.UnitTests.Application.ListCategories;
+namespace CodeFlix.Catalog.UnitTests.Application.Category.ListCategories;
 
 [CollectionDefinition(nameof(ListCategoriesTestsFixture))]
-public class ListCategoriesTestsFixtureCollection : ICollectionFixture<ListCategoriesTestsFixture> {}
+public class ListCategoriesTestsFixtureCollection : ICollectionFixture<ListCategoriesTestsFixture> { }
 
 public class ListCategoriesTestsFixture : CategoryUseCasesBaseFixture
-{ 
-    public List<Category> GetCategories(int length = 10) {
-        var list = new List<Category>();
-        for (int i = 0; i < length; i++) {
+{
+    public List<DomainEntity.Category> GetCategories(int length = 10)
+    {
+        var list = new List<DomainEntity.Category>();
+        for (int i = 0; i < length; i++)
+        {
             list.Add(GetValidCategory());
         }
         return list;
     }
 
-    public ListCategoriesInput GetValidInput() {
+    public ListCategoriesInput GetValidInput()
+    {
         var random = new Random();
         return new ListCategoriesInput(
             page: random.Next(1, 10),

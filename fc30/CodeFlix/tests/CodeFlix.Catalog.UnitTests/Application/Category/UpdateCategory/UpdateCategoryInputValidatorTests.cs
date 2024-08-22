@@ -1,6 +1,4 @@
-using System;
-
-namespace CodeFlix.Catalog.UnitTests.Application.UpdateCategory;
+namespace CodeFlix.Catalog.UnitTests.Application.Category.UpdateCategory;
 
 [Collection(nameof(UpdateCategoryTestsFixture))]
 public class UpdateCategoryInputValidatorTests
@@ -14,7 +12,8 @@ public class UpdateCategoryInputValidatorTests
 
     [Fact(DisplayName = nameof(DoNotValidateWhenEmptyGuid))]
     [Trait("Application", "UpdateCategoryInputValidatorTests - Use Cases")]
-    public void DoNotValidateWhenEmptyGuid() {
+    public void DoNotValidateWhenEmptyGuid()
+    {
         // Arrange
         var input = _fixture.GetValidInput(Guid.Empty);
         var validator = new UpdateCategoryInputValidator();
@@ -31,7 +30,8 @@ public class UpdateCategoryInputValidatorTests
 
     [Fact(DisplayName = nameof(ValidateSuccessful))]
     [Trait("Application", "UpdateCategoryInputValidatorTests - Use Cases")]
-    public void ValidateSuccessful() {
+    public void ValidateSuccessful()
+    {
         // Arrange
         var input = _fixture.GetValidInput();
         var validator = new UpdateCategoryInputValidator();

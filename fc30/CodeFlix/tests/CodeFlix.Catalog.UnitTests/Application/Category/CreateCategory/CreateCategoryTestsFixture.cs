@@ -1,10 +1,10 @@
 ﻿using CodeFlix.Catalog.Application.UseCases.Category.CreateCategory;
-using CodeFlix.Catalog.UnitTests.Application.Common;
+using CodeFlix.Catalog.UnitTests.Application.Category.Common;
 
-namespace CodeFlix.Catalog.UnitTests;
+namespace CodeFlix.Catalog.UnitTests.Application.Category.CreateCategory;
 
 [CollectionDefinition(nameof(CreateCategoryTestsFixture))]
-public class CreateCategoryTestsFixtureCollection : ICollectionFixture<CreateCategoryTestsFixture> 
+public class CreateCategoryTestsFixtureCollection : ICollectionFixture<CreateCategoryTestsFixture>
 { }
 
 public class CreateCategoryTestsFixture : CategoryUseCasesBaseFixture
@@ -15,14 +15,14 @@ public class CreateCategoryTestsFixture : CategoryUseCasesBaseFixture
         GetRandomBoolean()
     );
 
-    public CreateCategoryInput GetInvalidInputShortName() 
+    public CreateCategoryInput GetInvalidInputShortName()
     {
         CreateCategoryInput invalidInput = GetValidInput();
         invalidInput.Name = invalidInput.Name.Substring(0, 2);
         return invalidInput;
     }
 
-    public CreateCategoryInput GetInvalidInputTooLongName() 
+    public CreateCategoryInput GetInvalidInputTooLongName()
     {
         CreateCategoryInput invalidInput = GetValidInput();
         while (invalidInput.Name.Length <= 255)
@@ -30,14 +30,14 @@ public class CreateCategoryTestsFixture : CategoryUseCasesBaseFixture
         return invalidInput;
     }
 
-    public CreateCategoryInput GetInvalidInputNullDescription() 
+    public CreateCategoryInput GetInvalidInputNullDescription()
     {
         CreateCategoryInput invalidInput = GetValidInput();
         invalidInput.Description = null!;
         return invalidInput;
     }
 
-    public CreateCategoryInput GetInvalidInputTooLongDescription() 
+    public CreateCategoryInput GetInvalidInputTooLongDescription()
     {
         CreateCategoryInput invalidInput = GetValidInput();
         invalidInput = GetValidInput();
@@ -45,4 +45,4 @@ public class CreateCategoryTestsFixture : CategoryUseCasesBaseFixture
             invalidInput.Description += $" {GetValidCategoryDescription()}";
         return invalidInput;
     }
- }
+}

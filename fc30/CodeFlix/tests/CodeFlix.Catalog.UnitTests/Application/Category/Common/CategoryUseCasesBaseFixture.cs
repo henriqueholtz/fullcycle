@@ -3,7 +3,7 @@ using CodeFlix.Catalog.Domain.Repository;
 using CodeFlix.Catalog.UnitTests.Common;
 using DomainEntity = CodeFlix.Catalog.Domain.Entity;
 
-namespace CodeFlix.Catalog.UnitTests.Application.Common;
+namespace CodeFlix.Catalog.UnitTests.Application.Category.Common;
 
 public abstract class CategoryUseCasesBaseFixture : BaseFixture
 {
@@ -32,7 +32,7 @@ public abstract class CategoryUseCasesBaseFixture : BaseFixture
         return categoryDescription;
     }
 
-    public bool GetRandomBoolean() => (new Random()).NextDouble() > 0.5;
+    public bool GetRandomBoolean() => new Random().NextDouble() > 0.5;
 
     public DomainEntity.Category GetValidCategory() => new(GetValidCategoryName(), GetValidCategoryDescription(), GetRandomBoolean());
 }

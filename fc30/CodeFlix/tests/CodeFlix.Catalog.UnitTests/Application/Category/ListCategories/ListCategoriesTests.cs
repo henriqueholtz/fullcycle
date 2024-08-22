@@ -1,9 +1,9 @@
 using CodeFlix.Catalog.Application.UseCases.Category.ListCategories;
-using CodeFlix.Catalog.Domain.Entity;
 using CodeFlix.Catalog.Domain.SeedWork.SearchableRepository;
 using UseCaseListCategories = CodeFlix.Catalog.Application.UseCases.Category.ListCategories;
+using DomainEntity = CodeFlix.Catalog.Domain.Entity;
 
-namespace CodeFlix.Catalog.UnitTests.Application.ListCategories;
+namespace CodeFlix.Catalog.UnitTests.Application.Category.ListCategories;
 
 [Collection(nameof(ListCategoriesTestsFixture))]
 public class ListCategoriesTests
@@ -17,18 +17,19 @@ public class ListCategoriesTests
 
     [Fact(DisplayName = nameof(ListSuccess))]
     [Trait("Application", "ListCategories - Use Cases")]
-    public async Task ListSuccess() {
+    public async Task ListSuccess()
+    {
         var repositoryMock = _fixture.GetRepositoryMock();
         var input = _fixture.GetValidInput();
         var categories = _fixture.GetCategories();
-        var repositorySearchOutput = new SearchOutput<Category>(
+        var repositorySearchOutput = new SearchOutput<DomainEntity.Category>(
             currentPage: input.Page,
             perPage: input.PerPage,
             items: categories,
             total: categories.Count
         );
         repositoryMock.Setup(x => x.SearchAsync(
-            It.Is<SearchInput>(i => 
+            It.Is<SearchInput>(i =>
                 i.Page == input.Page
                 && i.PerPage == input.PerPage
                 && i.Search == input.Search
@@ -48,7 +49,8 @@ public class ListCategoriesTests
         output.PerPage.Should().Be(repositorySearchOutput.PerPage);
         output.Total.Should().Be(repositorySearchOutput.Total);
         output.Items.Should().HaveCount(repositorySearchOutput.Items.Count);
-        output.Items.ToList().ForEach(outputItem => {
+        output.Items.ToList().ForEach(outputItem =>
+        {
             var repositoryCategory = repositorySearchOutput.Items.FirstOrDefault(x => x.Id == outputItem.Id);
             outputItem.Should().NotBeNull();
             outputItem.Name.Should().Be(repositoryCategory!.Name);
@@ -57,7 +59,7 @@ public class ListCategoriesTests
             outputItem.CreatedAt.Should().Be(repositoryCategory.CreatedAt);
         });
         repositoryMock.Verify(x => x.SearchAsync(
-            It.Is<SearchInput>(p => 
+            It.Is<SearchInput>(p =>
                 p.Page == input.Page
                 && p.PerPage == input.PerPage
                 && p.Search == input.Search
@@ -72,17 +74,18 @@ public class ListCategoriesTests
     [Theory(DisplayName = nameof(ListInputWithNoParametersShouldBeSuccessful))]
     [Trait("Application", "ListCategories - Use Cases")]
     [MemberData(nameof(ListCategoriesTestsDataGenerator.GetInputsWithoutAllParameters), parameters: 12, MemberType = typeof(ListCategoriesTestsDataGenerator))]
-    public async Task ListInputWithNoParametersShouldBeSuccessful(ListCategoriesInput input) {
+    public async Task ListInputWithNoParametersShouldBeSuccessful(ListCategoriesInput input)
+    {
         var repositoryMock = _fixture.GetRepositoryMock();
         var categories = _fixture.GetCategories();
-        var repositorySearchOutput = new SearchOutput<Category>(
+        var repositorySearchOutput = new SearchOutput<DomainEntity.Category>(
             currentPage: input.Page,
             perPage: input.PerPage,
             items: categories,
             total: categories.Count
         );
         repositoryMock.Setup(x => x.SearchAsync(
-            It.Is<SearchInput>(i => 
+            It.Is<SearchInput>(i =>
                 i.Page == input.Page
                 && i.PerPage == input.PerPage
                 && i.Search == input.Search
@@ -102,7 +105,8 @@ public class ListCategoriesTests
         output.PerPage.Should().Be(repositorySearchOutput.PerPage);
         output.Total.Should().Be(repositorySearchOutput.Total);
         output.Items.Should().HaveCount(repositorySearchOutput.Items.Count);
-        output.Items.ToList().ForEach(outputItem => {
+        output.Items.ToList().ForEach(outputItem =>
+        {
             var repositoryCategory = repositorySearchOutput.Items.FirstOrDefault(x => x.Id == outputItem.Id);
             outputItem.Should().NotBeNull();
             outputItem.Name.Should().Be(repositoryCategory!.Name);
@@ -111,7 +115,7 @@ public class ListCategoriesTests
             outputItem.CreatedAt.Should().Be(repositoryCategory.CreatedAt);
         });
         repositoryMock.Verify(x => x.SearchAsync(
-            It.Is<SearchInput>(p => 
+            It.Is<SearchInput>(p =>
                 p.Page == input.Page
                 && p.PerPage == input.PerPage
                 && p.Search == input.Search
@@ -125,17 +129,18 @@ public class ListCategoriesTests
 
     [Fact(DisplayName = nameof(EmptyListSuccess))]
     [Trait("Application", "ListCategories - Use Cases")]
-    public async Task EmptyListSuccess() {
+    public async Task EmptyListSuccess()
+    {
         var repositoryMock = _fixture.GetRepositoryMock();
         var input = _fixture.GetValidInput();
-        var repositorySearchOutput = new SearchOutput<Category>(
+        var repositorySearchOutput = new SearchOutput<DomainEntity.Category>(
             currentPage: input.Page,
             perPage: input.PerPage,
-            items: new List<Category>(),
+            items: new List<DomainEntity.Category>(),
             total: 0
         );
         repositoryMock.Setup(x => x.SearchAsync(
-            It.Is<SearchInput>(i => 
+            It.Is<SearchInput>(i =>
                 i.Page == input.Page
                 && i.PerPage == input.PerPage
                 && i.Search == input.Search
@@ -155,9 +160,9 @@ public class ListCategoriesTests
         output.PerPage.Should().Be(repositorySearchOutput.PerPage);
         output.Total.Should().Be(0);
         output.Items.Should().HaveCount(0);
-        
+
         repositoryMock.Verify(x => x.SearchAsync(
-            It.Is<SearchInput>(p => 
+            It.Is<SearchInput>(p =>
                 p.Page == input.Page
                 && p.PerPage == input.PerPage
                 && p.Search == input.Search

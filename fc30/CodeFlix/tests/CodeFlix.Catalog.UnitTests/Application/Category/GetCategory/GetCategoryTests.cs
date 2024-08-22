@@ -1,9 +1,8 @@
-﻿using CodeFlix.Catalog.UnitTests.Application.GetCategory;
-using UseCaseGetCategory = CodeFlix.Catalog.Application.UseCases.Category.GetCategory;
+﻿using UseCaseGetCategory = CodeFlix.Catalog.Application.UseCases.Category.GetCategory;
 using UseCaseCommon = CodeFlix.Catalog.Application.UseCases.Category.Common;
 using CodeFlix.Catalog.Application.Exceptions;
 
-namespace CodeFlix.Catalog.UnitTests;
+namespace CodeFlix.Catalog.UnitTests.Application.Category.GetCategory;
 
 [Collection(nameof(GetCategoryTestsFixture))]
 public class GetCategoryTests
@@ -17,7 +16,8 @@ public class GetCategoryTests
 
     [Fact(DisplayName = nameof(GetSuccessfully))]
     [Trait("Application", "GetCategory - Use Cases")]
-    public async Task GetSuccessfully() {
+    public async Task GetSuccessfully()
+    {
         // Arrange
         var repositoryMock = _fixture.GetRepositoryMock();
         var exampleCategory = _fixture.GetValidCategory();
@@ -42,7 +42,8 @@ public class GetCategoryTests
 
     [Fact(DisplayName = nameof(NotFoundExceptionWhenCategoryDoesNotExists))]
     [Trait("Application", "GetCategory - Use Cases")]
-    public async Task NotFoundExceptionWhenCategoryDoesNotExists() {
+    public async Task NotFoundExceptionWhenCategoryDoesNotExists()
+    {
         // Arrange
         var repositoryMock = _fixture.GetRepositoryMock();
         var exampleGuid = Guid.NewGuid();

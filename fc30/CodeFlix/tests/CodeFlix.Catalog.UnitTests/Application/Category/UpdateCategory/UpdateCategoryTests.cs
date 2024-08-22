@@ -1,10 +1,10 @@
 using CodeFlix.Catalog.Application.Exceptions;
 using CodeFlix.Catalog.Application.UseCases.Category.UpdateCategory;
-using CodeFlix.Catalog.Domain.Entity;
+using DomainEntity = CodeFlix.Catalog.Domain.Entity;
 using CodeFlix.Catalog.Domain.Exceptions;
 using UseCaseUpdateCategory = CodeFlix.Catalog.Application.UseCases.Category.UpdateCategory;
 
-namespace CodeFlix.Catalog.UnitTests.Application.UpdateCategory;
+namespace CodeFlix.Catalog.UnitTests.Application.Category.UpdateCategory;
 
 [Collection(nameof(UpdateCategoryTestsFixture))]
 public class UpdateCategoryTests : UpdateCategoryTestsFixture
@@ -19,7 +19,8 @@ public class UpdateCategoryTests : UpdateCategoryTestsFixture
     [Theory(DisplayName = nameof(FullUpdateShouldBeSuccessful))]
     [Trait("Application", "UpdateCategory - Use Cases")]
     [MemberData(nameof(UpdateCategoryTestsGenerator.GetCategoriesToUpdate), parameters: 10, MemberType = typeof(UpdateCategoryTestsGenerator))]
-    public async Task FullUpdateShouldBeSuccessful(Category category, UpdateCategoryInput input) {
+    public async Task FullUpdateShouldBeSuccessful(DomainEntity.Category category, UpdateCategoryInput input)
+    {
         // Arrange
         var repositoryMock = _fixture.GetRepositoryMock();
         var uowMock = _fixture.GetUowMock();
@@ -47,7 +48,8 @@ public class UpdateCategoryTests : UpdateCategoryTestsFixture
     [Theory(DisplayName = nameof(UpdateWithoutIsActiveShouldBeSuccessful))]
     [Trait("Application", "UpdateCategory - Use Cases")]
     [MemberData(nameof(UpdateCategoryTestsGenerator.GetCategoriesToUpdate), parameters: 10, MemberType = typeof(UpdateCategoryTestsGenerator))]
-    public async Task UpdateWithoutIsActiveShouldBeSuccessful(Category category, UpdateCategoryInput baseInput) {
+    public async Task UpdateWithoutIsActiveShouldBeSuccessful(DomainEntity.Category category, UpdateCategoryInput baseInput)
+    {
         // Arrange
         var input = new UpdateCategoryInput(baseInput.Id, baseInput.Name, baseInput.Description);
         var repositoryMock = _fixture.GetRepositoryMock();
@@ -76,7 +78,8 @@ public class UpdateCategoryTests : UpdateCategoryTestsFixture
     [Theory(DisplayName = nameof(UpdateOnlyNameShouldBeSuccessful))]
     [Trait("Application", "UpdateCategory - Use Cases")]
     [MemberData(nameof(UpdateCategoryTestsGenerator.GetCategoriesToUpdate), parameters: 10, MemberType = typeof(UpdateCategoryTestsGenerator))]
-    public async Task UpdateOnlyNameShouldBeSuccessful(Category category, UpdateCategoryInput baseInput) {
+    public async Task UpdateOnlyNameShouldBeSuccessful(DomainEntity.Category category, UpdateCategoryInput baseInput)
+    {
         // Arrange
         var input = new UpdateCategoryInput(baseInput.Id, baseInput.Name);
         var repositoryMock = _fixture.GetRepositoryMock();
@@ -104,7 +107,8 @@ public class UpdateCategoryTests : UpdateCategoryTestsFixture
 
     [Fact(DisplayName = nameof(ThrowNotFoundExceptionWhenCategoryIsNotFound))]
     [Trait("Application", "UpdateCategory - Use Cases")]
-    public async Task ThrowNotFoundExceptionWhenCategoryIsNotFound () {
+    public async Task ThrowNotFoundExceptionWhenCategoryIsNotFound()
+    {
         // Arrange
         var repositoryMock = _fixture.GetRepositoryMock();
         var uowMock = _fixture.GetUowMock();
@@ -125,7 +129,8 @@ public class UpdateCategoryTests : UpdateCategoryTestsFixture
     [Theory(DisplayName = nameof(ThrowEntityValidationExceptionWhenCanNotUpdateCategory))]
     [Trait("Application", "UpdateCategory - Use Cases")]
     [MemberData(nameof(UpdateCategoryTestsGenerator.GetInvalidInputs), parameters: 12, MemberType = typeof(UpdateCategoryTestsGenerator))]
-    public async Task ThrowEntityValidationExceptionWhenCanNotUpdateCategory(UpdateCategoryInput input, string expectedExceptionMessage) {
+    public async Task ThrowEntityValidationExceptionWhenCanNotUpdateCategory(UpdateCategoryInput input, string expectedExceptionMessage)
+    {
         // Arrange
         var repositoryMock = _fixture.GetRepositoryMock();
         var uowMock = _fixture.GetUowMock();

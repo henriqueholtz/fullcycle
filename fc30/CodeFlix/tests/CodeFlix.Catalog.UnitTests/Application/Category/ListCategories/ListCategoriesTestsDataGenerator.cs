@@ -1,14 +1,17 @@
 using CodeFlix.Catalog.Application.UseCases.Category.ListCategories;
 
-namespace CodeFlix.Catalog.UnitTests.Application.ListCategories;
+namespace CodeFlix.Catalog.UnitTests.Application.Category.ListCategories;
 
 public class ListCategoriesTestsDataGenerator
 {
-    public static IEnumerable<object[]> GetInputsWithoutAllParameters(int times) {
+    public static IEnumerable<object[]> GetInputsWithoutAllParameters(int times)
+    {
         var fixture = new ListCategoriesTestsFixture();
         var inputBase = fixture.GetValidInput();
-        for (int i = 0; i < times; i++) {
-            switch (i % 6) {
+        for (int i = 0; i < times; i++)
+        {
+            switch (i % 6)
+            {
                 case 0:
                     yield return new object[] { new ListCategoriesInput() };
                     break;
