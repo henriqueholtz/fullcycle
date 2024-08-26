@@ -1,4 +1,5 @@
-﻿using CodeFlix.Catalog.Infra.Data.EF;
+﻿using System.Diagnostics.CodeAnalysis;
+using CodeFlix.Catalog.Infra.Data.EF;
 using CodeFlix.Catalog.IntegrationTests.Base;
 using Repository = CodeFlix.Catalog.Infra.Data.EF.Repositories;
 
@@ -30,6 +31,30 @@ public class CategoryRepositoryTests : BaseFixture
         var categoryDb = await dbContext.Categories.FindAsync(category.Id);
         categoryDb.Should().NotBeNull();
         categoryDb!.Name.Should().Be(category.Name);
+        categoryDb.Description.Should().Be(category.Description);
+        categoryDb.IsActive.Should().Be(category.IsActive);
+        categoryDb.CreatedAt.Should().Be(category.CreatedAt);
+    }
+
+    [Fact(DisplayName = nameof(GetSuccess))]
+    [Trait("Integration/Infra.Data", "CategoryRepository - Repositories")]
+    public async Task GetSuccess()
+    {
+        // Arrange
+        CodeFlixCatalogDbContext dbContext = _fixture.CreateDbContext();
+        var category = _fixture.GetValidCategory();
+        var exampleCategories = _fixture.GetValidCategories();
+        exampleCategories.Add(category);
+        await dbContext.AddRangeAsync(exampleCategories);
+        var categoryRepository = new Repository.CategoryRepository(dbContext);
+
+        // Act
+        var categoryDb = await categoryRepository.GetAsync(category.Id, CancellationToken.None);
+
+        // Assert
+        categoryDb.Should().NotBeNull();
+        categoryDb!.Id.Should().Be(category.Id);
+        categoryDb.Name.Should().Be(category.Name);
         categoryDb.Description.Should().Be(category.Description);
         categoryDb.IsActive.Should().Be(category.IsActive);
         categoryDb.CreatedAt.Should().Be(category.CreatedAt);

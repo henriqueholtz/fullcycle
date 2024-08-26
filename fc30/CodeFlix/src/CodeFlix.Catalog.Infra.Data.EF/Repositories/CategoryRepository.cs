@@ -20,9 +20,9 @@ public class CategoryRepository : ICategoryRepository
         throw new NotImplementedException();
     }
 
-    public Task<Category> GetAsync(Guid id, CancellationToken cancellationToken)
+    public async Task<Category> GetAsync(Guid id, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        return await _categories.FindAsync(new object[] { id }, cancellationToken);
     }
 
     public async Task InsertAsync(Category aggregate, CancellationToken cancellationToken)
