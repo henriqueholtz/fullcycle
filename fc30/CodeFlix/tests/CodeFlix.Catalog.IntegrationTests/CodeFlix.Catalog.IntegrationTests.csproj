@@ -23,4 +23,9 @@
     <Using Include="Xunit" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\CodeFlix.Catalog.Domain\CodeFlix.Catalog.Domain.csproj" />
+    <ProjectReference Include="..\..\src\CodeFlix.Catalog.Infra.Data.EF\CodeFlix.Catalog.Infra.Data.EF.csproj" />
+  </ItemGroup>
+
 </Project>
