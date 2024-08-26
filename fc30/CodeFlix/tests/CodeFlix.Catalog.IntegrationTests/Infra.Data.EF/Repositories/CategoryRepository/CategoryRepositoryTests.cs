@@ -26,6 +26,7 @@ public class CategoryRepositoryTests : BaseFixture
 
         // Act
         await categoryRepository.InsertAsync(category, CancellationToken.None);
+        await dbContext.SaveChangesAsync();
 
         // Assert
         var categoryDb = await dbContext.Categories.FindAsync(category.Id);
@@ -46,6 +47,7 @@ public class CategoryRepositoryTests : BaseFixture
         var exampleCategories = _fixture.GetValidCategories();
         exampleCategories.Add(category);
         await dbContext.AddRangeAsync(exampleCategories);
+        await dbContext.SaveChangesAsync();
         var categoryRepository = new Repository.CategoryRepository(dbContext);
 
         // Act
@@ -69,6 +71,7 @@ public class CategoryRepositoryTests : BaseFixture
         var notFoundCategoryId = Guid.NewGuid();
         var exampleCategories = _fixture.GetValidCategories();
         await dbContext.AddRangeAsync(exampleCategories);
+        await dbContext.SaveChangesAsync();
         var categoryRepository = new Repository.CategoryRepository(dbContext);
 
         // Act
@@ -77,5 +80,34 @@ public class CategoryRepositoryTests : BaseFixture
         // Assert
         await action.Should().ThrowAsync<NotFoundException>()
             .WithMessage($"Category {notFoundCategoryId} not found.");
+    }
+
+    [Fact(DisplayName = nameof(UpdateSuccess))]
+    [Trait("Integration/Infra.Data", "CategoryRepository - Repositories")]
+    public async Task UpdateSuccess()
+    {
+        // Arrange
+        CodeFlixCatalogDbContext dbContext = _fixture.CreateDbContext();
+        var category = _fixture.GetValidCategory();
+        var newCategory = _fixture.GetValidCategory();
+        var exampleCategories = _fixture.GetValidCategories();
+        exampleCategories.Add(category);
+        await dbContext.AddRangeAsync(exampleCategories);
+        await dbContext.SaveChangesAsync();
+        var categoryRepository = new Repository.CategoryRepository(dbContext);
+        category.Update(newCategory.Name, newCategory.Description);
+
+        // Act
+        await categoryRepository.UpdateAsync(category, CancellationToken.None);
+        await dbContext.SaveChangesAsync();
+
+        // Assert
+        var categoryDb = await dbContext.Categories.FindAsync(category.Id);
+        categoryDb.Should().NotBeNull();
+        categoryDb!.Id.Should().Be(category.Id);
+        categoryDb.Name.Should().Be(newCategory.Name);
+        categoryDb.Description.Should().Be(newCategory.Description);
+        categoryDb.IsActive.Should().Be(category.IsActive);
+        categoryDb.CreatedAt.Should().Be(category.CreatedAt);
     }
 }
