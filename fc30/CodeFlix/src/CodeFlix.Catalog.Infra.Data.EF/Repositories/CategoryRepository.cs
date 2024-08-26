@@ -24,10 +24,10 @@ public class CategoryRepository : ICategoryRepository
     public async Task<Category> GetAsync(Guid id, CancellationToken cancellationToken)
     {
         var category = await _categories.FindAsync(new object[] { id }, cancellationToken);
-        if (category == null)
-            throw new NotFoundException($"Category {id} not found.");
 
-        return category;
+        NotFoundException.ThrowIfNull(category, $"Category {id} not found.");
+
+        return category!;
     }
 
     public async Task InsertAsync(Category aggregate, CancellationToken cancellationToken)
