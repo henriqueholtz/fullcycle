@@ -29,7 +29,7 @@ public class CategoryRepositoryTests : BaseFixture
         await dbContext.SaveChangesAsync();
 
         // Assert
-        var categoryDb = await dbContext.Categories.FindAsync(category.Id);
+        var categoryDb = await (_fixture.CreateDbContext()).Categories.FindAsync(category.Id);
         categoryDb.Should().NotBeNull();
         categoryDb!.Name.Should().Be(category.Name);
         categoryDb.Description.Should().Be(category.Description);
@@ -48,7 +48,7 @@ public class CategoryRepositoryTests : BaseFixture
         exampleCategories.Add(category);
         await dbContext.AddRangeAsync(exampleCategories);
         await dbContext.SaveChangesAsync();
-        var categoryRepository = new Repository.CategoryRepository(dbContext);
+        var categoryRepository = new Repository.CategoryRepository(_fixture.CreateDbContext());
 
         // Act
         var categoryDb = await categoryRepository.GetAsync(category.Id, CancellationToken.None);
@@ -102,7 +102,7 @@ public class CategoryRepositoryTests : BaseFixture
         await dbContext.SaveChangesAsync();
 
         // Assert
-        var categoryDb = await dbContext.Categories.FindAsync(category.Id);
+        var categoryDb = await (_fixture.CreateDbContext()).Categories.FindAsync(category.Id);
         categoryDb.Should().NotBeNull();
         categoryDb!.Id.Should().Be(category.Id);
         categoryDb.Name.Should().Be(newCategory.Name);
