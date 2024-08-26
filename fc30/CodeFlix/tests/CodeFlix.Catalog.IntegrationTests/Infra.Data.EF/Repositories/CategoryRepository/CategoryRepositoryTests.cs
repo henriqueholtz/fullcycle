@@ -1,4 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using CodeFlix.Catalog.Application.Exceptions;
 using CodeFlix.Catalog.Infra.Data.EF;
 using CodeFlix.Catalog.IntegrationTests.Base;
 using Repository = CodeFlix.Catalog.Infra.Data.EF.Repositories;
@@ -58,5 +58,24 @@ public class CategoryRepositoryTests : BaseFixture
         categoryDb.Description.Should().Be(category.Description);
         categoryDb.IsActive.Should().Be(category.IsActive);
         categoryDb.CreatedAt.Should().Be(category.CreatedAt);
+    }
+
+    [Fact(DisplayName = nameof(GetThrowIfNotFound))]
+    [Trait("Integration/Infra.Data", "CategoryRepository - Repositories")]
+    public async Task GetThrowIfNotFound()
+    {
+        // Arrange
+        CodeFlixCatalogDbContext dbContext = _fixture.CreateDbContext();
+        var notFoundCategoryId = Guid.NewGuid();
+        var exampleCategories = _fixture.GetValidCategories();
+        await dbContext.AddRangeAsync(exampleCategories);
+        var categoryRepository = new Repository.CategoryRepository(dbContext);
+
+        // Act
+        var action = async () => await categoryRepository.GetAsync(notFoundCategoryId, CancellationToken.None);
+
+        // Assert
+        await action.Should().ThrowAsync<NotFoundException>()
+            .WithMessage($"Category {notFoundCategoryId} not found.");
     }
 }
