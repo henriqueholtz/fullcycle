@@ -16,9 +16,9 @@ public class CategoryRepository : ICategoryRepository
         _dbContext = dbContext;
     }
 
-    public Task DeleteAsync(Category aggregate, CancellationToken cancellationToken)
+    public Task DeleteAsync(Category aggregate, CancellationToken _)
     {
-        throw new NotImplementedException();
+        return Task.FromResult(_categories.Remove(aggregate));
     }
 
     public async Task<Category> GetAsync(Guid id, CancellationToken cancellationToken)
@@ -40,7 +40,7 @@ public class CategoryRepository : ICategoryRepository
         throw new NotImplementedException();
     }
 
-    public Task UpdateAsync(Category aggregate, CancellationToken cancellationToken)
+    public Task UpdateAsync(Category aggregate, CancellationToken _)
     {
         return Task.FromResult(_categories.Update(aggregate));
     }

@@ -110,4 +110,26 @@ public class CategoryRepositoryTests : BaseFixture
         categoryDb.IsActive.Should().Be(category.IsActive);
         categoryDb.CreatedAt.Should().Be(category.CreatedAt);
     }
+
+    [Fact(DisplayName = nameof(DeleteSuccess))]
+    [Trait("Integration/Infra.Data", "CategoryRepository - Repositories")]
+    public async Task DeleteSuccess()
+    {
+        // Arrange
+        CodeFlixCatalogDbContext dbContext = _fixture.CreateDbContext();
+        var category = _fixture.GetValidCategory();
+        var exampleCategories = _fixture.GetValidCategories();
+        exampleCategories.Add(category);
+        await dbContext.AddRangeAsync(exampleCategories);
+        await dbContext.SaveChangesAsync();
+        var categoryRepository = new Repository.CategoryRepository(dbContext);
+
+        // Act
+        await categoryRepository.DeleteAsync(category, CancellationToken.None);
+        await dbContext.SaveChangesAsync();
+
+        // Assert
+        var categoryDb = await (_fixture.CreateDbContext()).Categories.FindAsync(category.Id);
+        categoryDb.Should().BeNull();
+    }
 }
