@@ -43,13 +43,15 @@ public class CategoryRepositoryTestsFixture : BaseFixture
             .ToList();
     }
 
-    public CodeFlixCatalogDbContext CreateDbContext()
+    public CodeFlixCatalogDbContext CreateDbContext(bool preserveData = false)
     {
         var dbContext = new CodeFlixCatalogDbContext(
             new DbContextOptionsBuilder<CodeFlixCatalogDbContext>()
                 .UseInMemoryDatabase("CodeFlix.Catalog.IntegrationTests")
                 .Options
         );
+        if (!preserveData)
+            dbContext.Database.EnsureDeleted();
         return dbContext;
     }
 }
