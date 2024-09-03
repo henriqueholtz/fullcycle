@@ -189,4 +189,43 @@ public class CategoryRepositoryTests
         output.Total.Should().Be(0);
         output.Items.Should().HaveCount(0);
     }
+
+    [Theory(DisplayName = nameof(SearchReturnPaginatedListAndTotal_Success))]
+    [Trait("Integration/Infra.Data", "CategoryRepository - Repositories")]
+    [InlineData(10, 1, 5, 5)]
+    [InlineData(10, 2, 5, 5)]
+    [InlineData(7, 2, 5, 2)]
+    [InlineData(7, 3, 5, 0)]
+    public async Task SearchReturnPaginatedListAndTotal_Success(int quantityToGenerate, int page, int perPage, int expectedQuantity)
+    {
+        // Arrange
+        CodeFlixCatalogDbContext dbContext = _fixture.CreateDbContext();
+        var exampleCategories = _fixture.GetValidCategories(quantityToGenerate);
+        await dbContext.AddRangeAsync(exampleCategories);
+        await dbContext.SaveChangesAsync();
+        var categoryRepository = new Repository.CategoryRepository(dbContext);
+        var input = new SearchInput(page, perPage, "", "", SearchOrder.Asc);
+
+        // Act
+        var output = await categoryRepository.SearchAsync(input, CancellationToken.None);
+
+        // Assert
+        output.Should().NotBeNull();
+        output.Items.Should().NotBeNull();
+        output.CurrentPage.Should().Be(input.Page);
+        output.PerPage.Should().Be(input.PerPage);
+        output.Total.Should().Be(quantityToGenerate);
+        output.Items.Should().HaveCount(expectedQuantity);
+
+        foreach (Category outputCategory in output.Items)
+        {
+            var exampleCategory = exampleCategories.Find(cat => cat.Id == outputCategory.Id);
+            exampleCategory.Should().NotBeNull();
+            outputCategory.Should().NotBeNull();
+            outputCategory.Name.Should().Be(exampleCategory!.Name);
+            outputCategory.Description.Should().Be(exampleCategory.Description);
+            outputCategory.IsActive.Should().Be(exampleCategory.IsActive);
+            outputCategory.CreatedAt.Should().Be(exampleCategory.CreatedAt);
+        }
+    }
 }
