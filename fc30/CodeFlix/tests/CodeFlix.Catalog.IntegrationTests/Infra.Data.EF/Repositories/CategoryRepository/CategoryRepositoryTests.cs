@@ -228,4 +228,57 @@ public class CategoryRepositoryTests
             outputCategory.CreatedAt.Should().Be(exampleCategory.CreatedAt);
         }
     }
+
+    [Theory(DisplayName = nameof(SearchByTextReturnPaginatedListAndTotal_Success))]
+    [Trait("Integration/Infra.Data", "CategoryRepository - Repositories")]
+    [InlineData("Action", 1, 5, 1, 1)]
+    [InlineData("Horror", 1, 5, 3, 3)]
+    [InlineData("Horror", 2, 5, 0, 3)]
+    [InlineData("Sci-fi", 1, 5, 4, 4)]
+    [InlineData("Sci-fi", 1, 2, 2, 4)]
+    [InlineData("Sci-fi", 2, 3, 1, 4)]
+    [InlineData("Sci-fi Other", 1, 3, 0, 0)]
+    [InlineData("Robots", 1, 5, 2, 2)]
+    public async Task SearchByTextReturnPaginatedListAndTotal_Success(string search, int page, int perPage, int expectedQuantityReturned, int expectedQuantityTotal)
+    {
+        // Arrange
+        CodeFlixCatalogDbContext dbContext = _fixture.CreateDbContext();
+        var exampleCategories = _fixture.GetValidCategoriesWithFixedNames(new List<string> {
+            "Action",
+            "Horror",
+            "Horror - Robots",
+            "Horror - Based on Real Facts",
+            "Drama",
+            "Sci-fi IA",
+            "Sci-fi Space",
+            "Sci-fi Robots",
+            "Sci-fi Future",
+        });
+        await dbContext.AddRangeAsync(exampleCategories);
+        await dbContext.SaveChangesAsync();
+        var categoryRepository = new Repository.CategoryRepository(dbContext);
+        var input = new SearchInput(page, perPage, search, "", SearchOrder.Asc);
+
+        // Act
+        var output = await categoryRepository.SearchAsync(input, CancellationToken.None);
+
+        // Assert
+        output.Should().NotBeNull();
+        output.Items.Should().NotBeNull();
+        output.CurrentPage.Should().Be(input.Page);
+        output.PerPage.Should().Be(input.PerPage);
+        output.Total.Should().Be(expectedQuantityTotal);
+        output.Items.Should().HaveCount(expectedQuantityReturned);
+
+        foreach (Category outputCategory in output.Items)
+        {
+            var exampleCategory = exampleCategories.Find(cat => cat.Id == outputCategory.Id);
+            exampleCategory.Should().NotBeNull();
+            outputCategory.Should().NotBeNull();
+            outputCategory.Name.Should().Be(exampleCategory!.Name);
+            outputCategory.Description.Should().Be(exampleCategory.Description);
+            outputCategory.IsActive.Should().Be(exampleCategory.IsActive);
+            outputCategory.CreatedAt.Should().Be(exampleCategory.CreatedAt);
+        }
+    }
 }

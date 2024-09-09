@@ -36,6 +36,15 @@ public class CategoryRepositoryTestsFixture : BaseFixture
     public bool GetRandomBoolean() => new Random().NextDouble() > 0.5;
 
     public Category GetValidCategory() => new(GetValidCategoryName(), GetValidCategoryDescription(), GetRandomBoolean());
+    public List<Category> GetValidCategoriesWithFixedNames(List<string> names)
+    {
+        return names.Select(name =>
+        {
+            var category = GetValidCategory();
+            category.Update(name);
+            return category;
+        }).ToList();
+    }
     public List<Category> GetValidCategories(int length = 10)
     {
         return Enumerable.Range(1, length)
