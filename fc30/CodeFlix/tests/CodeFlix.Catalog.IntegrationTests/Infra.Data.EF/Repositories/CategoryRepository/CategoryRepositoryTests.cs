@@ -1,4 +1,4 @@
-using CodeFlix.Catalog.Application.Exceptions;
+﻿using CodeFlix.Catalog.Application.Exceptions;
 using CodeFlix.Catalog.Domain.Entity;
 using CodeFlix.Catalog.Domain.SeedWork.SearchableRepository;
 using CodeFlix.Catalog.Infra.Data.EF;
@@ -279,6 +279,51 @@ public class CategoryRepositoryTests
             outputCategory.Description.Should().Be(exampleCategory.Description);
             outputCategory.IsActive.Should().Be(exampleCategory.IsActive);
             outputCategory.CreatedAt.Should().Be(exampleCategory.CreatedAt);
+        }
+    }
+
+    [Theory(DisplayName = nameof(SearchOrderedReturnPaginatedListAndTotal_Success))]
+    [Trait("Integration/Infra.Data", "CategoryRepository - Repositories")]
+    [InlineData(SearchOrder.Asc, "name")]
+    [InlineData(SearchOrder.Desc, "name")]
+    [InlineData(SearchOrder.Asc, "id")]
+    [InlineData(SearchOrder.Desc, "id")]
+    [InlineData(SearchOrder.Asc, "createdAt")]
+    [InlineData(SearchOrder.Desc, "createdAt")]
+    [InlineData(SearchOrder.Desc, "invalid_field")]
+    public async Task SearchOrderedReturnPaginatedListAndTotal_Success(SearchOrder order, string orderBy)
+    {
+        // Arrange
+        CodeFlixCatalogDbContext dbContext = _fixture.CreateDbContext(false, true);
+        var exampleCategories = _fixture.GetValidCategories();
+        await dbContext.AddRangeAsync(exampleCategories);
+        await dbContext.SaveChangesAsync();
+        var categoryRepository = new Repository.CategoryRepository(dbContext);
+        var input = new SearchInput(1, 20, "", orderBy, order);
+
+        // Act
+        var output = await categoryRepository.SearchAsync(input, CancellationToken.None);
+
+        // Assert
+        var orderedCategories = _fixture.OrderCategories(exampleCategories, orderBy, order);
+        output.Should().NotBeNull();
+        output.Items.Should().NotBeNull();
+        output.CurrentPage.Should().Be(input.Page);
+        output.PerPage.Should().Be(input.PerPage);
+        output.Total.Should().Be(exampleCategories.Count);
+        output.Items.Should().HaveCount(exampleCategories.Count);
+
+        for (int i = 0; i < exampleCategories.Count; i++)
+        {
+            var expectedCategory = orderedCategories[i];
+            var outputCategory = output.Items[i];
+            expectedCategory.Should().NotBeNull();
+            outputCategory.Should().NotBeNull();
+            outputCategory.Id.Should().Be(expectedCategory!.Id);
+            outputCategory.Name.Should().Be(expectedCategory.Name);
+            outputCategory.Description.Should().Be(expectedCategory.Description);
+            outputCategory.IsActive.Should().Be(expectedCategory.IsActive);
+            outputCategory.CreatedAt.Should().Be(expectedCategory.CreatedAt);
         }
     }
 }

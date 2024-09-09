@@ -35,11 +35,27 @@ public class CategoryRepository : ICategoryRepository
         await _categories.AddAsync(aggregate);
     }
 
+    private IQueryable<Category> AddOrderToQuery(IQueryable<Category> query, string orderBy, SearchOrder order)
+    {
+        return (orderBy.ToLower(), order) switch
+        {
+            ("name", SearchOrder.Asc) => query.OrderBy(c => c.Name),
+            ("name", SearchOrder.Desc) => query.OrderByDescending(c => c.Name),
+            ("id", SearchOrder.Asc) => query.OrderBy(c => c.Id),
+            ("id", SearchOrder.Desc) => query.OrderByDescending(c => c.Id),
+            ("createdat", SearchOrder.Asc) => query.OrderBy(c => c.CreatedAt),
+            ("createdat", SearchOrder.Desc) => query.OrderByDescending(c => c.CreatedAt),
+            _ => query.OrderBy(c => c.Name),
+        };
+    }
+
     public async Task<SearchOutput<Category>> SearchAsync(SearchInput searchInput, CancellationToken cancellationToken)
     {
         var query = _categories.AsNoTracking();
         if (!string.IsNullOrWhiteSpace(searchInput.Search))
             query = query.Where(c => c.Name.Contains(searchInput.Search));
+
+        query = AddOrderToQuery(query, searchInput.OrderBy, searchInput.Order);
 
         var skipQuantity = (searchInput.Page - 1) * searchInput.PerPage;
         var total = await query.CountAsync();

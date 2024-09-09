@@ -72,10 +72,14 @@ public class CategoryRepositoryTestsFixture : BaseFixture
     public List<Category> OrderCategories(List<Category> categories, string orderBy, SearchOrder order)
     {
         var orderedCategories = new List<Category>(categories);
-        var ordered = (order, orderBy) switch
+        var ordered = (order, orderBy.ToLower()) switch
         {
             (SearchOrder.Asc, "name") => orderedCategories.OrderBy(c => c.Name),
             (SearchOrder.Desc, "name") => orderedCategories.OrderByDescending(c => c.Name),
+            (SearchOrder.Asc, "id") => orderedCategories.OrderBy(c => c.Id),
+            (SearchOrder.Desc, "id") => orderedCategories.OrderByDescending(c => c.Id),
+            (SearchOrder.Asc, "createdat") => orderedCategories.OrderBy(c => c.CreatedAt),
+            (SearchOrder.Desc, "createdat") => orderedCategories.OrderByDescending(c => c.CreatedAt),
             _ => orderedCategories.OrderBy(c => c.Name),
         };
         return ordered.ToList();
