@@ -1,4 +1,5 @@
 using CodeFlix.Catalog.Domain.Entity;
+using CodeFlix.Catalog.Domain.SeedWork.SearchableRepository;
 using CodeFlix.Catalog.Infra.Data.EF;
 using CodeFlix.Catalog.IntegrationTests.Base;
 using Microsoft.EntityFrameworkCore;
@@ -52,15 +53,31 @@ public class CategoryRepositoryTestsFixture : BaseFixture
             .ToList();
     }
 
-    public CodeFlixCatalogDbContext CreateDbContext(bool preserveData = false)
+    public CodeFlixCatalogDbContext CreateDbContext(bool preserveData = false, bool randomDatabaseName = false)
     {
+        string databaseName = "CodeFlix.Catalog.IntegrationTests";
+        if (randomDatabaseName)
+            databaseName += Guid.NewGuid().ToString();
+
         var dbContext = new CodeFlixCatalogDbContext(
             new DbContextOptionsBuilder<CodeFlixCatalogDbContext>()
-                .UseInMemoryDatabase("CodeFlix.Catalog.IntegrationTests")
+                .UseInMemoryDatabase(databaseName)
                 .Options
         );
         if (!preserveData)
             dbContext.Database.EnsureDeleted();
         return dbContext;
+    }
+
+    public List<Category> OrderCategories(List<Category> categories, string orderBy, SearchOrder order)
+    {
+        var orderedCategories = new List<Category>(categories);
+        var ordered = (order, orderBy) switch
+        {
+            (SearchOrder.Asc, "name") => orderedCategories.OrderBy(c => c.Name),
+            (SearchOrder.Desc, "name") => orderedCategories.OrderByDescending(c => c.Name),
+            _ => orderedCategories.OrderBy(c => c.Name),
+        };
+        return ordered.ToList();
     }
 }

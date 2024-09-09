@@ -1,4 +1,4 @@
-﻿using CodeFlix.Catalog.Application.Exceptions;
+using CodeFlix.Catalog.Application.Exceptions;
 using CodeFlix.Catalog.Domain.Entity;
 using CodeFlix.Catalog.Domain.SeedWork.SearchableRepository;
 using CodeFlix.Catalog.Infra.Data.EF;
@@ -139,7 +139,7 @@ public class CategoryRepositoryTests
     public async Task SearchReturnListAndTotal_Success()
     {
         // Arrange
-        CodeFlixCatalogDbContext dbContext = _fixture.CreateDbContext();
+        CodeFlixCatalogDbContext dbContext = _fixture.CreateDbContext(false, true);
         var exampleCategories = _fixture.GetValidCategories();
         await dbContext.AddRangeAsync(exampleCategories);
         await dbContext.SaveChangesAsync();
@@ -199,7 +199,7 @@ public class CategoryRepositoryTests
     public async Task SearchReturnPaginatedListAndTotal_Success(int quantityToGenerate, int page, int perPage, int expectedQuantity)
     {
         // Arrange
-        CodeFlixCatalogDbContext dbContext = _fixture.CreateDbContext();
+        CodeFlixCatalogDbContext dbContext = _fixture.CreateDbContext(false, true);
         var exampleCategories = _fixture.GetValidCategories(quantityToGenerate);
         await dbContext.AddRangeAsync(exampleCategories);
         await dbContext.SaveChangesAsync();
