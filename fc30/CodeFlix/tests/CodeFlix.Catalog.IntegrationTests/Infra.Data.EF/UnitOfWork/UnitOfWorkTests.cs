@@ -32,4 +32,19 @@ public class UnitOfWorkTests
         savedCategories.Should().NotBeNullOrEmpty();
         savedCategories.Should().HaveCount(categories.Count);
     }
+
+    [Fact(DisplayName = nameof(RollbackSuccess))]
+    [Trait("Integration/Infra.Data", "UnitOfWork - Persistence")]
+    public async Task RollbackSuccess()
+    {
+        // Arrange
+        var dbContext = _fixture.CreateDbContext();
+        var ufw = new UnitOfWorkInfra.UnitOfWork(dbContext);
+
+        // Act
+        var task = async () => await ufw.RollbackAsync(CancellationToken.None);
+
+        // Assert
+        await task.Should().NotThrowAsync<Exception>();
+    }
 }
