@@ -1,8 +1,8 @@
-﻿using CodeFlix.Catalog.Application.UseCases.Category.CreateCategory;
+using CodeFlix.Catalog.Application.UseCases.Category.CreateCategory;
 
-namespace CodeFlix.Catalog.UnitTests.Application.Category.CreateCategory;
+namespace CodeFlix.Catalog.IntegrationTests.Application.UseCases.Category.CreateCategory;
 
-public static class CreateCategoryTestsGenerator
+public class CreateCategoryTestsDataGenerator
 {
     public static IEnumerable<object[]> GetValidInputs()
     {
