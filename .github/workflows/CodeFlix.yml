@@ -1,0 +1,26 @@
+name: CodeFlix.Tests
+
+on:
+  push:
+    branches: [master]
+    paths:
+      - 'fc30/CodeFlix/**'
+  pull_request:
+    branches: [master]
+    paths:
+      - 'fc30/CodeFlix/**'
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 8.0.x
+      - name: UnitTests
+        run: dotnet test fc30/CodeFlix/tests/CodeFlix.Catalog.UnitTests/CodeFlix.Catalog.UnitTests.csproj
+      - name: IntegrationTests
+        run: dotnet test fc30/CodeFlix/tests/CodeFlix.Catalog.IntegrationTests/CodeFlix.Catalog.IntegrationTests.csproj
