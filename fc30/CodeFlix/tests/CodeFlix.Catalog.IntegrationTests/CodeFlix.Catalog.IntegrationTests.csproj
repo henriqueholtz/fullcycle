@@ -10,9 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Bogus" Version="35.6.0" />
     <PackageReference Include="coverlet.collector" Version="6.0.0" />
-    <PackageReference Include="FluentAssertions" Version="6.12.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="8.0.8" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
     <PackageReference Include="xunit" Version="2.5.3" />
@@ -24,6 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="../CodeFlix.Catalog.SharedTests/CodeFlix.Catalog.SharedTests.csproj" />
     <ProjectReference Include="..\..\src\CodeFlix.Catalog.Domain\CodeFlix.Catalog.Domain.csproj" />
     <ProjectReference Include="..\..\src\CodeFlix.Catalog.Infra.Data.EF\CodeFlix.Catalog.Infra.Data.EF.csproj" />
   </ItemGroup>

@@ -1,18 +1,11 @@
-using Bogus;
 using CodeFlix.Catalog.Infra.Data.EF;
 using Microsoft.EntityFrameworkCore;
+using SharedBase = CodeFlix.Catalog.SharedTests.Base;
 
 namespace CodeFlix.Catalog.IntegrationTests.Base;
 
-public class BaseFixture
+public class BaseFixture : SharedBase.BaseFixture
 {
-    protected Faker Faker { get; set; }
-
-    public BaseFixture()
-    {
-        Faker = new Faker("pt_BR");
-    }
-
     public CodeFlixCatalogDbContext CreateDbContext(bool preserveData = false, bool randomDatabaseName = false)
     {
         string databaseName = "CodeFlix.Catalog.IntegrationTests";
