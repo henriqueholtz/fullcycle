@@ -14,10 +14,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers/" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\CodeFlix.Catalog.Application\CodeFlix.Catalog.Application.csproj" />
     <ProjectReference Include="..\CodeFlix.Catalog.Infra.Data.EF\CodeFlix.Catalog.Infra.Data.EF.csproj" />
   </ItemGroup>
