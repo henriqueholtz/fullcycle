@@ -1,4 +1,4 @@
-
+﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
@@ -16,6 +16,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeFlix.Catalog.IntegrationTests", "tests\CodeFlix.Catalog.IntegrationTests\CodeFlix.Catalog.IntegrationTests.csproj", "{063DA65F-17C5-4B0D-8FD9-56876431FB31}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeFlix.Catalog.Infra.Data.EF", "src\CodeFlix.Catalog.Infra.Data.EF\CodeFlix.Catalog.Infra.Data.EF.csproj", "{A2BA5048-E657-446E-AAA4-BF7CFD8716FD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeFlix.Catalog.EndToEndTests", "tests\CodeFlix.Catalog.EndToEndTests\CodeFlix.Catalog.EndToEndTests.csproj", "{7526A75A-2F7E-4163-AB94-B8F80047D218}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeFlix.Catalog.SharedTests", "tests\CodeFlix.Catalog.SharedTests\CodeFlix.Catalog.SharedTests.csproj", "{9FA7C1E2-1D96-4B87-B59A-DFB1603A1F24}"
 EndProject
@@ -47,6 +49,10 @@ Global
 		{A2BA5048-E657-446E-AAA4-BF7CFD8716FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A2BA5048-E657-446E-AAA4-BF7CFD8716FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A2BA5048-E657-446E-AAA4-BF7CFD8716FD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7526A75A-2F7E-4163-AB94-B8F80047D218}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7526A75A-2F7E-4163-AB94-B8F80047D218}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7526A75A-2F7E-4163-AB94-B8F80047D218}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7526A75A-2F7E-4163-AB94-B8F80047D218}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9FA7C1E2-1D96-4B87-B59A-DFB1603A1F24}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9FA7C1E2-1D96-4B87-B59A-DFB1603A1F24}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9FA7C1E2-1D96-4B87-B59A-DFB1603A1F24}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -65,6 +71,7 @@ Global
 		{865A9BB4-6B1E-4A73-A521-866C520FF5FC} = {BF1C4DD9-95BC-4771-A2D7-29CB2045B41D}
 		{063DA65F-17C5-4B0D-8FD9-56876431FB31} = {304667C4-1676-4E0B-AAA9-DE914F70E4BE}
 		{A2BA5048-E657-446E-AAA4-BF7CFD8716FD} = {BF1C4DD9-95BC-4771-A2D7-29CB2045B41D}
+		{7526A75A-2F7E-4163-AB94-B8F80047D218} = {304667C4-1676-4E0B-AAA9-DE914F70E4BE}
 		{9FA7C1E2-1D96-4B87-B59A-DFB1603A1F24} = {304667C4-1676-4E0B-AAA9-DE914F70E4BE}
 		{6AD53CD6-DF48-48D4-BAC7-D05C7B5CE00C} = {BF1C4DD9-95BC-4771-A2D7-29CB2045B41D}
 	EndGlobalSection
