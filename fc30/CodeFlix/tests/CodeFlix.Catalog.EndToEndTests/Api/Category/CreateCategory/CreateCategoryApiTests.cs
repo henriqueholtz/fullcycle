@@ -25,7 +25,7 @@ public class CreateCategoryApiTests
         var input = _fixture.GetValidInput();
 
         // Act
-        var (response, output) = await _fixture.ApiClient.Post<CategoryModelOutput>(
+        var (response, output) = await _fixture.ApiClient.PostAsync<CategoryModelOutput>(
             "/api/categories",
             input
             );
@@ -56,7 +56,7 @@ public class CreateCategoryApiTests
     public async Task ThrowWhenCanNotInstantiateAggregate(CreateCategoryInput input, string expectedErrorMessage)
     {
         // Act
-        var (response, output) = await _fixture.ApiClient.Post<ProblemDetails>(
+        var (response, output) = await _fixture.ApiClient.PostAsync<ProblemDetails>(
             "/api/categories",
             input
             );

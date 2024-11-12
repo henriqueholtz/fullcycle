@@ -13,7 +13,7 @@ public class ApiClient
         _client = client;
     }
 
-    public async Task<(HttpResponseMessage?, TOutput?)> Post<TOutput>(string routePath, object payload)
+    public async Task<(HttpResponseMessage?, TOutput?)> PostAsync<TOutput>(string routePath, object payload)
     {
         var response = await _client.PostAsync(routePath, new StringContent(JsonSerializer.Serialize(payload), Encoding.UTF8, MediaTypeNames.Application.Json));
         var responseAsString = await response.Content.ReadAsStringAsync() ?? "";
