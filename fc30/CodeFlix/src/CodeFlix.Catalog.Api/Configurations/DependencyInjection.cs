@@ -1,9 +1,9 @@
+using CodeFlix.Catalog.Api.Filters;
 using CodeFlix.Catalog.Application;
 using CodeFlix.Catalog.Application.UseCases.Category.CreateCategory;
 using CodeFlix.Catalog.Domain.Repository;
 using CodeFlix.Catalog.Infra.Data.EF;
 using CodeFlix.Catalog.Infra.Data.EF.Repositories;
-using MediatR;
 
 namespace CodeFlix.Catalog.Api.Configurations;
 
@@ -11,7 +11,7 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddControllersAndDocumentation(this IServiceCollection services)
     {
-        services.AddControllers();
+        services.AddControllers(options => options.Filters.Add(typeof(ExceptionsFilter)));
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen();
         return services;
