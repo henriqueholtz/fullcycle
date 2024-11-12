@@ -34,5 +34,25 @@ public class CategoryApiBaseTestsFixture : BaseFixture
 
     public bool GetRandomBoolean() => new Random().NextDouble() > 0.5;
 
+    public string GetInvalidNameTooShort()
+    {
+        string nameTooShort = GetValidCategoryName();
+        return nameTooShort.Substring(0, 2);
+    }
 
+    public string GetInvalidNameTooLong()
+    {
+        string nameTooLong = GetValidCategoryName();
+        while (nameTooLong.Length <= 255)
+            nameTooLong += $" {GetValidCategoryName()}";
+        return nameTooLong;
+    }
+
+    public string GetInvalidDescriptionTooLong()
+    {
+        string descriptionTooLong = GetValidCategoryDescription();
+        while (descriptionTooLong.Length <= 10_000)
+            descriptionTooLong += $" {GetValidCategoryDescription()}";
+        return descriptionTooLong;
+    }
 }
