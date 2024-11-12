@@ -18,7 +18,7 @@ public class CreateCategoryApiTests
     }
 
     [Fact(DisplayName = nameof(CreateCategory))]
-    [Trait("EndToEnd/Api", "Category Endpoints")]
+    [Trait("EndToEnd/Api", "Category/Create Endpoints")]
     public async Task CreateCategory()
     {
         // Arrange
@@ -51,7 +51,7 @@ public class CreateCategoryApiTests
     }
 
     [Theory(DisplayName = nameof(ThrowWhenCanNotInstantiateAggregate))]
-    [Trait("EndToEnd/Api", "Category Endpoints")]
+    [Trait("EndToEnd/Api", "Category/Create Endpoints")]
     [MemberData(nameof(CreateCategoryApiTestsDataGenerator.GetInvalidInputs), MemberType = typeof(CreateCategoryApiTestsDataGenerator))]
     public async Task ThrowWhenCanNotInstantiateAggregate(CreateCategoryInput input, string expectedErrorMessage)
     {
