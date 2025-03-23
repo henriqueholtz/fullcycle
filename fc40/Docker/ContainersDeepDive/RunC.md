@@ -1,0 +1,21 @@
+# RunC
+
+- Execute an ubuntu container: `docker run -d --rm --privileged=true --name=ubuntu ubuntu:22.04 sleep infinity`
+- Access the container: `docker exec -it ubuntu bash`
+- Install some packages: `apt update && apt install -y sudo containerd curl`
+- Install docker to pull the images from a registry like dockerhub: `curl https://get.docker.com/ | bash -` or:
+  - Install additional packages: `sudo apt install -y ca-certificates curl gnupg lsb-release`
+  - Add GPG keys: `curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg`
+  - Add Docker repository `echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null`
+  - `sudo apt update && sudo apt install -y docker-ce docker-ce-cli`
+- Start docker: `sudo service docker start` or in some cases: `sudo systemctl start docker`
+- Pull the image: `sudo docker pull alpine`
+- Download and install runc: `curl -L https://github.com/opencontainers/runc/releases/download/v1.2.6/runc.arm64 -o runc && chmod +x runc && sudo mv runc /usr/local/bin`
+- Show the runc version: `runc -v`
+- Create a folder `mkdir rootfs`
+- `CONTAINER_ID=$(sudo docker create alpine)`
+- `sudo docker export $CONTAINER_ID | sudo tar -C rootfs -xvf -`
+- Create a container specification base (will create the spec as `config.json`) `runc spec`
+- Execute a container using the `config.json`: `sudo runc run mycontainer`
+- List the running containers (new terminal): `sudo runc list` or `ps aux | grep mycontainer`
+- Stop a container: `sudo runc kill mycontainer KILL`
